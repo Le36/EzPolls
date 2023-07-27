@@ -1,27 +1,86 @@
 package com.ezpolls.service;
 
 import com.ezpolls.model.Poll;
+import com.ezpolls.model.VoteRecord;
 import com.ezpolls.repository.PollRepository;
+import com.ezpolls.repository.VoteRecordRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 public class PollService {
 
     private final PollRepository pollRepository;
+    private final VoteRecordRepository voteRecordRepository;
 
     @Autowired
-    public PollService(PollRepository pollRepository) {
+    public PollService(PollRepository pollRepository, VoteRecordRepository voteRecordRepository) {
         this.pollRepository = pollRepository;
+        this.voteRecordRepository = voteRecordRepository;
     }
 
     public Poll createPoll(Poll poll) {
         return pollRepository.save(poll);
     }
 
-    public Optional<Poll> getPollById(String id) {
-        return pollRepository.findById(id);
+    public Poll getPoll(String id) {
+        return pollRepository.findById(id).orElseThrow(() -> new RuntimeException("Poll not found"));
+    }
+
+    public void castVote(String pollId, String optionText, String voterIp) {
+        String userId = "TODO: get user id from session";
+        Poll poll = getPoll(pollId);
+        if (poll == null) {
+            throw new RuntimeException("Poll not found");
+        }
+
+        VoteRecord voteRecord = voteRecordRepository.findByPollId(pollId);
+        if (voteRecord == null) {
+            voteRecord = new VoteRecord();
+            voteRecord.setPollId(pollId);
+        }
+
+        String previousVote;
+        switch (poll.getVotingRestriction()) {
+            case ONE_VOTE_PER_IP -> {
+                previousVote = voteRecord.getVotesByIp().get(voterIp);
+                if (previousVote != null) {
+                    decrementVoteCount(poll, previousVote);
+                }
+                voteRecord.getVotesByIp().put(voterIp, optionText);
+            }
+            case ONE_VOTE_PER_USER -> {
+                previousVote = voteRecord.getVotesByUserId().get(userId);
+                if (previousVote != null) {
+                    decrementVoteCount(poll, previousVote);
+                }
+                voteRecord.getVotesByUserId().put(userId, optionText);
+            }
+            case NO_RESTRICTION -> {
+            }
+        }
+
+        incrementVoteCount(poll, optionText);
+
+        pollRepository.save(poll);
+        voteRecordRepository.save(voteRecord);
+    }
+
+    private void incrementVoteCount(Poll poll, String optionText) {
+        for (Poll.Option option : poll.getOptions()) {
+            if (option.getOptionText().equals(optionText)) {
+                option.setVoteCount(option.getVoteCount() + 1);
+                break;
+            }
+        }
+    }
+
+    private void decrementVoteCount(Poll poll, String optionText) {
+        for (Poll.Option option : poll.getOptions()) {
+            if (option.getOptionText().equals(optionText)) {
+                option.setVoteCount(option.getVoteCount() - 1);
+                break;
+            }
+        }
     }
 }

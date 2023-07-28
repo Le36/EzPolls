@@ -1,5 +1,7 @@
 package com.ezpolls.controller;
 
+import com.ezpolls.dto.PollCreationDTO;
+import com.ezpolls.dto.VoteDTO;
 import com.ezpolls.model.Poll;
 import com.ezpolls.service.PollService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -18,8 +20,8 @@ public class PollController {
     }
 
     @PostMapping
-    public Poll createPoll(@RequestBody Poll poll) {
-        return pollService.createPoll(poll);
+    public Poll createPoll(@RequestBody PollCreationDTO pollCreationDTO) {
+        return pollService.createPoll(pollCreationDTO);
     }
 
     @GetMapping("/{id}")
@@ -30,13 +32,13 @@ public class PollController {
     @PostMapping("/{id}/vote")
     public void castVote(HttpServletRequest request,
                          @PathVariable String id,
-                         @RequestParam String optionText) {
+                         @RequestBody VoteDTO vote) {
         String voterIp = request.getHeader("X-Forwarded-For");
         if (voterIp == null) {
             voterIp = request.getRemoteAddr();
         } else {
             voterIp = voterIp.split(",")[0];
         }
-        pollService.castVote(id, optionText, voterIp);
+        pollService.castVote(id, vote.getOptionText(), voterIp);
     }
 }

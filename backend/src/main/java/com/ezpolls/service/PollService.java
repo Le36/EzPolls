@@ -1,11 +1,15 @@
 package com.ezpolls.service;
 
+import com.ezpolls.dto.PollCreationDTO;
 import com.ezpolls.model.Poll;
 import com.ezpolls.model.VoteRecord;
 import com.ezpolls.repository.PollRepository;
 import com.ezpolls.repository.VoteRecordRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class PollService {
@@ -19,7 +23,21 @@ public class PollService {
         this.voteRecordRepository = voteRecordRepository;
     }
 
-    public Poll createPoll(Poll poll) {
+    public Poll createPoll(PollCreationDTO pollCreationDTO) {
+        Poll poll = new Poll();
+        poll.setQuestion(pollCreationDTO.getQuestion());
+        poll.setVotingRestriction(pollCreationDTO.getVotingRestriction());
+
+        List<Poll.Option> options = pollCreationDTO.getOptions().stream()
+                .map(optionText -> {
+                    Poll.Option option = new Poll.Option();
+                    option.setOptionText(optionText);
+                    return option;
+                })
+                .collect(Collectors.toList());
+
+        poll.setOptions(options);
+
         return pollRepository.save(poll);
     }
 

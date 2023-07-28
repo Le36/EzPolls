@@ -7,6 +7,7 @@ const NewPoll = () => {
     const navigate = useNavigate();
     const [question, setQuestion] = useState('');
     const [options, setOptions] = useState(['']);
+    const [restriction, setRestriction] = useState('ONE_VOTE_PER_IP');
 
     const handleOptionChange = (e, index) => {
         const newOptions = [...options];
@@ -23,7 +24,8 @@ const NewPoll = () => {
 
         const poll = {
             question,
-            options: options.filter(option => option !== '')
+            options: options.filter(option => option !== ''),
+            votingRestriction: restriction,
         };
 
         const createdPoll = await pollService.createPoll(poll);
@@ -42,6 +44,13 @@ const NewPoll = () => {
                 <input key={index} type="text" value={option} onChange={e => handleOptionChange(e, index)}/>
             ))}
             <button type="button" onClick={addOption}>Add Option</button>
+
+            <h3>Voting Restriction</h3>
+            <select value={restriction} onChange={e => setRestriction(e.target.value)}>
+                <option value="ONE_VOTE_PER_IP">One Vote Per IP</option>
+                <option value="ONE_VOTE_PER_USER">One Vote Per User</option>
+                <option value="NO_RESTRICTION">No Restriction</option>
+            </select>
 
             <button type="submit">Submit</button>
         </form>

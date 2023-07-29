@@ -1,5 +1,5 @@
 const SubmitButton = ({type, children}) => {
-    return <button type={type}>{children}</button>;
-};
+	return <button type={type}>{children}</button>
+}
 
-export default SubmitButton;
+export default SubmitButton

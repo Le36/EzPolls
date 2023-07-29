@@ -1,7 +1,9 @@
 import React, {useState, useEffect} from 'react';
 import {useParams, useLocation} from 'react-router-dom';
 import pollService from '../services/pollService';
-import PollResults from "./PollResults";
+import PollQuestion from "./PollQuestion";
+import VotingRestriction from "./VotingRestriction";
+import ResultsList from "./ResultsList";
 
 const ViewPoll = () => {
     const {id} = useParams();
@@ -20,12 +22,7 @@ const ViewPoll = () => {
     }, [id, poll]);
 
     useEffect(() => {
-        const eventSource = new EventSource(`http://localhost:8080/api/polls/${id}/votes`);
-
-        eventSource.onmessage = event => {
-            const updatedPoll = JSON.parse(event.data);
-            setPoll(updatedPoll);
-        };
+        const eventSource = pollService.subscribeToVotes(id, setPoll);
 
         return () => {
             eventSource.close();
@@ -34,7 +31,13 @@ const ViewPoll = () => {
 
     if (!poll) return null;
 
-    return <PollResults poll={poll}/>;
+    return (
+        <div>
+            <PollQuestion question={poll.question}/>
+            <VotingRestriction restriction={poll.votingRestriction}/>
+            <ResultsList options={poll.options}/>
+        </div>
+    )
 };
 
 export default ViewPoll;

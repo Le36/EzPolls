@@ -1,6 +1,10 @@
 import React, {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import pollService from '../services/pollService';
+import QuestionInput from "./QuestionInput";
+import OptionInputs from "./OptionsInput";
+import RestrictionSelect from "./RestictionSelect";
+import SubmitButton from "./SubmitButton";
 
 
 const NewPoll = () => {
@@ -36,23 +40,10 @@ const NewPoll = () => {
     return (
         <form onSubmit={handleSubmit}>
             <h2>New Poll</h2>
-            <label>Question:</label>
-            <input type="text" value={question} onChange={e => setQuestion(e.target.value)} required/>
-
-            <h3>Options</h3>
-            {options.map((option, index) => (
-                <input key={index} type="text" value={option} onChange={e => handleOptionChange(e, index)}/>
-            ))}
-            <button type="button" onClick={addOption}>Add Option</button>
-
-            <h3>Voting Restriction</h3>
-            <select value={restriction} onChange={e => setRestriction(e.target.value)}>
-                <option value="ONE_VOTE_PER_IP">One Vote Per IP</option>
-                <option value="ONE_VOTE_PER_USER">One Vote Per User</option>
-                <option value="NO_RESTRICTION">No Restriction</option>
-            </select>
-
-            <button type="submit">Submit</button>
+            <QuestionInput value={question} onChange={e => setQuestion(e.target.value)}/>
+            <OptionInputs options={options} handleOptionChange={handleOptionChange} addOption={addOption}/>
+            <RestrictionSelect value={restriction} onChange={e => setRestriction(e.target.value)}/>
+            <SubmitButton type="submit">Submit</SubmitButton>
         </form>
     );
 };

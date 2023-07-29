@@ -1,22 +1,31 @@
 import axios from 'axios';
 
-axios.defaults.baseURL = 'http://localhost:8080';
+const BASE_URL = 'http://localhost:8080/api/polls';
 
-const createPoll = async (poll) => {
-    console.log(poll)
-    const response = await axios.post('/api/polls', poll);
+const createPoll = async (newPoll) => {
+    const response = await axios.post(BASE_URL, newPoll);
     return response.data;
 };
 
 const getPoll = async (id) => {
-    const response = await axios.get(`/api/polls/${id}`);
+    const response = await axios.get(`${BASE_URL}/${id}`);
     return response.data;
 };
 
 const votePoll = async (id, optionText) => {
-    const response = await axios.post(`/api/polls/${id}/vote`, {optionText});
-    return response.data;
+    await axios.post(`${BASE_URL}/${id}/vote`, {optionText});
 };
 
-const pollService = {createPoll, getPoll, votePoll}
+const subscribeToVotes = (id, callback) => {
+    const eventSource = new EventSource(`${BASE_URL}/${id}/votes`);
+
+    eventSource.onmessage = event => {
+        const updatedPoll = JSON.parse(event.data);
+        callback(updatedPoll);
+    };
+
+    return eventSource;
+};
+
+const pollService = {createPoll, getPoll, votePoll, subscribeToVotes};
 export default pollService;

@@ -1,12 +1,17 @@
 import React, {useEffect, useState} from 'react';
 import pollService from '../services/pollService';
-import {useLocation, useParams} from "react-router-dom";
+import {useLocation, useNavigate, useParams} from "react-router-dom";
+import PollQuestion from "./PollQuestion";
+import VotingRestriction from "./VotingRestriction";
+import PollOptions from "./PollOptions";
+import SubmitButton from "./SubmitButton";
 
 const VotePoll = () => {
     const {id} = useParams();
     const location = useLocation();
     const [poll, setPoll] = useState(location.state?.poll || null);
     const [selectedOption, setSelectedOption] = useState(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchPoll = async () => {
@@ -28,25 +33,17 @@ const VotePoll = () => {
 
         const updatedPoll = await pollService.votePoll(poll.id, selectedOption);
         setPoll(updatedPoll);
+        navigate(`/polls/${id}/results`, {state: {poll}});
     };
 
     if (!poll) return null;
 
     return (
         <form onSubmit={handleSubmit}>
-            <h2>{poll.question}</h2>
-
-            <h3>Voting Restriction: {poll.votingRestriction.replace('_', ' ')}</h3>
-
-            {poll.options.map((option, index) => (
-                <div key={index}>
-                    <input type="radio" id={option.optionText} name="poll" value={option.optionText}
-                           onChange={e => setSelectedOption(e.target.value)}/>
-                    <label htmlFor={option.optionText}>{option.optionText}</label>
-                </div>
-            ))}
-
-            <button type="submit">Vote</button>
+            <PollQuestion question={poll.question}/>
+            <VotingRestriction restriction={poll.votingRestriction}/>
+            <PollOptions options={poll.options} setSelectedOption={setSelectedOption}/>
+            <SubmitButton type="submit">Vote</SubmitButton>
         </form>
     );
 };

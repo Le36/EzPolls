@@ -6,7 +6,9 @@ import com.ezpolls.model.Poll;
 import com.ezpolls.service.PollService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Flux;
 
 @RestController
 @RequestMapping("/api/polls")
@@ -40,5 +42,10 @@ public class PollController {
             voterIp = voterIp.split(",")[0];
         }
         pollService.castVote(id, vote.getOptionText(), voterIp);
+    }
+
+    @GetMapping(value = "/{id}/votes", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    public Flux<Poll> getVoteUpdates(@PathVariable String id) {
+        return pollService.getVoteUpdates(id);
     }
 }

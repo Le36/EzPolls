@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import pollService from '../services/pollService';
 import {useLocation, useParams} from "react-router-dom";
 
-const Poll = () => {
+const VotePoll = () => {
     const {id} = useParams();
     const location = useLocation();
     const [poll, setPoll] = useState(location.state?.poll || null);
@@ -51,4 +51,4 @@ const Poll = () => {
     );
 };
 
-export default Poll;
+export default VotePoll;

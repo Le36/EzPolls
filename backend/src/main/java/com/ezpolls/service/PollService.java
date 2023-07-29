@@ -7,8 +7,12 @@ import com.ezpolls.repository.PollRepository;
 import com.ezpolls.repository.VoteRecordRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Flux;
+import reactor.core.scheduler.Schedulers;
 
+import java.time.Duration;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -100,5 +104,12 @@ public class PollService {
                 break;
             }
         }
+    }
+
+    public Flux<Poll> getVoteUpdates(String pollId) {
+        return Flux.interval(Duration.ofSeconds(1))
+                .publishOn(Schedulers.boundedElastic())
+                .flatMap(seq -> Flux.just(Objects.requireNonNull(pollRepository.findById(pollId).orElse(null))))
+                .distinctUntilChanged();
     }
 }

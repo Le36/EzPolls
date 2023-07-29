@@ -4,6 +4,7 @@ import pollService from '../services/pollService';
 import PollQuestion from "./PollQuestion";
 import VotingRestriction from "./VotingRestriction";
 import ResultsList from "./ResultsList";
+import Loading from "./Loading";
 
 const ViewPoll = () => {
     const {id} = useParams();
@@ -29,7 +30,7 @@ const ViewPoll = () => {
         };
     }, [id]);
 
-    if (!poll) return null;
+    if (!poll) return <Loading/>;
 
     return (
         <div>

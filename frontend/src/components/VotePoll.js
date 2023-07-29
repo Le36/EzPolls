@@ -5,6 +5,7 @@ import PollQuestion from "./PollQuestion";
 import VotingRestriction from "./VotingRestriction";
 import PollOptions from "./PollOptions";
 import SubmitButton from "./SubmitButton";
+import Loading from "./Loading";
 
 const VotePoll = () => {
     const {id} = useParams();
@@ -36,7 +37,7 @@ const VotePoll = () => {
         navigate(`/polls/${id}/results`, {state: {poll}});
     };
 
-    if (!poll) return null;
+    if (!poll) return <Loading/>;
 
     return (
         <form onSubmit={handleSubmit}>

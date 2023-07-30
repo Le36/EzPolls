@@ -5,6 +5,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Data
@@ -13,7 +14,7 @@ public class VoteRecord {
 
     @Id
     private String pollId;
-    private Map<String, String> votesByIp = new HashMap<>();
-    private Map<String, String> votesByUserId = new HashMap<>();
+    private Map<String, List<String>> votesByIp = new HashMap<>();
+    private Map<String, List<String>> votesByUserId = new HashMap<>();
 
 }

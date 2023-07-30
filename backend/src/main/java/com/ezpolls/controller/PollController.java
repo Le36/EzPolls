@@ -41,7 +41,7 @@ public class PollController {
         } else {
             voterIp = voterIp.split(",")[0];
         }
-        pollService.castVote(id, vote.getOptionText(), voterIp);
+        pollService.castVote(id, vote.getOptionTexts(), voterIp);
     }
 
     @GetMapping(value = "/{id}/votes", produces = MediaType.TEXT_EVENT_STREAM_VALUE)

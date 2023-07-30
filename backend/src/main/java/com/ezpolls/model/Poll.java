@@ -17,6 +17,7 @@ public class Poll {
     private String question;
     private List<Option> options;
     private VotingRestriction votingRestriction;
+    private boolean multipleChoicesAllowed;
 
     @Getter
     @Setter

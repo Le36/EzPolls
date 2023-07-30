@@ -10,4 +10,5 @@ public class PollCreationDTO {
     private String question;
     private List<String> options;
     private Poll.VotingRestriction votingRestriction;
+    private boolean multipleChoicesAllowed;
 }

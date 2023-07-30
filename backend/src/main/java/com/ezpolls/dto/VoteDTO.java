@@ -2,7 +2,9 @@ package com.ezpolls.dto;
 
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 public class VoteDTO {
-    private String optionText;
+    private List<String> optionTexts;
 }

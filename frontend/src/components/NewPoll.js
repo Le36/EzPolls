@@ -5,12 +5,14 @@ import QuestionInput from './QuestionInput'
 import OptionInputs from './OptionsInput'
 import RestrictionSelect from './RestictionSelect'
 import SubmitButton from './SubmitButton'
+import MultipleChoicesCheckbox from './MultipleChoicesCheckbox'
 
 const NewPoll = () => {
 	const navigate = useNavigate()
 	const [question, setQuestion] = useState('')
 	const [options, setOptions] = useState([''])
 	const [restriction, setRestriction] = useState('ONE_VOTE_PER_IP')
+	const [multipleChoicesAllowed, setMultipleChoicesAllowed] = useState(false)
 
 	const handleOptionChange = (e, index) => {
 		const newOptions = [...options]
@@ -29,6 +31,7 @@ const NewPoll = () => {
 			question,
 			options: options.filter((option) => option !== ''),
 			votingRestriction: restriction,
+			multipleChoicesAllowed,
 		}
 
 		const createdPoll = await pollService.createPoll(poll)
@@ -42,6 +45,10 @@ const NewPoll = () => {
 			<QuestionInput value={question} onChange={(e) => setQuestion(e.target.value)} />
 			<OptionInputs options={options} handleOptionChange={handleOptionChange} addOption={addOption} />
 			<RestrictionSelect value={restriction} onChange={(e) => setRestriction(e.target.value)} />
+			<MultipleChoicesCheckbox
+				checked={multipleChoicesAllowed}
+				onChange={(e) => setMultipleChoicesAllowed(e.target.checked)}
+			/>
 			<SubmitButton type="submit">Submit</SubmitButton>
 		</form>
 	)

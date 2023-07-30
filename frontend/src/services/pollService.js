@@ -12,8 +12,9 @@ const getPoll = async (id) => {
 	return response.data
 }
 
-const votePoll = async (id, optionText) => {
-	await axios.post(`${BASE_URL}/${id}/vote`, {optionText})
+const votePoll = async (id, optionTexts) => {
+	const response = await axios.post(`${BASE_URL}/${id}/vote`, optionTexts)
+	return response.data
 }
 
 const subscribeToVotes = (id, callback) => {

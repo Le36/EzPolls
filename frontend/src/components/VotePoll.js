@@ -11,7 +11,7 @@ const VotePoll = () => {
 	const {id} = useParams()
 	const location = useLocation()
 	const [poll, setPoll] = useState(location.state?.poll || null)
-	const [selectedOption, setSelectedOption] = useState(null)
+	const [selectedOptions, setSelectedOptions] = useState([])
 	const navigate = useNavigate()
 
 	useEffect(() => {
@@ -25,14 +25,30 @@ const VotePoll = () => {
 		fetchPoll()
 	}, [id, poll])
 
+	const handleOptionChange = (optionText) => {
+		if (poll.multipleChoicesAllowed) {
+			setSelectedOptions(
+				selectedOptions.includes(optionText)
+					? selectedOptions.filter((option) => option !== optionText)
+					: [...selectedOptions, optionText],
+			)
+		} else {
+			setSelectedOptions([optionText])
+		}
+	}
+
 	const handleSubmit = async (e) => {
 		e.preventDefault()
-		if (selectedOption == null) {
+		if (selectedOptions.length === 0) {
 			alert('Please select an option')
 			return
 		}
 
-		const updatedPoll = await pollService.votePoll(poll.id, selectedOption)
+		const optionsObject = {
+			optionTexts: selectedOptions,
+		}
+
+		const updatedPoll = await pollService.votePoll(poll.id, optionsObject)
 		setPoll(updatedPoll)
 		navigate(`/polls/${id}/results`, {state: {poll}})
 	}
@@ -43,7 +59,12 @@ const VotePoll = () => {
 		<form onSubmit={handleSubmit}>
 			<PollQuestion question={poll.question} />
 			<VotingRestriction restriction={poll.votingRestriction} />
-			<PollOptions options={poll.options} setSelectedOption={setSelectedOption} />
+			<PollOptions
+				options={poll.options}
+				selectedOptions={selectedOptions}
+				handleOptionChange={handleOptionChange}
+				multipleChoicesAllowed={poll.multipleChoicesAllowed}
+			/>
 			<SubmitButton type="submit">Vote</SubmitButton>
 		</form>
 	)

@@ -75,14 +75,18 @@ public class PollService {
         switch (poll.getVotingRestriction()) {
             case ONE_VOTE_PER_IP -> {
                 previousVotes = voteRecord.getVotesByIp().get(voterIp);
-                if (previousVotes != null) {
+                if (previousVotes != null && !poll.isRevotingAllowed()) {
+                    throw new RuntimeException("You have already voted, revoting is not allowed in this poll");
+                } else if (previousVotes != null) {
                     previousVotes.forEach(previousVote -> decrementVoteCount(poll, previousVote));
                 }
                 voteRecord.getVotesByIp().put(voterIp, new ArrayList<>());
             }
             case ONE_VOTE_PER_USER -> {
                 previousVotes = voteRecord.getVotesByUserId().get(userId);
-                if (previousVotes != null) {
+                if (previousVotes != null && !poll.isRevotingAllowed()) {
+                    throw new RuntimeException("You have already voted, revoting is not allowed in this poll");
+                } else if (previousVotes != null) {
                     previousVotes.forEach(previousVote -> decrementVoteCount(poll, previousVote));
                 }
                 voteRecord.getVotesByUserId().put(userId, new ArrayList<>());

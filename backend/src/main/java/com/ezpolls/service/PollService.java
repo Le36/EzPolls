@@ -1,17 +1,20 @@
 package com.ezpolls.service;
 
 import com.ezpolls.dto.PollCreationDTO;
+import com.ezpolls.event.VoteCastEvent;
 import com.ezpolls.model.Poll;
 import com.ezpolls.model.VoteRecord;
 import com.ezpolls.repository.PollRepository;
 import com.ezpolls.repository.VoteRecordRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationListener;
+import org.springframework.context.event.ApplicationEventMulticaster;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
 
-import java.time.Duration;
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -21,11 +24,15 @@ public class PollService {
 
     private final PollRepository pollRepository;
     private final VoteRecordRepository voteRecordRepository;
+    private final ApplicationEventMulticaster applicationEventMulticaster;
 
     @Autowired
-    public PollService(PollRepository pollRepository, VoteRecordRepository voteRecordRepository) {
+    public PollService(PollRepository pollRepository,
+                       VoteRecordRepository voteRecordRepository,
+                       ApplicationEventMulticaster applicationEventMulticaster) {
         this.pollRepository = pollRepository;
         this.voteRecordRepository = voteRecordRepository;
+        this.applicationEventMulticaster = applicationEventMulticaster;
     }
 
     public Poll createPoll(PollCreationDTO pollCreationDTO) {
@@ -64,22 +71,6 @@ public class PollService {
             voteRecord.setPollId(pollId);
         }
 
-        if (poll.isMultipleChoicesAllowed()) {
-            for (String optionText : optionTexts) {
-                voteForOption(poll, voteRecord, voterIp, userId, optionText);
-            }
-        } else {
-            if (optionTexts.size() > 1) {
-                throw new IllegalArgumentException("Multiple choices not allowed for this poll");
-            }
-            voteForOption(poll, voteRecord, voterIp, userId, optionTexts.get(0));
-        }
-
-        pollRepository.save(poll);
-        voteRecordRepository.save(voteRecord);
-    }
-
-    private void voteForOption(Poll poll, VoteRecord voteRecord, String voterIp, String userId, String optionText) {
         List<String> previousVotes;
         switch (poll.getVotingRestriction()) {
             case ONE_VOTE_PER_IP -> {
@@ -87,20 +78,31 @@ public class PollService {
                 if (previousVotes != null) {
                     previousVotes.forEach(previousVote -> decrementVoteCount(poll, previousVote));
                 }
-                voteRecord.getVotesByIp().put(voterIp, Collections.singletonList(optionText));
+                voteRecord.getVotesByIp().put(voterIp, new ArrayList<>());
             }
             case ONE_VOTE_PER_USER -> {
                 previousVotes = voteRecord.getVotesByUserId().get(userId);
                 if (previousVotes != null) {
                     previousVotes.forEach(previousVote -> decrementVoteCount(poll, previousVote));
                 }
-                voteRecord.getVotesByUserId().put(userId, Collections.singletonList(optionText));
+                voteRecord.getVotesByUserId().put(userId, new ArrayList<>());
             }
             case NO_RESTRICTION -> {
             }
         }
 
-        incrementVoteCount(poll, optionText);
+        for (String optionText : optionTexts) {
+            incrementVoteCount(poll, optionText);
+            if (poll.getVotingRestriction() == Poll.VotingRestriction.ONE_VOTE_PER_IP) {
+                voteRecord.getVotesByIp().get(voterIp).add(optionText);
+            } else if (poll.getVotingRestriction() == Poll.VotingRestriction.ONE_VOTE_PER_USER) {
+                voteRecord.getVotesByUserId().get(userId).add(optionText);
+            }
+        }
+
+        pollRepository.save(poll);
+        voteRecordRepository.save(voteRecord);
+        applicationEventMulticaster.multicastEvent(new VoteCastEvent(this, pollId));
     }
 
     private void incrementVoteCount(Poll poll, String optionText) {
@@ -122,9 +124,21 @@ public class PollService {
     }
 
     public Flux<Poll> getVoteUpdates(String pollId) {
-        return Flux.interval(Duration.ofSeconds(1))
-                .publishOn(Schedulers.boundedElastic())
-                .flatMap(seq -> Flux.just(Objects.requireNonNull(pollRepository.findById(pollId).orElse(null))))
-                .distinctUntilChanged();
+        return Flux.create(emitter -> {
+            ApplicationListener<VoteCastEvent> listener = event -> {
+                if (event.getPollId().equals(pollId)) {
+                    Mono.fromCallable(() -> pollRepository.findById(pollId))
+                            .subscribeOn(Schedulers.boundedElastic())
+                            .subscribe(poll -> emitter.next(Objects.requireNonNull(poll.orElse(null))));
+                }
+            };
+
+            Mono.fromCallable(() -> pollRepository.findById(pollId))
+                    .subscribeOn(Schedulers.boundedElastic())
+                    .subscribe(poll -> emitter.next(Objects.requireNonNull(poll.orElse(null))));
+
+            emitter.onRequest(v -> applicationEventMulticaster.addApplicationListener(listener));
+            emitter.onDispose(() -> applicationEventMulticaster.removeApplicationListener(listener));
+        });
     }
 }

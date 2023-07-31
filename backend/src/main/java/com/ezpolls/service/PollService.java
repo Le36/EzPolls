@@ -2,6 +2,8 @@ package com.ezpolls.service;
 
 import com.ezpolls.dto.PollCreationDTO;
 import com.ezpolls.event.VoteCastEvent;
+import com.ezpolls.exception.PollNotFoundException;
+import com.ezpolls.exception.VoteNotPermittedException;
 import com.ezpolls.model.Poll;
 import com.ezpolls.model.VoteRecord;
 import com.ezpolls.repository.PollRepository;
@@ -40,6 +42,7 @@ public class PollService {
         poll.setQuestion(pollCreationDTO.getQuestion());
         poll.setVotingRestriction(pollCreationDTO.getVotingRestriction());
         poll.setMultipleChoicesAllowed(pollCreationDTO.isMultipleChoicesAllowed());
+        poll.setRevotingAllowed(pollCreationDTO.isRevotingAllowed());
 
         List<Poll.Option> options = pollCreationDTO.getOptions().stream()
                 .map(optionText -> {
@@ -55,15 +58,12 @@ public class PollService {
     }
 
     public Poll getPoll(String id) {
-        return pollRepository.findById(id).orElseThrow(() -> new RuntimeException("Poll not found"));
+        return pollRepository.findById(id).orElseThrow(PollNotFoundException::new);
     }
 
     public void castVote(String pollId, List<String> optionTexts, String voterIp) {
         String userId = "TODO: get user id from session";
         Poll poll = getPoll(pollId);
-        if (poll == null) {
-            throw new RuntimeException("Poll not found");
-        }
 
         VoteRecord voteRecord = voteRecordRepository.findByPollId(pollId);
         if (voteRecord == null) {
@@ -76,7 +76,7 @@ public class PollService {
             case ONE_VOTE_PER_IP -> {
                 previousVotes = voteRecord.getVotesByIp().get(voterIp);
                 if (previousVotes != null && !poll.isRevotingAllowed()) {
-                    throw new RuntimeException("You have already voted, revoting is not allowed in this poll");
+                    throw new VoteNotPermittedException();
                 } else if (previousVotes != null) {
                     previousVotes.forEach(previousVote -> decrementVoteCount(poll, previousVote));
                 }
@@ -85,7 +85,7 @@ public class PollService {
             case ONE_VOTE_PER_USER -> {
                 previousVotes = voteRecord.getVotesByUserId().get(userId);
                 if (previousVotes != null && !poll.isRevotingAllowed()) {
-                    throw new RuntimeException("You have already voted, revoting is not allowed in this poll");
+                    throw new VoteNotPermittedException();
                 } else if (previousVotes != null) {
                     previousVotes.forEach(previousVote -> decrementVoteCount(poll, previousVote));
                 }

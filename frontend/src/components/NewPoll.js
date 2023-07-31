@@ -6,6 +6,7 @@ import OptionInputs from './OptionsInput'
 import RestrictionSelect from './RestictionSelect'
 import SubmitButton from './SubmitButton'
 import MultipleChoicesCheckbox from './MultipleChoicesCheckbox'
+import RevotingAllowedCheckbox from './RevotingAllowedCheckbox'
 
 const NewPoll = () => {
 	const navigate = useNavigate()
@@ -13,6 +14,7 @@ const NewPoll = () => {
 	const [options, setOptions] = useState([''])
 	const [restriction, setRestriction] = useState('ONE_VOTE_PER_IP')
 	const [multipleChoicesAllowed, setMultipleChoicesAllowed] = useState(false)
+	const [revotingAllowed, setRevotingAllowed] = useState(false)
 
 	const handleOptionChange = (e, index) => {
 		const newOptions = [...options]
@@ -32,6 +34,7 @@ const NewPoll = () => {
 			options: options.filter((option) => option !== ''),
 			votingRestriction: restriction,
 			multipleChoicesAllowed,
+			revotingAllowed,
 		}
 
 		const createdPoll = await pollService.createPoll(poll)
@@ -45,6 +48,12 @@ const NewPoll = () => {
 			<QuestionInput value={question} onChange={(e) => setQuestion(e.target.value)} />
 			<OptionInputs options={options} handleOptionChange={handleOptionChange} addOption={addOption} />
 			<RestrictionSelect value={restriction} onChange={(e) => setRestriction(e.target.value)} />
+			{restriction !== 'NO_RESTRICTION' && (
+				<RevotingAllowedCheckbox
+					checked={revotingAllowed}
+					onChange={(e) => setRevotingAllowed(e.target.checked)}
+				/>
+			)}
 			<MultipleChoicesCheckbox
 				checked={multipleChoicesAllowed}
 				onChange={(e) => setMultipleChoicesAllowed(e.target.checked)}

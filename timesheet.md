@@ -6,4 +6,5 @@
 | 27.07 | 10            | Initial functions for front and backend, create poll, vote, view |
 | 28.07 | 8             | Add voting with anti tampering mechanisms to back and frontend   |
 | 29.07 | 10            | Mvp with component rehaul and concurrent voting system           |
-| total | 34            |                                                                  |
+| 30.07 | 8             | Working option for multiple choices in a poll                    |
+| total | 42            |                                                                  |

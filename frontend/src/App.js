@@ -5,17 +5,17 @@ import {ErrorProvider} from './contexts/ErrorContext'
 import ErrorNotification from './components/ErrorNotification'
 
 const App = () => {
-	return (
-		<ErrorProvider>
-			<Router>
-				<div>
-					<h1>EzPolls</h1>
-					<ErrorNotification />
-					<PollContainer />
-				</div>
-			</Router>
-		</ErrorProvider>
-	)
+    return (
+        <ErrorProvider>
+            <Router>
+                <div>
+                    <h1>EzPolls</h1>
+                    <ErrorNotification />
+                    <PollContainer />
+                </div>
+            </Router>
+        </ErrorProvider>
+    )
 }
 
 export default App

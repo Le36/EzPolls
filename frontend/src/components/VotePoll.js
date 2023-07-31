@@ -10,68 +10,68 @@ import {ErrorContext} from '../contexts/ErrorContext'
 import usePoll from '../hooks/UsePoll'
 
 const VotePoll = () => {
-	const [selectedOptions, setSelectedOptions] = useState([])
-	const navigate = useNavigate()
-	const {setErrorMessage} = useContext(ErrorContext)
-	const [isSubmitting, setIsSubmitting] = useState(false)
-	const poll = usePoll()
+    const [selectedOptions, setSelectedOptions] = useState([])
+    const navigate = useNavigate()
+    const {setErrorMessage} = useContext(ErrorContext)
+    const [isSubmitting, setIsSubmitting] = useState(false)
+    const poll = usePoll()
 
-	const handleOptionChange = (optionText) => {
-		if (poll.multipleChoicesAllowed) {
-			setSelectedOptions(
-				selectedOptions.includes(optionText)
-					? selectedOptions.filter((option) => option !== optionText)
-					: [...selectedOptions, optionText],
-			)
-		} else {
-			setSelectedOptions([optionText])
-		}
-	}
+    const handleOptionChange = (optionText) => {
+        if (poll.multipleChoicesAllowed) {
+            setSelectedOptions(
+                selectedOptions.includes(optionText)
+                    ? selectedOptions.filter((option) => option !== optionText)
+                    : [...selectedOptions, optionText],
+            )
+        } else {
+            setSelectedOptions([optionText])
+        }
+    }
 
-	const handleSubmit = async (e) => {
-		e.preventDefault()
-		if (selectedOptions.length === 0) {
-			setErrorMessage('Please select an option')
-			return
-		}
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        if (selectedOptions.length === 0) {
+            setErrorMessage('Please select an option')
+            return
+        }
 
-		setIsSubmitting(true)
+        setIsSubmitting(true)
 
-		const optionsObject = {
-			optionTexts: selectedOptions,
-		}
+        const optionsObject = {
+            optionTexts: selectedOptions,
+        }
 
-		try {
-			await pollService.votePoll(poll.id, optionsObject)
-			navigate(`/polls/${poll.id}/results`)
-		} catch (error) {
-			if (error.response && error.response.data.message) {
-				setErrorMessage(error.response.data.message)
-			} else {
-				setErrorMessage('An unexpected error occurred. Please try again.')
-			}
-		} finally {
-			setIsSubmitting(false)
-		}
-	}
+        try {
+            await pollService.votePoll(poll.id, optionsObject)
+            navigate(`/polls/${poll.id}/results`)
+        } catch (error) {
+            if (error.response && error.response.data.message) {
+                setErrorMessage(error.response.data.message)
+            } else {
+                setErrorMessage('An unexpected error occurred. Please try again.')
+            }
+        } finally {
+            setIsSubmitting(false)
+        }
+    }
 
-	if (!poll) return <Loading />
+    if (!poll) return <Loading />
 
-	return (
-		<form onSubmit={handleSubmit}>
-			<PollQuestion question={poll.question} />
-			<VotingRestriction restriction={poll.votingRestriction} />
-			<PollOptions
-				options={poll.options}
-				selectedOptions={selectedOptions}
-				handleOptionChange={handleOptionChange}
-				multipleChoicesAllowed={poll.multipleChoicesAllowed}
-			/>
-			<SubmitButton type="submit" disabled={isSubmitting}>
-				{isSubmitting ? 'Voting...' : 'Vote'}
-			</SubmitButton>
-		</form>
-	)
+    return (
+        <form onSubmit={handleSubmit}>
+            <PollQuestion question={poll.question} />
+            <VotingRestriction restriction={poll.votingRestriction} />
+            <PollOptions
+                options={poll.options}
+                selectedOptions={selectedOptions}
+                handleOptionChange={handleOptionChange}
+                multipleChoicesAllowed={poll.multipleChoicesAllowed}
+            />
+            <SubmitButton type="submit" disabled={isSubmitting}>
+                {isSubmitting ? 'Voting...' : 'Vote'}
+            </SubmitButton>
+        </form>
+    )
 }
 
 export default VotePoll

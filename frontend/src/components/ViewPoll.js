@@ -6,17 +6,17 @@ import Loading from './Loading'
 import usePoll from '../hooks/UsePoll'
 
 const ViewPoll = () => {
-	const poll = usePoll(true)
+    const poll = usePoll(true)
 
-	if (!poll) return <Loading />
+    if (!poll) return <Loading />
 
-	return (
-		<div>
-			<PollQuestion question={poll.question} />
-			<VotingRestriction restriction={poll.votingRestriction} />
-			<ResultsList options={poll.options} />
-		</div>
-	)
+    return (
+        <div>
+            <PollQuestion question={poll.question} />
+            <VotingRestriction restriction={poll.votingRestriction} />
+            <ResultsList options={poll.options} />
+        </div>
+    )
 }
 
 export default ViewPoll

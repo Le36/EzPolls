@@ -18,7 +18,6 @@ import reactor.core.scheduler.Schedulers;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -133,13 +132,11 @@ public class PollService {
                 if (event.getPollId().equals(pollId)) {
                     Mono.fromCallable(() -> pollRepository.findById(pollId))
                             .subscribeOn(Schedulers.boundedElastic())
-                            .subscribe(poll -> emitter.next(Objects.requireNonNull(poll.orElse(null))));
+                            .subscribe(poll -> {
+                                poll.ifPresent(emitter::next);
+                            });
                 }
             };
-
-            Mono.fromCallable(() -> pollRepository.findById(pollId))
-                    .subscribeOn(Schedulers.boundedElastic())
-                    .subscribe(poll -> emitter.next(Objects.requireNonNull(poll.orElse(null))));
 
             emitter.onRequest(v -> applicationEventMulticaster.addApplicationListener(listener));
             emitter.onDispose(() -> applicationEventMulticaster.removeApplicationListener(listener));

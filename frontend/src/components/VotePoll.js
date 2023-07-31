@@ -1,29 +1,20 @@
-import React, {useEffect, useState} from 'react'
+import React, {useContext, useState} from 'react'
 import pollService from '../services/pollService'
-import {useLocation, useNavigate, useParams} from 'react-router-dom'
+import {useNavigate} from 'react-router-dom'
 import PollQuestion from './PollQuestion'
 import VotingRestriction from './VotingRestriction'
 import PollOptions from './PollOptions'
 import SubmitButton from './SubmitButton'
 import Loading from './Loading'
+import {ErrorContext} from '../contexts/ErrorContext'
+import usePoll from '../hooks/UsePoll'
 
 const VotePoll = () => {
-	const {id} = useParams()
-	const location = useLocation()
-	const [poll, setPoll] = useState(location.state?.poll || null)
 	const [selectedOptions, setSelectedOptions] = useState([])
 	const navigate = useNavigate()
-
-	useEffect(() => {
-		const fetchPoll = async () => {
-			if (!poll) {
-				const fetchedPoll = await pollService.getPoll(id)
-				setPoll(fetchedPoll)
-			}
-		}
-
-		fetchPoll()
-	}, [id, poll])
+	const {setErrorMessage} = useContext(ErrorContext)
+	const [isSubmitting, setIsSubmitting] = useState(false)
+	const poll = usePoll()
 
 	const handleOptionChange = (optionText) => {
 		if (poll.multipleChoicesAllowed) {
@@ -40,17 +31,28 @@ const VotePoll = () => {
 	const handleSubmit = async (e) => {
 		e.preventDefault()
 		if (selectedOptions.length === 0) {
-			alert('Please select an option')
+			setErrorMessage('Please select an option')
 			return
 		}
+
+		setIsSubmitting(true)
 
 		const optionsObject = {
 			optionTexts: selectedOptions,
 		}
 
-		const updatedPoll = await pollService.votePoll(poll.id, optionsObject)
-		setPoll(updatedPoll)
-		navigate(`/polls/${id}/results`, {state: {poll}})
+		try {
+			await pollService.votePoll(poll.id, optionsObject)
+			navigate(`/polls/${poll.id}/results`)
+		} catch (error) {
+			if (error.response && error.response.data.message) {
+				setErrorMessage(error.response.data.message)
+			} else {
+				setErrorMessage('An unexpected error occurred. Please try again.')
+			}
+		} finally {
+			setIsSubmitting(false)
+		}
 	}
 
 	if (!poll) return <Loading />
@@ -65,7 +67,9 @@ const VotePoll = () => {
 				handleOptionChange={handleOptionChange}
 				multipleChoicesAllowed={poll.multipleChoicesAllowed}
 			/>
-			<SubmitButton type="submit">Vote</SubmitButton>
+			<SubmitButton type="submit" disabled={isSubmitting}>
+				{isSubmitting ? 'Voting...' : 'Vote'}
+			</SubmitButton>
 		</form>
 	)
 }

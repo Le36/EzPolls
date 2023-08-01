@@ -16,6 +16,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -128,18 +129,18 @@ public class PollService {
 
     public Flux<Poll> getVoteUpdates(String pollId) {
         return Flux.create(emitter -> {
-            ApplicationListener<VoteCastEvent> listener = event -> {
-                if (event.getPollId().equals(pollId)) {
-                    Mono.fromCallable(() -> pollRepository.findById(pollId))
-                            .subscribeOn(Schedulers.boundedElastic())
-                            .subscribe(poll -> {
-                                poll.ifPresent(emitter::next);
-                            });
-                }
-            };
+                    ApplicationListener<VoteCastEvent> listener = event -> {
+                        if (event.getPollId().equals(pollId)) {
+                            Mono.fromCallable(() -> pollRepository.findById(pollId))
+                                    .subscribeOn(Schedulers.boundedElastic())
+                                    .subscribe(poll -> poll.ifPresent(emitter::next));
+                        }
+                    };
 
-            emitter.onRequest(v -> applicationEventMulticaster.addApplicationListener(listener));
-            emitter.onDispose(() -> applicationEventMulticaster.removeApplicationListener(listener));
-        });
+                    emitter.onRequest(v -> applicationEventMulticaster.addApplicationListener(listener));
+                    emitter.onDispose(() -> applicationEventMulticaster.removeApplicationListener(listener));
+                })
+                .bufferTimeout(100, Duration.ofMillis(300))
+                .map(list -> (Poll) list.get(list.size() - 1));
     }
 }

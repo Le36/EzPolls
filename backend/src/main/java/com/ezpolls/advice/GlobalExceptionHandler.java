@@ -1,6 +1,7 @@
 package com.ezpolls.advice;
 
 import com.ezpolls.exception.PollNotFoundException;
+import com.ezpolls.exception.RateLimitException;
 import com.ezpolls.exception.VoteNotPermittedException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +20,12 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = {PollNotFoundException.class})
     public ResponseEntity<Object> handlePollNotFoundException(PollNotFoundException ex) {
         ApiError apiError = new ApiError(HttpStatus.NOT_FOUND, ex.getMessage());
+        return new ResponseEntity<>(apiError, apiError.getStatus());
+    }
+
+    @ExceptionHandler(value = {RateLimitException.class})
+    public ResponseEntity<Object> handleRateLimitException(RateLimitException ex) {
+        ApiError apiError = new ApiError(HttpStatus.TOO_MANY_REQUESTS, ex.getMessage());
         return new ResponseEntity<>(apiError, apiError.getStatus());
     }
 }

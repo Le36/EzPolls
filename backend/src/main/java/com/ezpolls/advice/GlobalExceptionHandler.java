@@ -1,8 +1,6 @@
 package com.ezpolls.advice;
 
-import com.ezpolls.exception.PollNotFoundException;
-import com.ezpolls.exception.RateLimitException;
-import com.ezpolls.exception.VoteNotPermittedException;
+import com.ezpolls.exception.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -26,6 +24,18 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = {RateLimitException.class})
     public ResponseEntity<Object> handleRateLimitException(RateLimitException ex) {
         ApiError apiError = new ApiError(HttpStatus.TOO_MANY_REQUESTS, ex.getMessage());
+        return new ResponseEntity<>(apiError, apiError.getStatus());
+    }
+
+    @ExceptionHandler(value = {UserAlreadyExistsException.class})
+    public ResponseEntity<Object> handleUserAlreadyExistsException(UserAlreadyExistsException ex) {
+        ApiError apiError = new ApiError(HttpStatus.CONFLICT, ex.getMessage());
+        return new ResponseEntity<>(apiError, apiError.getStatus());
+    }
+
+    @ExceptionHandler(value = {InvalidCredentialsException.class})
+    public ResponseEntity<Object> handleInvalidCredentialsException(InvalidCredentialsException ex) {
+        ApiError apiError = new ApiError(HttpStatus.UNAUTHORIZED, ex.getMessage());
         return new ResponseEntity<>(apiError, apiError.getStatus());
     }
 }

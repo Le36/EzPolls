@@ -48,14 +48,13 @@ public class PollController {
     }
 
     @PostMapping("/{id}/vote")
-    public void castVote(HttpServletRequest request,
-                         @PathVariable String id,
-                         @RequestBody VoteDTO vote) {
+    public void castVote(HttpServletRequest request, @PathVariable String id, @RequestBody VoteDTO vote) {
         String voterIp = getClientIp(request);
         if (rateLimiter.tryConsume(voterIp)) {
             throw new RateLimitException();
         }
-        pollService.castVote(id, vote.getOptionTexts(), voterIp.replace(".", "-"));
+        Optional<String> username = jwtUtil.extractUsernameFromHeader(request.getHeader("Authorization"));
+        pollService.castVote(id, vote.getOptionTexts(), voterIp.replace(".", "-"), username.orElse(null));
     }
 
     @GetMapping(value = "/{id}/votes", produces = MediaType.TEXT_EVENT_STREAM_VALUE)

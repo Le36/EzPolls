@@ -38,4 +38,10 @@ public class GlobalExceptionHandler {
         ApiError apiError = new ApiError(HttpStatus.UNAUTHORIZED, ex.getMessage());
         return new ResponseEntity<>(apiError, apiError.getStatus());
     }
+
+    @ExceptionHandler(value = {UserNotLoggedInException.class})
+    public ResponseEntity<Object> handleUserNotLoggedInException(UserNotLoggedInException ex) {
+        ApiError apiError = new ApiError(HttpStatus.UNAUTHORIZED, ex.getMessage());
+        return new ResponseEntity<>(apiError, apiError.getStatus());
+    }
 }

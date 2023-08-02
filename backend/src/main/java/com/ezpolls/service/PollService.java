@@ -3,6 +3,7 @@ package com.ezpolls.service;
 import com.ezpolls.dto.PollCreationDTO;
 import com.ezpolls.event.VoteCastEvent;
 import com.ezpolls.exception.PollNotFoundException;
+import com.ezpolls.exception.UserNotLoggedInException;
 import com.ezpolls.exception.VoteNotPermittedException;
 import com.ezpolls.model.Poll;
 import com.ezpolls.model.VoteRecord;
@@ -62,8 +63,7 @@ public class PollService {
         return pollRepository.findById(id).orElseThrow(PollNotFoundException::new);
     }
 
-    public void castVote(String pollId, List<String> optionTexts, String voterIp) {
-        String userId = "TODO: get user id from session";
+    public void castVote(String pollId, List<String> optionTexts, String voterIp, String username) {
         Poll poll = getPoll(pollId);
 
         VoteRecord voteRecord = voteRecordRepository.findByPollId(pollId);
@@ -84,13 +84,15 @@ public class PollService {
                 voteRecord.getVotesByIp().put(voterIp, new ArrayList<>());
             }
             case ONE_VOTE_PER_USER -> {
-                previousVotes = voteRecord.getVotesByUserId().get(userId);
+                if (username == null) throw new UserNotLoggedInException();
+
+                previousVotes = voteRecord.getVotesByUserId().get(username);
                 if (previousVotes != null && !poll.isRevotingAllowed()) {
                     throw new VoteNotPermittedException();
                 } else if (previousVotes != null) {
                     previousVotes.forEach(previousVote -> decrementVoteCount(poll, previousVote));
                 }
-                voteRecord.getVotesByUserId().put(userId, new ArrayList<>());
+                voteRecord.getVotesByUserId().put(username, new ArrayList<>());
             }
             case NO_RESTRICTION -> {
             }
@@ -101,7 +103,7 @@ public class PollService {
             if (poll.getVotingRestriction() == Poll.VotingRestriction.ONE_VOTE_PER_IP) {
                 voteRecord.getVotesByIp().get(voterIp).add(optionText);
             } else if (poll.getVotingRestriction() == Poll.VotingRestriction.ONE_VOTE_PER_USER) {
-                voteRecord.getVotesByUserId().get(userId).add(optionText);
+                voteRecord.getVotesByUserId().get(username).add(optionText);
             }
         }
 

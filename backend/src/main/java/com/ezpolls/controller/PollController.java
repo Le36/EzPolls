@@ -4,7 +4,6 @@ import com.ezpolls.dto.PollCreationDTO;
 import com.ezpolls.dto.VoteDTO;
 import com.ezpolls.exception.RateLimitException;
 import com.ezpolls.model.Poll;
-import com.ezpolls.security.JwtUtil;
 import com.ezpolls.service.PollService;
 import com.ezpolls.service.RateLimiter;
 import jakarta.servlet.http.HttpServletRequest;
@@ -13,7 +12,6 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/polls")
@@ -21,13 +19,11 @@ public class PollController {
 
     private final PollService pollService;
     private final RateLimiter rateLimiter;
-    private final JwtUtil jwtUtil;
 
     @Autowired
-    public PollController(PollService pollService, RateLimiter rateLimiter, JwtUtil jwtUtil) {
+    public PollController(PollService pollService, RateLimiter rateLimiter) {
         this.pollService = pollService;
         this.rateLimiter = rateLimiter;
-        this.jwtUtil = jwtUtil;
     }
 
     @PostMapping
@@ -37,9 +33,8 @@ public class PollController {
             throw new RateLimitException();
         }
 
-        Optional<String> username = jwtUtil.extractUsernameFromHeader(request.getHeader("Authorization"));
-
-        return pollService.createPoll(pollCreationDTO, username.orElse(null));
+        String username = (String) request.getAttribute("username");
+        return pollService.createPoll(pollCreationDTO, username);
     }
 
     @GetMapping("/{id}")
@@ -53,13 +48,20 @@ public class PollController {
         if (rateLimiter.tryConsume(voterIp)) {
             throw new RateLimitException();
         }
-        Optional<String> username = jwtUtil.extractUsernameFromHeader(request.getHeader("Authorization"));
-        pollService.castVote(id, vote.getOptionTexts(), voterIp.replace(".", "-"), username.orElse(null));
+        String username = (String) request.getAttribute("username");
+        pollService.castVote(id, vote.getOptionTexts(), voterIp.replace(".", "-"), username);
     }
 
     @GetMapping(value = "/{id}/votes", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public Flux<Poll> getVoteUpdates(@PathVariable String id) {
         return pollService.getVoteUpdates(id);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deletePoll(HttpServletRequest request, @PathVariable String id) {
+        String username = (String) request.getAttribute("username");
+
+        pollService.deletePoll(id, username);
     }
 
     private String getClientIp(HttpServletRequest request) {

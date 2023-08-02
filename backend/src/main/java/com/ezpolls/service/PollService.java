@@ -3,6 +3,7 @@ package com.ezpolls.service;
 import com.ezpolls.dto.PollCreationDTO;
 import com.ezpolls.event.VoteCastEvent;
 import com.ezpolls.exception.PollNotFoundException;
+import com.ezpolls.exception.UnauthorizedAccessException;
 import com.ezpolls.exception.UserNotLoggedInException;
 import com.ezpolls.exception.VoteNotPermittedException;
 import com.ezpolls.model.Poll;
@@ -145,5 +146,15 @@ public class PollService {
                 })
                 .bufferTimeout(100, Duration.ofMillis(300))
                 .map(list -> (Poll) list.get(list.size() - 1));
+    }
+
+    public void deletePoll(String pollId, String username) {
+        Poll poll = getPoll(pollId);
+        if (poll.getAuthor() != null && poll.getAuthor().equals(username)) {
+            pollRepository.deleteById(pollId);
+            voteRecordRepository.deleteById(pollId);
+        } else {
+            throw new UnauthorizedAccessException();
+        }
     }
 }

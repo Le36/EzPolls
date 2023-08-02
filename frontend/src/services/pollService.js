@@ -2,8 +2,8 @@ import axios from 'axios'
 
 const BASE_URL = 'http://localhost:8080/api/polls'
 
-const createPoll = async (newPoll) => {
-    const response = await axios.post(BASE_URL, newPoll)
+const createPoll = async (newPoll, headers) => {
+    const response = await axios.post(BASE_URL, newPoll, {headers})
     return response.data
 }
 
@@ -12,8 +12,8 @@ const getPoll = async (id) => {
     return response.data
 }
 
-const votePoll = async (id, optionTexts) => {
-    const response = await axios.post(`${BASE_URL}/${id}/vote`, optionTexts)
+const votePoll = async (id, optionTexts, headers) => {
+    const response = await axios.post(`${BASE_URL}/${id}/vote`, optionTexts, {headers})
     return response.data
 }
 

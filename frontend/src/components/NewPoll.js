@@ -8,6 +8,7 @@ import SubmitButton from './SubmitButton'
 import MultipleChoicesCheckbox from './MultipleChoicesCheckbox'
 import RevotingAllowedCheckbox from './RevotingAllowedCheckbox'
 import {ErrorContext} from '../contexts/ErrorContext'
+import {AuthContext} from '../contexts/AuthContext'
 
 const NewPoll = () => {
     const navigate = useNavigate()
@@ -18,6 +19,7 @@ const NewPoll = () => {
     const [revotingAllowed, setRevotingAllowed] = useState(false)
     const [isSubmitting, setIsSubmitting] = useState(false)
     const {setErrorMessage} = useContext(ErrorContext)
+    const {authHeader} = useContext(AuthContext)
 
     const handleOptionChange = (e, index) => {
         const newOptions = [...options]
@@ -66,7 +68,7 @@ const NewPoll = () => {
         }
 
         try {
-            const createdPoll = await pollService.createPoll(poll)
+            const createdPoll = await pollService.createPoll(poll, authHeader())
             navigate(`/polls/${createdPoll.id}`, {state: {poll: createdPoll}})
         } catch (error) {
             if (error.response && error.response.data.message) {

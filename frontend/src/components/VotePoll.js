@@ -8,6 +8,7 @@ import SubmitButton from './SubmitButton'
 import Loading from './Loading'
 import {ErrorContext} from '../contexts/ErrorContext'
 import usePoll from '../hooks/UsePoll'
+import {AuthContext} from '../contexts/AuthContext'
 
 const VotePoll = () => {
     const [selectedOptions, setSelectedOptions] = useState([])
@@ -15,6 +16,7 @@ const VotePoll = () => {
     const {setErrorMessage} = useContext(ErrorContext)
     const [isSubmitting, setIsSubmitting] = useState(false)
     const poll = usePoll()
+    const {authHeader} = useContext(AuthContext)
 
     const handleOptionChange = (optionText) => {
         if (poll.multipleChoicesAllowed) {
@@ -42,7 +44,7 @@ const VotePoll = () => {
         }
 
         try {
-            await pollService.votePoll(poll.id, optionsObject)
+            await pollService.votePoll(poll.id, optionsObject, authHeader())
             navigate(`/polls/${poll.id}/results`)
         } catch (error) {
             if (error.response && error.response.data.message) {

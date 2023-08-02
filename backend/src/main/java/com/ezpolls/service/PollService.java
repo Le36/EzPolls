@@ -37,12 +37,13 @@ public class PollService {
         this.applicationEventMulticaster = applicationEventMulticaster;
     }
 
-    public Poll createPoll(PollCreationDTO pollCreationDTO) {
+    public Poll createPoll(PollCreationDTO pollCreationDTO, String username) {
         Poll poll = new Poll();
         poll.setQuestion(pollCreationDTO.getQuestion());
         poll.setVotingRestriction(pollCreationDTO.getVotingRestriction());
         poll.setMultipleChoicesAllowed(pollCreationDTO.isMultipleChoicesAllowed());
         poll.setRevotingAllowed(pollCreationDTO.isRevotingAllowed());
+        poll.setAuthor(username);
 
         List<Poll.Option> options = pollCreationDTO.getOptions().stream()
                 .map(optionText -> {

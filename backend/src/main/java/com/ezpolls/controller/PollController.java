@@ -4,6 +4,7 @@ import com.ezpolls.dto.PollCreationDTO;
 import com.ezpolls.dto.VoteDTO;
 import com.ezpolls.exception.RateLimitException;
 import com.ezpolls.model.Poll;
+import com.ezpolls.security.JwtUtil;
 import com.ezpolls.service.PollService;
 import com.ezpolls.service.RateLimiter;
 import jakarta.servlet.http.HttpServletRequest;
@@ -12,17 +13,21 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 
+import java.util.Optional;
+
 @RestController
 @RequestMapping("/api/polls")
 public class PollController {
 
     private final PollService pollService;
     private final RateLimiter rateLimiter;
+    private final JwtUtil jwtUtil;
 
     @Autowired
-    public PollController(PollService pollService, RateLimiter rateLimiter) {
+    public PollController(PollService pollService, RateLimiter rateLimiter, JwtUtil jwtUtil) {
         this.pollService = pollService;
         this.rateLimiter = rateLimiter;
+        this.jwtUtil = jwtUtil;
     }
 
     @PostMapping
@@ -31,7 +36,10 @@ public class PollController {
         if (rateLimiter.tryConsume(ip)) {
             throw new RateLimitException();
         }
-        return pollService.createPoll(pollCreationDTO);
+
+        Optional<String> username = jwtUtil.extractUsernameFromHeader(request.getHeader("Authorization"));
+
+        return pollService.createPoll(pollCreationDTO, username.orElse(null));
     }
 
     @GetMapping("/{id}")

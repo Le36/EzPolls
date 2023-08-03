@@ -28,5 +28,10 @@ const subscribeToVotes = (id, callback) => {
     return eventSource
 }
 
-const pollService = {createPoll, getPoll, votePoll, subscribeToVotes}
+const deletePoll = async (id, headers) => {
+    const response = await axios.delete(`${BASE_URL}/${id}`, {headers})
+    return response.data
+}
+
+const pollService = {createPoll, getPoll, votePoll, subscribeToVotes, deletePoll}
 export default pollService

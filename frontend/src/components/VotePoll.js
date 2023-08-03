@@ -10,6 +10,7 @@ import {ErrorContext} from '../contexts/ErrorContext'
 import usePoll from '../hooks/UsePoll'
 import {AuthContext} from '../contexts/AuthContext'
 import Author from './Author'
+import DeleteButton from './DeleteButton'
 
 const VotePoll = () => {
     const [selectedOptions, setSelectedOptions] = useState([])
@@ -74,6 +75,7 @@ const VotePoll = () => {
             <SubmitButton type="submit" disabled={isSubmitting}>
                 {isSubmitting ? 'Voting...' : 'Vote'}
             </SubmitButton>
+            <DeleteButton poll={poll} />
         </form>
     )
 }

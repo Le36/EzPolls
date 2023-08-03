@@ -9,27 +9,36 @@ import VotePoll from './components/VotePoll'
 import ViewPoll from './components/ViewPoll'
 import LoginForm from './components/LoginForm'
 import RegisterForm from './components/RegisterForm'
+import {NotificationProvider} from './contexts/NotificationContext'
+import Notification from './components/Notification'
+
+const Providers = ({children}) => (
+    <AuthProvider>
+        <ErrorProvider>
+            <NotificationProvider>{children}</NotificationProvider>
+        </ErrorProvider>
+    </AuthProvider>
+)
 
 const App = () => {
     return (
-        <AuthProvider>
-            <ErrorProvider>
-                <Router>
-                    <div>
-                        <Navbar />
-                        <h1>EzPolls</h1>
-                        <ErrorNotification />
-                        <Routes>
-                            <Route path="/" element={<NewPoll />} />
-                            <Route path="/polls/:id" element={<VotePoll />} />
-                            <Route path="/polls/:id/results" element={<ViewPoll />} />
-                            <Route path="/login" element={<LoginForm />} />
-                            <Route path="/register" element={<RegisterForm />} />
-                        </Routes>
-                    </div>
-                </Router>
-            </ErrorProvider>
-        </AuthProvider>
+        <Providers>
+            <Router>
+                <div>
+                    <Navbar />
+                    <h1>EzPolls</h1>
+                    <ErrorNotification />
+                    <Notification />
+                    <Routes>
+                        <Route path="/" element={<NewPoll />} />
+                        <Route path="/polls/:id" element={<VotePoll />} />
+                        <Route path="/polls/:id/results" element={<ViewPoll />} />
+                        <Route path="/login" element={<LoginForm />} />
+                        <Route path="/register" element={<RegisterForm />} />
+                    </Routes>
+                </div>
+            </Router>
+        </Providers>
     )
 }
 

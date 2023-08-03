@@ -3,10 +3,12 @@ import {AuthContext} from '../contexts/AuthContext'
 import pollService from '../services/pollService'
 import {ErrorContext} from '../contexts/ErrorContext'
 import {useNavigate} from 'react-router-dom'
+import {NotificationContext} from '../contexts/NotificationContext'
 
 const DeleteButton = ({poll}) => {
     const {username, authHeader} = useContext(AuthContext)
     const {setErrorMessage} = useContext(ErrorContext)
+    const {setNotificationMessage} = useContext(NotificationContext)
     const [isDeleting, setIsDeleting] = useState(false)
     const navigate = useNavigate()
 
@@ -14,6 +16,7 @@ const DeleteButton = ({poll}) => {
         setIsDeleting(true)
         try {
             await pollService.deletePoll(poll.id, authHeader())
+            setNotificationMessage('Poll deleted successfully')
             navigate(`/`)
         } catch (error) {
             if (error.response && error.response.data.message) {

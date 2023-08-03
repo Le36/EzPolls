@@ -1,9 +1,9 @@
 const QuestionInput = ({value, onChange}) => {
     return (
-        <>
-            <label>Question:</label>
-            <input type="text" value={value} onChange={onChange} required />
-        </>
+        <div>
+            <label>Question</label>
+            <input type="text" placeholder="Type your question here" value={value} onChange={onChange} required />
+        </div>
     )
 }
 

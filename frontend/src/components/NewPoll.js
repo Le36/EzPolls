@@ -13,7 +13,7 @@ import {AuthContext} from '../contexts/AuthContext'
 const NewPoll = () => {
     const navigate = useNavigate()
     const [question, setQuestion] = useState('')
-    const [options, setOptions] = useState([''])
+    const [options, setOptions] = useState(['', ''])
     const [restriction, setRestriction] = useState('ONE_VOTE_PER_IP')
     const [multipleChoicesAllowed, setMultipleChoicesAllowed] = useState(false)
     const [revotingAllowed, setRevotingAllowed] = useState(false)
@@ -29,6 +29,12 @@ const NewPoll = () => {
 
     const addOption = () => {
         setOptions([...options, ''])
+    }
+
+    const removeOption = (indexToRemove) => {
+        if (options.length > 2) {
+            setOptions(options.filter((_, index) => index !== indexToRemove))
+        }
     }
 
     const validateInputs = () => {
@@ -83,9 +89,15 @@ const NewPoll = () => {
 
     return (
         <form onSubmit={handleSubmit}>
-            <h2>New Poll</h2>
+            <h2>Create a Poll</h2>
+            Complete the below fields to create your poll.
             <QuestionInput value={question} onChange={(e) => setQuestion(e.target.value)} />
-            <OptionInputs options={options} handleOptionChange={handleOptionChange} addOption={addOption} />
+            <OptionInputs
+                options={options}
+                handleOptionChange={handleOptionChange}
+                addOption={addOption}
+                removeOption={removeOption}
+            />
             <RestrictionSelect value={restriction} onChange={(e) => setRestriction(e.target.value)} />
             {restriction !== 'NO_RESTRICTION' && (
                 <RevotingAllowedCheckbox

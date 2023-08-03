@@ -12,6 +12,7 @@ import {AuthContext} from '../contexts/AuthContext'
 import Author from './Author'
 import DeleteButton from './DeleteButton'
 import {NotificationContext} from '../contexts/NotificationContext'
+import NavigateButton from './NavigateButton'
 
 const VotePoll = () => {
     const [selectedOptions, setSelectedOptions] = useState([])
@@ -88,6 +89,7 @@ const VotePoll = () => {
                 {isSubmitting ? 'Voting...' : 'Vote'}
             </SubmitButton>
             <DeleteButton poll={poll} />
+            <NavigateButton to={`/polls/${poll.id}/results`}>Live Results</NavigateButton>
         </form>
     )
 }

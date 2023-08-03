@@ -6,6 +6,7 @@ import Loading from './Loading'
 import usePoll from '../hooks/UsePoll'
 import Author from './Author'
 import DeleteButton from './DeleteButton'
+import NavigateButton from './NavigateButton'
 
 const ViewPoll = () => {
     const {poll} = usePoll(true)
@@ -19,6 +20,7 @@ const ViewPoll = () => {
             <Author author={poll.author} />
             <ResultsList options={poll.options} />
             <DeleteButton poll={poll} />
+            <NavigateButton to={`/polls/${poll.id}`}>Back to Voting</NavigateButton>
         </div>
     )
 }

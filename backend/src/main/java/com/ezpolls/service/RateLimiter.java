@@ -12,7 +12,7 @@ import java.time.Instant;
 @Service
 public class RateLimiter {
 
-    private static final int MAX_REQUESTS_PER_PERIOD = 10;
+    private static final int MAX_REQUESTS_PER_PERIOD = 5;
     private static final long RATE_LIMIT_PERIOD = 1000;
     private static final long CLEANUP_PERIOD = 60 * 1000;
 

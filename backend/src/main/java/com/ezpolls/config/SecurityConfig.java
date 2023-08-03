@@ -25,7 +25,6 @@ import java.util.Arrays;
 @EnableWebSecurity
 public class SecurityConfig extends SecurityConfigurerAdapter<DefaultSecurityFilterChain, HttpSecurity> {
 
-
     private final JwtRequestFilter jwtRequestFilter;
     private final UserDetailsService userDetailsService;
 
@@ -67,5 +66,4 @@ public class SecurityConfig extends SecurityConfigurerAdapter<DefaultSecurityFil
 
         return http.build();
     }
-
 }

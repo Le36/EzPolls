@@ -9,6 +9,7 @@ import Loading from './Loading'
 import {ErrorContext} from '../contexts/ErrorContext'
 import usePoll from '../hooks/UsePoll'
 import {AuthContext} from '../contexts/AuthContext'
+import Author from './Author'
 
 const VotePoll = () => {
     const [selectedOptions, setSelectedOptions] = useState([])
@@ -63,6 +64,7 @@ const VotePoll = () => {
         <form onSubmit={handleSubmit}>
             <PollQuestion question={poll.question} />
             <VotingRestriction restriction={poll.votingRestriction} />
+            <Author author={poll.author} />
             <PollOptions
                 options={poll.options}
                 selectedOptions={selectedOptions}

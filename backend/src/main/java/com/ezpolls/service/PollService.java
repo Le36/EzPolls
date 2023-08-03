@@ -1,6 +1,7 @@
 package com.ezpolls.service;
 
 import com.ezpolls.dto.PollCreationDTO;
+import com.ezpolls.dto.PollResponseDTO;
 import com.ezpolls.event.VoteCastEvent;
 import com.ezpolls.exception.PollNotFoundException;
 import com.ezpolls.exception.UnauthorizedAccessException;
@@ -58,6 +59,37 @@ public class PollService {
         poll.setOptions(options);
 
         return pollRepository.save(poll);
+    }
+
+    public PollResponseDTO getPoll(String id, String ip, String username) {
+        Poll poll = getPoll(id);
+        PollResponseDTO pollResponseDTO = new PollResponseDTO();
+        pollResponseDTO.setPoll(poll);
+
+        VoteRecord voteRecord = voteRecordRepository.findByPollId(id);
+        if (voteRecord != null) {
+            switch (poll.getVotingRestriction()) {
+                case ONE_VOTE_PER_IP -> {
+                    if (ip != null) {
+                        List<String> votes = voteRecord.getVotesByIp().get(ip);
+                        if (votes != null && !votes.isEmpty()) {
+                            pollResponseDTO.setUserVotes(votes);
+                        }
+                    }
+                }
+                case ONE_VOTE_PER_USER -> {
+                    if (username != null) {
+                        List<String> votes = voteRecord.getVotesByUserId().get(username);
+                        if (votes != null && !votes.isEmpty()) {
+                            pollResponseDTO.setUserVotes(votes);
+                        }
+                    }
+                }
+                case NO_RESTRICTION -> {
+                }
+            }
+        }
+        return pollResponseDTO;
     }
 
     public Poll getPoll(String id) {

@@ -1,6 +1,7 @@
 package com.ezpolls.controller;
 
 import com.ezpolls.dto.PollCreationDTO;
+import com.ezpolls.dto.PollResponseDTO;
 import com.ezpolls.dto.VoteDTO;
 import com.ezpolls.model.Poll;
 import com.ezpolls.service.PollService;
@@ -29,8 +30,10 @@ public class PollController {
     }
 
     @GetMapping("/{id}")
-    public Poll getPoll(@PathVariable String id) {
-        return pollService.getPoll(id);
+    public PollResponseDTO getPoll(HttpServletRequest request, @PathVariable String id) {
+        String voterIp = (String) request.getAttribute("ip");
+        String username = (String) request.getAttribute("username");
+        return pollService.getPoll(id, voterIp.replace(".", "-"), username);
     }
 
     @PostMapping("/{id}/vote")

@@ -8,7 +8,7 @@ import Author from './Author'
 import DeleteButton from './DeleteButton'
 
 const ViewPoll = () => {
-    const poll = usePoll(true)
+    const {poll} = usePoll(true)
 
     if (!poll) return <Loading />
 

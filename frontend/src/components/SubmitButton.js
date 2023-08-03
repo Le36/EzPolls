@@ -1,7 +1,7 @@
-const SubmitButton = ({type, children, isSubmitting}) => {
+const SubmitButton = ({type, disabled, children}) => {
     return (
-        <button type={type} disabled={isSubmitting}>
-            {isSubmitting ? 'Submitting...' : children}
+        <button type={type} disabled={disabled}>
+            {children}
         </button>
     )
 }

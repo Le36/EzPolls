@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react'
+import React, {useContext, useEffect, useState} from 'react'
 import pollService from '../services/pollService'
 import {useNavigate} from 'react-router-dom'
 import PollQuestion from './PollQuestion'
@@ -11,14 +11,26 @@ import usePoll from '../hooks/UsePoll'
 import {AuthContext} from '../contexts/AuthContext'
 import Author from './Author'
 import DeleteButton from './DeleteButton'
+import {NotificationContext} from '../contexts/NotificationContext'
 
 const VotePoll = () => {
     const [selectedOptions, setSelectedOptions] = useState([])
     const navigate = useNavigate()
     const {setErrorMessage} = useContext(ErrorContext)
     const [isSubmitting, setIsSubmitting] = useState(false)
-    const poll = usePoll()
+    const {poll, userVotes} = usePoll()
     const {authHeader} = useContext(AuthContext)
+    const {setNotificationMessage} = useContext(NotificationContext)
+
+    useEffect(() => {
+        if (userVotes) {
+            const message = poll.revotingAllowed
+                ? 'You have already voted on this poll. You can change your vote.'
+                : 'You have already voted on this poll. You cannot change your vote.'
+            setNotificationMessage(message)
+            setSelectedOptions(userVotes)
+        }
+    }, [userVotes, setNotificationMessage, poll])
 
     const handleOptionChange = (optionText) => {
         if (poll.multipleChoicesAllowed) {
@@ -72,7 +84,7 @@ const VotePoll = () => {
                 handleOptionChange={handleOptionChange}
                 multipleChoicesAllowed={poll.multipleChoicesAllowed}
             />
-            <SubmitButton type="submit" disabled={isSubmitting}>
+            <SubmitButton type="submit" disabled={isSubmitting || (userVotes && !poll.revotingAllowed)}>
                 {isSubmitting ? 'Voting...' : 'Vote'}
             </SubmitButton>
             <DeleteButton poll={poll} />

@@ -7,8 +7,8 @@ const createPoll = async (newPoll, headers) => {
     return response.data
 }
 
-const getPoll = async (id) => {
-    const response = await axios.get(`${BASE_URL}/${id}`)
+const getPoll = async (id, headers) => {
+    const response = await axios.get(`${BASE_URL}/${id}`, {headers})
     return response.data
 }
 

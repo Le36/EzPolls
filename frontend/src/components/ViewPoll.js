@@ -7,9 +7,11 @@ import usePoll from '../hooks/UsePoll'
 import Author from './Author'
 import DeleteButton from './DeleteButton'
 import NavigateButton from './NavigateButton'
+import {useNavigate} from 'react-router-dom'
 
 const ViewPoll = () => {
     const {poll} = usePoll(true)
+    const navigate = useNavigate()
 
     if (!poll) return <Loading />
 
@@ -19,7 +21,7 @@ const ViewPoll = () => {
             <VotingRestriction restriction={poll.votingRestriction} />
             <Author author={poll.author} />
             <ResultsList options={poll.options} />
-            <DeleteButton poll={poll} />
+            <DeleteButton poll={poll} onSuccess={() => navigate('/')} />
             <NavigateButton to={`/polls/${poll.id}`}>Back to Voting</NavigateButton>
         </div>
     )

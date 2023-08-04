@@ -3,6 +3,7 @@ import {Link, useParams} from 'react-router-dom'
 import userService from '../services/userService'
 import {ErrorContext} from '../contexts/ErrorContext'
 import {AuthContext} from '../contexts/AuthContext'
+import DeleteButton from './DeleteButton'
 
 const UserProfile = () => {
     const {username} = useParams()
@@ -31,12 +32,22 @@ const UserProfile = () => {
 
     return (
         <div>
-            <h2>{userProfile.user.username}'s Profile</h2>
-            <h3>Polls created by {userProfile.user.username}:</h3>
+            <h2>Your Profile</h2>
+            <p>Username: {userProfile.user.username}</p>
+            <h2>Your Polls</h2>
             {userProfile.polls.map((poll) => (
-                <p key={poll.id}>
+                <div key={poll.id}>
                     <Link to={`/polls/${poll.id}`}>{poll.question}</Link>
-                </p>
+                    <DeleteButton
+                        poll={poll}
+                        onSuccess={() =>
+                            setUserProfile((userData) => ({
+                                ...userData,
+                                polls: userData.polls.filter((p) => p.id !== poll.id),
+                            }))
+                        }
+                    />
+                </div>
             ))}
         </div>
     )

@@ -88,7 +88,7 @@ const VotePoll = () => {
             <SubmitButton type="submit" disabled={isSubmitting || (userVotes && !poll.revotingAllowed)}>
                 {isSubmitting ? 'Voting...' : 'Vote'}
             </SubmitButton>
-            <DeleteButton poll={poll} />
+            <DeleteButton poll={poll} onSuccess={() => navigate('/')} />
             <NavigateButton to={`/polls/${poll.id}/results`}>Live Results</NavigateButton>
         </form>
     )

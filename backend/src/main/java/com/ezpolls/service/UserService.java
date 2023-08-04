@@ -1,9 +1,11 @@
 package com.ezpolls.service;
 
+import com.ezpolls.dto.UserPollsDTO;
 import com.ezpolls.dto.UserRegistrationDTO;
 import com.ezpolls.dto.UserLoginDTO;
 import com.ezpolls.exception.InvalidCredentialsException;
 import com.ezpolls.exception.UserAlreadyExistsException;
+import com.ezpolls.model.Poll;
 import com.ezpolls.model.User;
 import com.ezpolls.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -21,11 +24,14 @@ public class UserService implements UserDetailsService {
 
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder passwordEncoder;
+    private final PollService pollService;
+
 
     @Autowired
-    public UserService(UserRepository userRepository, BCryptPasswordEncoder passwordEncoder) {
+    public UserService(UserRepository userRepository, BCryptPasswordEncoder passwordEncoder, PollService pollService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.pollService = pollService;
     }
 
     @Override
@@ -54,5 +60,15 @@ public class UserService implements UserDetailsService {
             return optionalUser;
         }
         return Optional.empty();
+    }
+
+    public UserPollsDTO getUserAndTheirPolls(String username) {
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(InvalidCredentialsException::new);
+        List<Poll> polls = pollService.getPollsByUser(username);
+        UserPollsDTO userPolls = new UserPollsDTO();
+        userPolls.setUser(user);
+        userPolls.setPolls(polls);
+        return userPolls;
     }
 }

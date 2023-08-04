@@ -189,4 +189,8 @@ public class PollService {
             throw new UnauthorizedAccessException();
         }
     }
+
+    public List<Poll> getPollsByUser(String username) {
+        return pollRepository.findAllByAuthor(username);
+    }
 }

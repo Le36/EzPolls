@@ -1,17 +1,17 @@
 package com.ezpolls.controller;
 
 import com.ezpolls.dto.UserLoginDTO;
+import com.ezpolls.dto.UserPollsDTO;
 import com.ezpolls.dto.UserRegistrationDTO;
 import com.ezpolls.exception.InvalidCredentialsException;
+import com.ezpolls.exception.UnauthorizedAccessException;
 import com.ezpolls.model.User;
 import com.ezpolls.security.JwtUtil;
 import com.ezpolls.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
@@ -43,5 +43,14 @@ public class UserController {
         User user = userOptional.get();
         String jwt = jwtUtil.generateToken(user);
         return ResponseEntity.ok(jwt);
+    }
+
+    @GetMapping("/{username}")
+    public UserPollsDTO getUserProfile(@PathVariable String username, HttpServletRequest request) {
+        String requesterUsername = (String) request.getAttribute("username");
+        if (!username.equals(requesterUsername)) {
+            throw new UnauthorizedAccessException();
+        }
+        return userService.getUserAndTheirPolls(username);
     }
 }

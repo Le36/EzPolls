@@ -1,10 +1,10 @@
 package com.ezpolls.service;
 
+import com.ezpolls.dto.PasswordChangeDTO;
 import com.ezpolls.dto.UserPollsDTO;
 import com.ezpolls.dto.UserRegistrationDTO;
 import com.ezpolls.dto.UserLoginDTO;
-import com.ezpolls.exception.InvalidCredentialsException;
-import com.ezpolls.exception.UserAlreadyExistsException;
+import com.ezpolls.exception.*;
 import com.ezpolls.model.Poll;
 import com.ezpolls.model.User;
 import com.ezpolls.repository.UserRepository;
@@ -18,6 +18,8 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -43,15 +45,29 @@ public class UserService implements UserDetailsService {
 
     public User createUser(UserRegistrationDTO userRegistrationDTO) {
         String username = userRegistrationDTO.getUsername();
+        String password = userRegistrationDTO.getPassword();
+        String email = userRegistrationDTO.getEmail();
         Optional<User> existingUser = userRepository.findByUsername(username);
         if (existingUser.isPresent()) {
             throw new UserAlreadyExistsException(username);
         }
 
+        if (!isValidUsername(username)) {
+            throw new InvalidUsernameException();
+        }
+
+        if (!isValidPassword(password)) {
+            throw new InvalidPasswordException();
+        }
+
+        if (!isValidEmail(email)) {
+            throw new InvalidEmailException();
+        }
+
         User newUser = new User();
         newUser.setUsername(username);
-        newUser.setPassword(passwordEncoder.encode(userRegistrationDTO.getPassword()));
-        newUser.setEmail(userRegistrationDTO.getEmail());
+        newUser.setPassword(passwordEncoder.encode(password));
+        newUser.setEmail(email);
         return userRepository.save(newUser);
     }
 
@@ -71,5 +87,54 @@ public class UserService implements UserDetailsService {
         userPolls.setUser(user);
         userPolls.setPolls(polls);
         return userPolls;
+    }
+
+    public User updateUserPassword(String username, PasswordChangeDTO passwordChangeDTO) {
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(InvalidCredentialsException::new);
+
+        if (!passwordEncoder.matches(passwordChangeDTO.getOldPassword(), user.getPassword())) {
+            throw new InvalidCredentialsException();
+        }
+
+        if (!isValidPassword(passwordChangeDTO.getNewPassword())) {
+            throw new InvalidPasswordException();
+        }
+
+        user.setPassword(passwordEncoder.encode(passwordChangeDTO.getNewPassword()));
+        return userRepository.save(user);
+    }
+
+    public User updateUserEmail(String username, String newEmail) {
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(InvalidCredentialsException::new);
+
+        if (!isValidEmail(newEmail)) {
+            throw new InvalidEmailException();
+        }
+
+        user.setEmail(newEmail);
+        return userRepository.save(user);
+    }
+
+    public boolean isValidPassword(String password) {
+        String passwordRegex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{8,}$";
+        Pattern pattern = Pattern.compile(passwordRegex);
+        Matcher matcher = pattern.matcher(password);
+        return matcher.matches();
+    }
+
+    public boolean isValidEmail(String email) {
+        String emailRegex = "^[A-Za-z0-9+_.-]+@(.+)$";
+        Pattern pattern = Pattern.compile(emailRegex);
+        Matcher matcher = pattern.matcher(email);
+        return matcher.matches();
+    }
+
+    public boolean isValidUsername(String username) {
+        String usernameRegex = "^[a-zA-Z0-9]{4,}$";
+        Pattern pattern = Pattern.compile(usernameRegex);
+        Matcher matcher = pattern.matcher(username);
+        return matcher.matches();
     }
 }

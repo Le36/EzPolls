@@ -1,5 +1,6 @@
 package com.ezpolls.controller;
 
+import com.ezpolls.dto.PasswordChangeDTO;
 import com.ezpolls.dto.UserLoginDTO;
 import com.ezpolls.dto.UserPollsDTO;
 import com.ezpolls.dto.UserRegistrationDTO;
@@ -52,5 +53,23 @@ public class UserController {
             throw new UnauthorizedAccessException();
         }
         return userService.getUserAndTheirPolls(username);
+    }
+
+    @PutMapping("/{username}/password")
+    public User updateUserPassword(@PathVariable String username, @RequestBody PasswordChangeDTO passwordChangeDTO, HttpServletRequest request) {
+        String requesterUsername = (String) request.getAttribute("username");
+        if (!username.equals(requesterUsername)) {
+            throw new UnauthorizedAccessException();
+        }
+        return userService.updateUserPassword(username, passwordChangeDTO);
+    }
+
+    @PutMapping("/{username}/email")
+    public User updateUserEmail(@PathVariable String username, @RequestBody String newEmail, HttpServletRequest request) {
+        String requesterUsername = (String) request.getAttribute("username");
+        if (!username.equals(requesterUsername)) {
+            throw new UnauthorizedAccessException();
+        }
+        return userService.updateUserEmail(username, newEmail);
     }
 }

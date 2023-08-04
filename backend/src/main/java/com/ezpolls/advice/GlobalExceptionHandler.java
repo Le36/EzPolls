@@ -50,4 +50,22 @@ public class GlobalExceptionHandler {
         ApiError apiError = new ApiError(HttpStatus.UNAUTHORIZED, ex.getMessage());
         return new ResponseEntity<>(apiError, apiError.getStatus());
     }
+
+    @ExceptionHandler(value = {InvalidUsernameException.class})
+    public ResponseEntity<Object> handleInvalidUsernameException(InvalidUsernameException ex) {
+        ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST, ex.getMessage());
+        return new ResponseEntity<>(apiError, apiError.getStatus());
+    }
+
+    @ExceptionHandler(value = {InvalidPasswordException.class})
+    public ResponseEntity<Object> handleInvalidPasswordException(InvalidPasswordException ex) {
+        ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST, ex.getMessage());
+        return new ResponseEntity<>(apiError, apiError.getStatus());
+    }
+
+    @ExceptionHandler(value = {InvalidEmailException.class})
+    public ResponseEntity<Object> handleInvalidEmailException(InvalidEmailException ex) {
+        ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST, ex.getMessage());
+        return new ResponseEntity<>(apiError, apiError.getStatus());
+    }
 }

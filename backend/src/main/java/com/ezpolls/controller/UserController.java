@@ -1,9 +1,6 @@
 package com.ezpolls.controller;
 
-import com.ezpolls.dto.PasswordChangeDTO;
-import com.ezpolls.dto.UserLoginDTO;
-import com.ezpolls.dto.UserPollsDTO;
-import com.ezpolls.dto.UserRegistrationDTO;
+import com.ezpolls.dto.*;
 import com.ezpolls.exception.InvalidCredentialsException;
 import com.ezpolls.exception.UnauthorizedAccessException;
 import com.ezpolls.model.User;
@@ -65,11 +62,11 @@ public class UserController {
     }
 
     @PutMapping("/{username}/email")
-    public User updateUserEmail(@PathVariable String username, @RequestBody String newEmail, HttpServletRequest request) {
+    public User updateUserEmail(@PathVariable String username, @RequestBody EmailUpdateDTO emailUpdateDTO, HttpServletRequest request) {
         String requesterUsername = (String) request.getAttribute("username");
         if (!username.equals(requesterUsername)) {
             throw new UnauthorizedAccessException();
         }
-        return userService.updateUserEmail(username, newEmail);
+        return userService.updateUserEmail(username, emailUpdateDTO.getEmail());
     }
 }

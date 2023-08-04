@@ -11,4 +11,5 @@
 | 01.08 | 10            | Implement rate limiting to backend, performance testing with 100 virtual users, user registration in backend                |
 | 02.08 | 11            | Login and auth system with JWT to backend, user system working in frontend, ability to delete polls by creator in backend   |
 | 03.08 | 13            | Refactor rate limiter into interceptor, QoL changes for poll creating and navigating, support to delete polls by the author |
+| 04.08 | 10            | Add profile page for users, support to change password, email                                                               |
 | total |               |                                                                                                                             |

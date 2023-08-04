@@ -4,6 +4,8 @@ import userService from '../services/userService'
 import {ErrorContext} from '../contexts/ErrorContext'
 import {AuthContext} from '../contexts/AuthContext'
 import DeleteButton from './DeleteButton'
+import EmailChangeForm from './EmailChangeForm'
+import PasswordChangeForm from './PasswordChangeForm'
 
 const UserProfile = () => {
     const {username} = useParams()
@@ -50,6 +52,8 @@ const UserProfile = () => {
                     />
                 </div>
             ))}
+            <PasswordChangeForm username={username} />
+            <EmailChangeForm username={username} />
         </div>
     )
 }

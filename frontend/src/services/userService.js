@@ -17,5 +17,15 @@ const getUserProfile = async (username, authHeader) => {
     return response.data
 }
 
-const userService = {login, register, getUserProfile}
+const changePassword = async (username, passwordChange, authHeader) => {
+    const response = await axios.put(`${BASE_URL}/${username}/password`, passwordChange, {headers: authHeader})
+    return response.data
+}
+
+const changeEmail = async (username, newEmail, authHeader) => {
+    const response = await axios.put(`${BASE_URL}/${username}/email`, newEmail, {headers: authHeader})
+    return response.data
+}
+
+const userService = {login, register, getUserProfile, changePassword, changeEmail}
 export default userService

@@ -34,6 +34,7 @@ const UserProfile = () => {
         <div>
             <h2>Your Profile</h2>
             <p>Username: {userProfile.user.username}</p>
+            <p>Email: {userProfile.user.email}</p>
             <h2>Your Polls</h2>
             {userProfile.polls.map((poll) => (
                 <div key={poll.id}>

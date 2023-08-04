@@ -12,5 +12,10 @@ const register = async (newUser) => {
     return response.data
 }
 
-const userService = {login, register}
+const getUserProfile = async (username, authHeader) => {
+    const response = await axios.get(`${BASE_URL}/${username}`, {headers: authHeader})
+    return response.data
+}
+
+const userService = {login, register, getUserProfile}
 export default userService

@@ -11,6 +11,7 @@ import LoginForm from './components/LoginForm'
 import RegisterForm from './components/RegisterForm'
 import {NotificationProvider} from './contexts/NotificationContext'
 import Notification from './components/Notification'
+import UserProfile from './components/UserProfile'
 
 const Providers = ({children}) => (
     <AuthProvider>
@@ -35,6 +36,7 @@ const App = () => {
                         <Route path="/polls/:id/results" element={<ViewPoll />} />
                         <Route path="/login" element={<LoginForm />} />
                         <Route path="/register" element={<RegisterForm />} />
+                        <Route path="/users/:username" element={<UserProfile />} />
                     </Routes>
                 </div>
             </Router>

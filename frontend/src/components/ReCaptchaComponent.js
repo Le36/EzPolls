@@ -1,5 +1,6 @@
 import React, {useRef, useImperativeHandle} from 'react'
 import ReCAPTCHA from 'react-google-recaptcha'
+import styles from './ReCaptchaComponent.module.css'
 
 const ReCaptchaComponent = React.forwardRef((props, ref) => {
     const recaptchaRef = useRef(null)
@@ -19,11 +20,15 @@ const ReCaptchaComponent = React.forwardRef((props, ref) => {
     }))
 
     return (
-        <ReCAPTCHA
-            ref={recaptchaRef}
-            sitekey="6LevqYUnAAAAAFFG9SrmT5hy-OUKEkZFZDVjDKzP"
-            onChange={handleCaptchaChange}
-        />
+        <div className={styles.container}>
+            <ReCAPTCHA
+                ref={recaptchaRef}
+                sitekey="6LevqYUnAAAAAFFG9SrmT5hy-OUKEkZFZDVjDKzP"
+                onChange={handleCaptchaChange}
+                theme="dark"
+                size="compact"
+            />
+        </div>
     )
 })
 

@@ -1,6 +1,7 @@
 import {useEffect, useState} from 'react'
 import styles from './PasswordField.module.css'
 import CustomInput from './CustomInput'
+import {FaCheck, FaCircle} from 'react-icons/fa'
 
 const PasswordField = ({setPassword, onValidationChange}) => {
     const [enteredPassword, setEnteredPassword] = useState('')
@@ -41,7 +42,7 @@ const PasswordField = ({setPassword, onValidationChange}) => {
     }
 
     return (
-        <div>
+        <div className={styles.container}>
             <CustomInput
                 type="password"
                 value={enteredPassword}
@@ -57,11 +58,21 @@ const PasswordField = ({setPassword, onValidationChange}) => {
                 required
             />
             <div className={styles.tipBox}>
-                <div className={isLengthValid ? styles.valid : styles.invalid}>Minimum 8 characters</div>
-                <div className={hasUpperCase ? styles.valid : styles.invalid}>Contains an uppercase character</div>
-                <div className={hasLowerCase ? styles.valid : styles.invalid}>Contains a lowercase character</div>
-                <div className={hasNumber ? styles.valid : styles.invalid}>Contains a number</div>
-                <div className={passwordsMatch ? styles.valid : styles.invalid}>Passwords match</div>
+                <div className={isLengthValid ? styles.valid : styles.invalid}>
+                    {isLengthValid ? <FaCheck /> : <FaCircle />} Minimum 8 characters
+                </div>
+                <div className={hasUpperCase ? styles.valid : styles.invalid}>
+                    {hasUpperCase ? <FaCheck /> : <FaCircle />} Contains an uppercase character
+                </div>
+                <div className={hasLowerCase ? styles.valid : styles.invalid}>
+                    {hasLowerCase ? <FaCheck /> : <FaCircle />} Contains a lowercase character
+                </div>
+                <div className={hasNumber ? styles.valid : styles.invalid}>
+                    {hasNumber ? <FaCheck /> : <FaCircle />} Contains a number
+                </div>
+                <div className={passwordsMatch ? styles.valid : styles.invalid}>
+                    {passwordsMatch ? <FaCheck /> : <FaCircle />} Passwords match
+                </div>
             </div>
         </div>
     )

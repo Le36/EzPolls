@@ -1,10 +1,12 @@
 .container {
+    display: flex;
+    flex-direction: column;
     position: relative;
-    display: inline-block;
+    width: auto;
+    padding-right: 25px;
 }
 
 .inputField {
-    padding-right: 40px;
     border: 1px solid #555;
     border-radius: 5px;
     padding: 10px;
@@ -12,6 +14,7 @@
     background-color: #333;
     color: #eaeaea;
     transition: border-color 0.3s;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .inputField:focus {
@@ -21,8 +24,8 @@
 
 .toggleVisibility {
     position: absolute;
-    right: 10px;
-    top: 50%;
+    right: 0;
+    top: 57%;
     transform: translateY(-50%);
     cursor: pointer;
     border: none;
@@ -31,5 +34,5 @@
 }
 
 .toggleVisibility:hover {
-    color: #ccc;
+    color: #b5b5b5;
 }

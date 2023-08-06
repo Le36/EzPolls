@@ -5,6 +5,7 @@ import {ErrorContext} from '../contexts/ErrorContext'
 import PasswordField from './PasswordField'
 import SubmitButton from './SubmitButton'
 import CustomInput from './CustomInput'
+import styles from './FormStyles.module.css'
 
 const RegisterForm = () => {
     const [username, setUsername] = useState('')
@@ -29,8 +30,10 @@ const RegisterForm = () => {
         }
     }
 
+    const isFormValid = username !== '' && email !== '' && isPasswordValid
+
     return (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className={styles.form}>
             <CustomInput
                 type="text"
                 value={username}
@@ -39,8 +42,14 @@ const RegisterForm = () => {
                 required
             />
             <PasswordField setPassword={setPassword} onValidationChange={setIsPasswordValid} />
-            <CustomInput type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" required />
-            <SubmitButton type="submit" disabled={!isPasswordValid}>
+            <CustomInput
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Email"
+                required
+            />
+            <SubmitButton type="submit" disabled={!isFormValid}>
                 Register
             </SubmitButton>
         </form>

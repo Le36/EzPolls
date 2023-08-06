@@ -4,6 +4,9 @@ import userService from '../services/userService'
 import {AuthContext} from '../contexts/AuthContext'
 import {ErrorContext} from '../contexts/ErrorContext'
 import ReCaptchaComponent from './ReCaptchaComponent'
+import CustomInput from './CustomInput'
+import SubmitButton from './SubmitButton'
+import styles from './FormStyles.module.css'
 
 const LoginForm = () => {
     const [username, setUsername] = useState('')
@@ -39,15 +42,15 @@ const LoginForm = () => {
     }
 
     return (
-        <form onSubmit={handleSubmit}>
-            <input
+        <form onSubmit={handleSubmit} className={styles.form}>
+            <CustomInput
                 type="text"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 placeholder="Username"
                 required
             />
-            <input
+            <CustomInput
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -55,7 +58,7 @@ const LoginForm = () => {
                 required
             />
             <ReCaptchaComponent ref={recaptchaRef} onCaptchaChange={setRecaptchaValue} />
-            <button type="submit">Login</button>
+            <SubmitButton type="submit">Login</SubmitButton>
         </form>
     )
 }

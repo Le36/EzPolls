@@ -1,4 +1,5 @@
 import styles from './CustomInput.module.css'
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import {useState} from 'react'
 
 const CustomInput = ({type = 'text', ...rest}) => {
@@ -13,7 +14,7 @@ const CustomInput = ({type = 'text', ...rest}) => {
             <input type={inputType} className={styles.inputField} {...rest} />
             {type === 'password' && (
                 <button type="button" className={styles.toggleVisibility} onClick={toggleVisibility}>
-                    {inputType === 'password' ? 'Show' : 'Hide'}
+                    {inputType === 'password' ? <FaEye /> : <FaEyeSlash />}
                 </button>
             )}
         </div>

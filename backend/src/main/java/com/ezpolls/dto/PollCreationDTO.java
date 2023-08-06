@@ -13,4 +13,5 @@ public class PollCreationDTO {
     private boolean multipleChoicesAllowed;
     private boolean isRevotingAllowed;
     private boolean requireRecaptcha;
+    private String recaptchaToken;
 }

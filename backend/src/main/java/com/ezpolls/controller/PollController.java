@@ -30,6 +30,13 @@ public class PollController {
     @PostMapping
     public Poll createPoll(@RequestBody PollCreationDTO pollCreationDTO, HttpServletRequest request) {
         String username = (String) request.getAttribute("username");
+
+        if (username == null) {
+            if (!captchaService.isResponseValid(pollCreationDTO.getRecaptchaToken())) {
+                throw new InvalidCaptchaException();
+            }
+        }
+
         return pollService.createPoll(pollCreationDTO, username);
     }
 

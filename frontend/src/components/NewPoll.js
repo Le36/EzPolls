@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react'
+import React, {useContext, useRef, useState} from 'react'
 import {useNavigate} from 'react-router-dom'
 import pollService from '../services/pollService'
 import QuestionInput from './QuestionInput'
@@ -8,6 +8,7 @@ import SubmitButton from './SubmitButton'
 import {ErrorContext} from '../contexts/ErrorContext'
 import {AuthContext} from '../contexts/AuthContext'
 import Checkbox from './Checkbox'
+import ReCaptchaComponent from './ReCaptchaComponent'
 
 const NewPoll = () => {
     const navigate = useNavigate()
@@ -19,7 +20,9 @@ const NewPoll = () => {
     const [requireRecaptcha, setRequireRecaptcha] = useState(false)
     const [isSubmitting, setIsSubmitting] = useState(false)
     const {setErrorMessage} = useContext(ErrorContext)
-    const {authHeader} = useContext(AuthContext)
+    const {authHeader, userToken} = useContext(AuthContext)
+    const [recaptchaValue, setRecaptchaValue] = useState(null)
+    const captchaRef = useRef(null)
 
     const handleOptionChange = (e, index) => {
         const newOptions = [...options]
@@ -74,6 +77,10 @@ const NewPoll = () => {
             requireRecaptcha,
         }
 
+        if (!userToken) {
+            poll.recaptchaToken = recaptchaValue
+        }
+
         try {
             const createdPoll = await pollService.createPoll(poll, authHeader())
             navigate(`/polls/${createdPoll.id}`, {state: {poll: createdPoll}})
@@ -117,6 +124,7 @@ const NewPoll = () => {
                 checked={requireRecaptcha}
                 onChange={(e) => setRequireRecaptcha(e.target.checked)}
             />
+            {!userToken && <ReCaptchaComponent ref={captchaRef} onCaptchaChange={setRecaptchaValue} />}
             <SubmitButton type="submit" disabled={isSubmitting}>
                 {isSubmitting ? 'Submitting...' : 'Submit'}
             </SubmitButton>

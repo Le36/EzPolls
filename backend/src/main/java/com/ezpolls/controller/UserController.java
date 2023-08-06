@@ -1,9 +1,11 @@
 package com.ezpolls.controller;
 
 import com.ezpolls.dto.*;
+import com.ezpolls.exception.InvalidCaptchaException;
 import com.ezpolls.exception.InvalidCredentialsException;
 import com.ezpolls.exception.UnauthorizedAccessException;
 import com.ezpolls.model.User;
+import com.ezpolls.security.CaptchaService;
 import com.ezpolls.security.JwtUtil;
 import com.ezpolls.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -19,11 +21,13 @@ public class UserController {
 
     private final UserService userService;
     private final JwtUtil jwtUtil;
+    private final CaptchaService captchaService;
 
     @Autowired
-    public UserController(UserService userService, JwtUtil jwtUtil) {
+    public UserController(UserService userService, JwtUtil jwtUtil, CaptchaService captchaService) {
         this.userService = userService;
         this.jwtUtil = jwtUtil;
+        this.captchaService = captchaService;
     }
 
     @PostMapping("/register")
@@ -33,6 +37,10 @@ public class UserController {
 
     @PostMapping("/login")
     public ResponseEntity<?> loginUser(@RequestBody UserLoginDTO userLoginDTO) {
+        if (!captchaService.isResponseValid(userLoginDTO.getRecaptcha())) {
+            throw new InvalidCaptchaException();
+        }
+
         Optional<User> userOptional = userService.validateUserCredentials(userLoginDTO);
         if (userOptional.isEmpty()) {
             throw new InvalidCredentialsException();

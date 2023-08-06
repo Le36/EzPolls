@@ -1,8 +1,9 @@
-import React, {useContext, useState} from 'react'
+import React, {useContext, useRef, useState} from 'react'
 import {useNavigate} from 'react-router-dom'
 import userService from '../services/userService'
 import {AuthContext} from '../contexts/AuthContext'
 import {ErrorContext} from '../contexts/ErrorContext'
+import ReCaptchaComponent from './ReCaptchaComponent'
 
 const LoginForm = () => {
     const [username, setUsername] = useState('')
@@ -10,10 +11,16 @@ const LoginForm = () => {
     const navigate = useNavigate()
     const {login} = useContext(AuthContext)
     const {setErrorMessage} = useContext(ErrorContext)
+    const [recaptchaValue, setRecaptchaValue] = useState(null)
+    const recaptchaRef = useRef(null)
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        const credentials = {username, password}
+        if (!recaptchaValue) {
+            setErrorMessage('Please verify the reCAPTCHA.')
+            return
+        }
+        const credentials = {username, password, recaptcha: recaptchaValue}
         try {
             const jwt = await userService.login(credentials)
             login(jwt)
@@ -25,6 +32,8 @@ const LoginForm = () => {
             } else {
                 setErrorMessage('Login failed. Please check your credentials and try again.')
             }
+            setRecaptchaValue(null)
+            recaptchaRef.current.reset()
         }
     }
 
@@ -44,6 +53,7 @@ const LoginForm = () => {
                 placeholder="Password"
                 required
             />
+            <ReCaptchaComponent ref={recaptchaRef} onCaptchaChange={setRecaptchaValue} />
             <button type="submit">Login</button>
         </form>
     )

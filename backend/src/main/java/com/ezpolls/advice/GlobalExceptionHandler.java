@@ -64,6 +64,11 @@ public class GlobalExceptionHandler {
         return buildErrorResponse(HttpStatus.BAD_REQUEST, ex.getMessage());
     }
 
+    @ExceptionHandler(value = {InvalidCaptchaException.class})
+    public ResponseEntity<Object> handleInvalidCaptchaException(InvalidCaptchaException ex) {
+        return buildErrorResponse(HttpStatus.BAD_REQUEST, ex.getMessage());
+    }
+
     private ResponseEntity<Object> buildErrorResponse(HttpStatus status, String errorMessage) {
         ApiError apiError = new ApiError(status, errorMessage);
         return new ResponseEntity<>(apiError, apiError.getStatus());

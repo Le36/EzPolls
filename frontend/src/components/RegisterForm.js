@@ -2,6 +2,9 @@ import React, {useContext, useState} from 'react'
 import {useNavigate} from 'react-router-dom'
 import userService from '../services/userService'
 import {ErrorContext} from '../contexts/ErrorContext'
+import PasswordField from './PasswordField'
+import SubmitButton from './SubmitButton'
+import CustomInput from './CustomInput'
 
 const RegisterForm = () => {
     const [username, setUsername] = useState('')
@@ -9,6 +12,7 @@ const RegisterForm = () => {
     const [email, setEmail] = useState('')
     const navigate = useNavigate()
     const {setErrorMessage} = useContext(ErrorContext)
+    const [isPasswordValid, setIsPasswordValid] = useState(false)
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -27,22 +31,18 @@ const RegisterForm = () => {
 
     return (
         <form onSubmit={handleSubmit}>
-            <input
+            <CustomInput
                 type="text"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 placeholder="Username"
                 required
             />
-            <input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="Password"
-                required
-            />
-            <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" required />
-            <button type="submit">Register</button>
+            <PasswordField setPassword={setPassword} onValidationChange={setIsPasswordValid} />
+            <CustomInput type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" required />
+            <SubmitButton type="submit" disabled={!isPasswordValid}>
+                Register
+            </SubmitButton>
         </form>
     )
 }

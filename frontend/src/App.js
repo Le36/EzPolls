@@ -12,6 +12,7 @@ import RegisterForm from './components/RegisterForm'
 import {NotificationProvider} from './contexts/NotificationContext'
 import Notification from './components/Notification'
 import UserProfile from './components/UserProfile'
+import styles from './App.module.css'
 
 const Providers = ({children}) => (
     <AuthProvider>
@@ -23,24 +24,26 @@ const Providers = ({children}) => (
 
 const App = () => {
     return (
-        <Providers>
-            <Router>
-                <div>
-                    <Navbar />
-                    <h1>EzPolls</h1>
-                    <ErrorNotification />
-                    <Notification />
-                    <Routes>
-                        <Route path="/" element={<NewPoll />} />
-                        <Route path="/polls/:id" element={<VotePoll />} />
-                        <Route path="/polls/:id/results" element={<ViewPoll />} />
-                        <Route path="/login" element={<LoginForm />} />
-                        <Route path="/register" element={<RegisterForm />} />
-                        <Route path="/users/:username" element={<UserProfile />} />
-                    </Routes>
-                </div>
-            </Router>
-        </Providers>
+        <div className={styles.container}>
+            <Providers>
+                <Router>
+                    <div>
+                        <Navbar />
+                        <h1>EzPolls</h1>
+                        <ErrorNotification />
+                        <Notification />
+                        <Routes>
+                            <Route path="/" element={<NewPoll />} />
+                            <Route path="/polls/:id" element={<VotePoll />} />
+                            <Route path="/polls/:id/results" element={<ViewPoll />} />
+                            <Route path="/login" element={<LoginForm />} />
+                            <Route path="/register" element={<RegisterForm />} />
+                            <Route path="/users/:username" element={<UserProfile />} />
+                        </Routes>
+                    </div>
+                </Router>
+            </Providers>
+        </div>
     )
 }
 

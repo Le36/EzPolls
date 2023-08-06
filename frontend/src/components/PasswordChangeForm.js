@@ -3,12 +3,16 @@ import userService from '../services/userService'
 import {ErrorContext} from '../contexts/ErrorContext'
 import {NotificationContext} from '../contexts/NotificationContext'
 import {AuthContext} from '../contexts/AuthContext'
+import SubmitButton from './SubmitButton'
+import PasswordField from './PasswordField'
+import CustomInput from './CustomInput'
 
 const PasswordChangeForm = ({username}) => {
     const [passwordChange, setPasswordChange] = useState({oldPassword: '', newPassword: ''})
     const {setErrorMessage} = useContext(ErrorContext)
     const {setNotificationMessage} = useContext(NotificationContext)
     const {authHeader} = useContext(AuthContext)
+    const [isPasswordValid, setIsPasswordValid] = useState(false)
 
     const handlePasswordChange = async (e) => {
         e.preventDefault()
@@ -26,19 +30,19 @@ const PasswordChangeForm = ({username}) => {
 
     return (
         <form onSubmit={handlePasswordChange}>
-            <input
+            <CustomInput
                 type="password"
                 placeholder="Old password"
                 value={passwordChange.oldPassword}
                 onChange={(e) => setPasswordChange((prev) => ({...prev, oldPassword: e.target.value}))}
             />
-            <input
-                type="password"
-                placeholder="New password"
-                value={passwordChange.newPassword}
-                onChange={(e) => setPasswordChange((prev) => ({...prev, newPassword: e.target.value}))}
+            <PasswordField
+                setPassword={(newPassword) => setPasswordChange((prev) => ({...prev, newPassword}))}
+                onValidationChange={setIsPasswordValid}
             />
-            <button type="submit">Change Password</button>
+            <SubmitButton type="submit" disabled={!isPasswordValid}>
+                Change Password
+            </SubmitButton>
         </form>
     )
 }

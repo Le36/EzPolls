@@ -1,0 +1,35 @@
+.container {
+    position: relative;
+    display: inline-block;
+}
+
+.inputField {
+    padding-right: 40px;
+    border: 1px solid #555;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 1em;
+    background-color: #333;
+    color: #eaeaea;
+    transition: border-color 0.3s;
+}
+
+.inputField:focus {
+    border-color: #777;
+    outline: none;
+}
+
+.toggleVisibility {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    border: none;
+    background: transparent;
+    color: #eaeaea;
+}
+
+.toggleVisibility:hover {
+    color: #ccc;
+}

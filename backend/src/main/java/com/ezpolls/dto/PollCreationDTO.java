@@ -12,4 +12,5 @@ public class PollCreationDTO {
     private Poll.VotingRestriction votingRestriction;
     private boolean multipleChoicesAllowed;
     private boolean isRevotingAllowed;
+    private boolean requireRecaptcha;
 }

@@ -3,7 +3,9 @@ package com.ezpolls.controller;
 import com.ezpolls.dto.PollCreationDTO;
 import com.ezpolls.dto.PollResponseDTO;
 import com.ezpolls.dto.VoteDTO;
+import com.ezpolls.exception.InvalidCaptchaException;
 import com.ezpolls.model.Poll;
+import com.ezpolls.security.CaptchaService;
 import com.ezpolls.service.PollService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,10 +19,12 @@ import reactor.core.publisher.Flux;
 public class PollController {
 
     private final PollService pollService;
+    private final CaptchaService captchaService;
 
     @Autowired
-    public PollController(PollService pollService) {
+    public PollController(PollService pollService, CaptchaService captchaService) {
         this.pollService = pollService;
+        this.captchaService = captchaService;
     }
 
     @PostMapping
@@ -38,9 +42,17 @@ public class PollController {
 
     @PostMapping("/{id}/vote")
     public void castVote(HttpServletRequest request, @PathVariable String id, @RequestBody VoteDTO vote) {
+        Poll poll = pollService.getPoll(id);
+
+        if (poll.isRequireRecaptcha()) {
+            if (!captchaService.isResponseValid(vote.getRecaptchaToken())) {
+                throw new InvalidCaptchaException();
+            }
+        }
+
         String voterIp = (String) request.getAttribute("ip");
         String username = (String) request.getAttribute("username");
-        pollService.castVote(id, vote.getOptionTexts(), voterIp.replace(".", "-"), username);
+        pollService.castVote(poll, vote.getOptionTexts(), voterIp.replace(".", "-"), username);
     }
 
     @GetMapping(value = "/{id}/votes", produces = MediaType.TEXT_EVENT_STREAM_VALUE)

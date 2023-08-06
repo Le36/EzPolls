@@ -19,6 +19,7 @@ public class Poll {
     private VotingRestriction votingRestriction;
     private boolean multipleChoicesAllowed;
     private boolean revotingAllowed;
+    private boolean requireRecaptcha;
     private String author;
 
     @Getter

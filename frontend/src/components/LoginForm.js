@@ -18,6 +18,7 @@ const LoginForm = () => {
         e.preventDefault()
         if (!recaptchaValue) {
             setErrorMessage('Please verify the reCAPTCHA.')
+            recaptchaRef.current.reset()
             return
         }
         const credentials = {username, password, recaptcha: recaptchaValue}

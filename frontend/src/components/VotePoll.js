@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react'
+import React, {useContext, useEffect, useRef, useState} from 'react'
 import pollService from '../services/pollService'
 import {useNavigate} from 'react-router-dom'
 import PollQuestion from './PollQuestion'
@@ -13,6 +13,7 @@ import Author from './Author'
 import DeleteButton from './DeleteButton'
 import {NotificationContext} from '../contexts/NotificationContext'
 import NavigateButton from './NavigateButton'
+import ReCaptchaComponent from './ReCaptchaComponent'
 
 const VotePoll = () => {
     const [selectedOptions, setSelectedOptions] = useState([])
@@ -22,6 +23,8 @@ const VotePoll = () => {
     const {poll, userVotes} = usePoll()
     const {authHeader} = useContext(AuthContext)
     const {setNotificationMessage} = useContext(NotificationContext)
+    const [recaptchaValue, setRecaptchaValue] = useState(null)
+    const captchaRef = useRef(null)
 
     useEffect(() => {
         if (userVotes) {
@@ -52,10 +55,17 @@ const VotePoll = () => {
             return
         }
 
+        if (poll.requireRecaptcha && !recaptchaValue) {
+            setErrorMessage('Please verify the reCAPTCHA.')
+            captchaRef.current.reset()
+            return
+        }
+
         setIsSubmitting(true)
 
         const optionsObject = {
             optionTexts: selectedOptions,
+            recaptchaToken: recaptchaValue,
         }
 
         try {
@@ -67,12 +77,15 @@ const VotePoll = () => {
             } else {
                 setErrorMessage('An unexpected error occurred. Please try again.')
             }
+            captchaRef.current.reset()
         } finally {
             setIsSubmitting(false)
         }
     }
 
     if (!poll) return <Loading />
+
+    const shouldShowCaptcha = poll.requireRecaptcha && (!userVotes || poll.revotingAllowed)
 
     return (
         <form onSubmit={handleSubmit}>
@@ -85,6 +98,7 @@ const VotePoll = () => {
                 handleOptionChange={handleOptionChange}
                 multipleChoicesAllowed={poll.multipleChoicesAllowed}
             />
+            {shouldShowCaptcha && <ReCaptchaComponent ref={captchaRef} onCaptchaChange={setRecaptchaValue} />}
             <SubmitButton type="submit" disabled={isSubmitting || (userVotes && !poll.revotingAllowed)}>
                 {isSubmitting ? 'Voting...' : 'Vote'}
             </SubmitButton>

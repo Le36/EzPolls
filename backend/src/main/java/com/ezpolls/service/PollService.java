@@ -46,6 +46,7 @@ public class PollService {
         poll.setVotingRestriction(pollCreationDTO.getVotingRestriction());
         poll.setMultipleChoicesAllowed(pollCreationDTO.isMultipleChoicesAllowed());
         poll.setRevotingAllowed(pollCreationDTO.isRevotingAllowed());
+        poll.setRequireRecaptcha(pollCreationDTO.isRequireRecaptcha());
         poll.setAuthor(username);
 
         List<Poll.Option> options = pollCreationDTO.getOptions().stream()
@@ -96,13 +97,12 @@ public class PollService {
         return pollRepository.findById(id).orElseThrow(PollNotFoundException::new);
     }
 
-    public void castVote(String pollId, List<String> optionTexts, String voterIp, String username) {
-        Poll poll = getPoll(pollId);
+    public void castVote(Poll poll, List<String> optionTexts, String voterIp, String username) {
 
-        VoteRecord voteRecord = voteRecordRepository.findByPollId(pollId);
+        VoteRecord voteRecord = voteRecordRepository.findByPollId(poll.getId());
         if (voteRecord == null) {
             voteRecord = new VoteRecord();
-            voteRecord.setPollId(pollId);
+            voteRecord.setPollId(poll.getId());
         }
 
         List<String> previousVotes;
@@ -142,7 +142,7 @@ public class PollService {
 
         pollRepository.save(poll);
         voteRecordRepository.save(voteRecord);
-        applicationEventMulticaster.multicastEvent(new VoteCastEvent(this, pollId));
+        applicationEventMulticaster.multicastEvent(new VoteCastEvent(this, poll.getId()));
     }
 
     private void incrementVoteCount(Poll poll, String optionText) {

@@ -5,10 +5,9 @@ import QuestionInput from './QuestionInput'
 import OptionInputs from './OptionsInput'
 import RestrictionSelect from './RestictionSelect'
 import SubmitButton from './SubmitButton'
-import MultipleChoicesCheckbox from './MultipleChoicesCheckbox'
-import RevotingAllowedCheckbox from './RevotingAllowedCheckbox'
 import {ErrorContext} from '../contexts/ErrorContext'
 import {AuthContext} from '../contexts/AuthContext'
+import Checkbox from './Checkbox'
 
 const NewPoll = () => {
     const navigate = useNavigate()
@@ -17,6 +16,7 @@ const NewPoll = () => {
     const [restriction, setRestriction] = useState('ONE_VOTE_PER_IP')
     const [multipleChoicesAllowed, setMultipleChoicesAllowed] = useState(false)
     const [revotingAllowed, setRevotingAllowed] = useState(false)
+    const [requireRecaptcha, setRequireRecaptcha] = useState(false)
     const [isSubmitting, setIsSubmitting] = useState(false)
     const {setErrorMessage} = useContext(ErrorContext)
     const {authHeader} = useContext(AuthContext)
@@ -71,6 +71,7 @@ const NewPoll = () => {
             votingRestriction: restriction,
             multipleChoicesAllowed,
             revotingAllowed,
+            requireRecaptcha,
         }
 
         try {
@@ -100,14 +101,21 @@ const NewPoll = () => {
             />
             <RestrictionSelect value={restriction} onChange={(e) => setRestriction(e.target.value)} />
             {restriction !== 'NO_RESTRICTION' && (
-                <RevotingAllowedCheckbox
+                <Checkbox
+                    label="Allow Revoting:"
                     checked={revotingAllowed}
                     onChange={(e) => setRevotingAllowed(e.target.checked)}
                 />
             )}
-            <MultipleChoicesCheckbox
+            <Checkbox
+                label="Allow multiple choices:"
                 checked={multipleChoicesAllowed}
                 onChange={(e) => setMultipleChoicesAllowed(e.target.checked)}
+            />
+            <Checkbox
+                label="Require reCAPTCHA on votes"
+                checked={requireRecaptcha}
+                onChange={(e) => setRequireRecaptcha(e.target.checked)}
             />
             <SubmitButton type="submit" disabled={isSubmitting}>
                 {isSubmitting ? 'Submitting...' : 'Submit'}

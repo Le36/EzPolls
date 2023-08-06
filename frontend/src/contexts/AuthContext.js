@@ -11,6 +11,11 @@ export const AuthProvider = ({children}) => {
         if (userToken) {
             const decoded = jwt_decode(userToken)
             setUsername(decoded.username)
+
+            const currentTime = Date.now() / 1000
+            if (decoded.exp < currentTime) {
+                logout()
+            }
         }
     }, [userToken])
 

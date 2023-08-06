@@ -7,4 +7,5 @@ import java.util.List;
 @Data
 public class VoteDTO {
     private List<String> optionTexts;
+    private String recaptchaToken;
 }

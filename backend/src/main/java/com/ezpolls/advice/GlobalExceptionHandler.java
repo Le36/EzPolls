@@ -11,61 +11,61 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = {VoteNotPermittedException.class})
     public ResponseEntity<Object> handleVoteNotPermittedException(VoteNotPermittedException ex) {
-        ApiError apiError = new ApiError(HttpStatus.FORBIDDEN, ex.getMessage());
-        return new ResponseEntity<>(apiError, apiError.getStatus());
+        return buildErrorResponse(HttpStatus.FORBIDDEN, ex.getMessage());
     }
 
     @ExceptionHandler(value = {PollNotFoundException.class})
     public ResponseEntity<Object> handlePollNotFoundException(PollNotFoundException ex) {
-        ApiError apiError = new ApiError(HttpStatus.NOT_FOUND, ex.getMessage());
-        return new ResponseEntity<>(apiError, apiError.getStatus());
+        return buildErrorResponse(HttpStatus.NOT_FOUND, ex.getMessage());
     }
 
     @ExceptionHandler(value = {RateLimitException.class})
     public ResponseEntity<Object> handleRateLimitException(RateLimitException ex) {
-        ApiError apiError = new ApiError(HttpStatus.TOO_MANY_REQUESTS, ex.getMessage());
-        return new ResponseEntity<>(apiError, apiError.getStatus());
+        return buildErrorResponse(HttpStatus.TOO_MANY_REQUESTS, ex.getMessage());
     }
 
     @ExceptionHandler(value = {UserAlreadyExistsException.class})
     public ResponseEntity<Object> handleUserAlreadyExistsException(UserAlreadyExistsException ex) {
-        ApiError apiError = new ApiError(HttpStatus.CONFLICT, ex.getMessage());
-        return new ResponseEntity<>(apiError, apiError.getStatus());
+        return buildErrorResponse(HttpStatus.CONFLICT, ex.getMessage());
     }
 
     @ExceptionHandler(value = {InvalidCredentialsException.class})
     public ResponseEntity<Object> handleInvalidCredentialsException(InvalidCredentialsException ex) {
-        ApiError apiError = new ApiError(HttpStatus.UNAUTHORIZED, ex.getMessage());
-        return new ResponseEntity<>(apiError, apiError.getStatus());
+        return buildErrorResponse(HttpStatus.UNAUTHORIZED, ex.getMessage());
     }
 
     @ExceptionHandler(value = {UserNotLoggedInException.class})
     public ResponseEntity<Object> handleUserNotLoggedInException(UserNotLoggedInException ex) {
-        ApiError apiError = new ApiError(HttpStatus.UNAUTHORIZED, ex.getMessage());
-        return new ResponseEntity<>(apiError, apiError.getStatus());
+        return buildErrorResponse(HttpStatus.UNAUTHORIZED, ex.getMessage());
     }
 
     @ExceptionHandler(value = {UnauthorizedAccessException.class})
     public ResponseEntity<Object> handleUnauthorizedAccessException(UnauthorizedAccessException ex) {
-        ApiError apiError = new ApiError(HttpStatus.UNAUTHORIZED, ex.getMessage());
-        return new ResponseEntity<>(apiError, apiError.getStatus());
+        return buildErrorResponse(HttpStatus.UNAUTHORIZED, ex.getMessage());
     }
 
     @ExceptionHandler(value = {InvalidUsernameException.class})
     public ResponseEntity<Object> handleInvalidUsernameException(InvalidUsernameException ex) {
-        ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST, ex.getMessage());
-        return new ResponseEntity<>(apiError, apiError.getStatus());
+        return buildErrorResponse(HttpStatus.BAD_REQUEST, ex.getMessage());
     }
 
     @ExceptionHandler(value = {InvalidPasswordException.class})
     public ResponseEntity<Object> handleInvalidPasswordException(InvalidPasswordException ex) {
-        ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST, ex.getMessage());
-        return new ResponseEntity<>(apiError, apiError.getStatus());
+        return buildErrorResponse(HttpStatus.BAD_REQUEST, ex.getMessage());
     }
 
     @ExceptionHandler(value = {InvalidEmailException.class})
     public ResponseEntity<Object> handleInvalidEmailException(InvalidEmailException ex) {
-        ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST, ex.getMessage());
+        return buildErrorResponse(HttpStatus.BAD_REQUEST, ex.getMessage());
+    }
+
+    @ExceptionHandler(value = {InvalidPollDataException.class})
+    public ResponseEntity<Object> handleInvalidPollData(InvalidPollDataException ex) {
+        return buildErrorResponse(HttpStatus.BAD_REQUEST, ex.getMessage());
+    }
+
+    private ResponseEntity<Object> buildErrorResponse(HttpStatus status, String errorMessage) {
+        ApiError apiError = new ApiError(status, errorMessage);
         return new ResponseEntity<>(apiError, apiError.getStatus());
     }
 }

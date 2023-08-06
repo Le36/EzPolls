@@ -3,10 +3,7 @@ package com.ezpolls.service;
 import com.ezpolls.dto.PollCreationDTO;
 import com.ezpolls.dto.PollResponseDTO;
 import com.ezpolls.event.VoteCastEvent;
-import com.ezpolls.exception.PollNotFoundException;
-import com.ezpolls.exception.UnauthorizedAccessException;
-import com.ezpolls.exception.UserNotLoggedInException;
-import com.ezpolls.exception.VoteNotPermittedException;
+import com.ezpolls.exception.*;
 import com.ezpolls.model.Poll;
 import com.ezpolls.model.VoteRecord;
 import com.ezpolls.repository.PollRepository;
@@ -21,7 +18,9 @@ import reactor.core.scheduler.Schedulers;
 
 import java.time.Duration;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -41,6 +40,7 @@ public class PollService {
     }
 
     public Poll createPoll(PollCreationDTO pollCreationDTO, String username) {
+        validatePollCreation(pollCreationDTO);
         Poll poll = new Poll();
         poll.setQuestion(pollCreationDTO.getQuestion());
         poll.setVotingRestriction(pollCreationDTO.getVotingRestriction());
@@ -192,5 +192,38 @@ public class PollService {
 
     public List<Poll> getPollsByUser(String username) {
         return pollRepository.findAllByAuthor(username);
+    }
+
+    private void validatePollCreation(PollCreationDTO pollCreationDTO) {
+        if (pollCreationDTO.getQuestion() == null || pollCreationDTO.getQuestion().trim().isEmpty()) {
+            throw new InvalidPollDataException("Question cannot be empty.");
+        }
+
+        if (pollCreationDTO.getQuestion().length() > 255) {
+            throw new InvalidPollDataException("Question can have a maximum of 255 characters.");
+        }
+
+        if (pollCreationDTO.getOptions() == null || pollCreationDTO.getOptions().size() < 2) {
+            throw new InvalidPollDataException("At least two options are required.");
+        }
+
+        if (pollCreationDTO.getOptions().size() > 50) {
+            throw new InvalidPollDataException("A maximum of 50 options are allowed.");
+        }
+
+        for (String option : pollCreationDTO.getOptions()) {
+            if (option.length() > 255) {
+                throw new InvalidPollDataException("Options can have a maximum of 255 characters.");
+            }
+        }
+
+        Set<String> uniqueOptions = new HashSet<>(pollCreationDTO.getOptions());
+        if (uniqueOptions.size() != pollCreationDTO.getOptions().size()) {
+            throw new InvalidPollDataException("Options must be unique.");
+        }
+
+        if (pollCreationDTO.getVotingRestriction() == null) {
+            pollCreationDTO.setVotingRestriction(Poll.VotingRestriction.ONE_VOTE_PER_IP);
+        }
     }
 }

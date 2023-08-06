@@ -4,7 +4,7 @@ import pollService from '../services/pollService'
 import {ErrorContext} from '../contexts/ErrorContext'
 import {AuthContext} from '../contexts/AuthContext'
 
-const usePoll = () => {
+const usePoll = (shouldSubscribeToVotes = false) => {
     const {id} = useParams()
     const [poll, setPoll] = useState(null)
     const [userVotes, setUserVotes] = useState(null)
@@ -32,12 +32,14 @@ const usePoll = () => {
     }, [authHeader, id, poll, setErrorMessage])
 
     useEffect(() => {
-        const eventSource = pollService.subscribeToVotes(id, setPoll)
+        if (shouldSubscribeToVotes) {
+            const eventSource = pollService.subscribeToVotes(id, setPoll)
 
-        return () => {
-            eventSource.close()
+            return () => {
+                eventSource.close()
+            }
         }
-    }, [id])
+    }, [id, shouldSubscribeToVotes])
 
     return {poll, userVotes}
 }

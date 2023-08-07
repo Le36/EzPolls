@@ -24,12 +24,12 @@ const Providers = ({children}) => (
 
 const App = () => {
     return (
-        <div className={styles.container}>
-            <Providers>
-                <Router>
-                    <div>
-                        <Navbar />
-                        <h1>EzPolls</h1>
+        <Providers>
+            <Router>
+                <div className={styles.gridContainer}>
+                    <Navbar />
+                    <h1 className={styles.title}>EzPolls</h1>
+                    <div className={styles.container}>
                         <ErrorNotification />
                         <Notification />
                         <Routes>
@@ -41,9 +41,9 @@ const App = () => {
                             <Route path="/users/:username" element={<UserProfile />} />
                         </Routes>
                     </div>
-                </Router>
-            </Providers>
-        </div>
+                </div>
+            </Router>
+        </Providers>
     )
 }
 

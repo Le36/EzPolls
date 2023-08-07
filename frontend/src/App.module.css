@@ -21,11 +21,20 @@ time, mark, audio, video {
 body {
     background-color: #181818;
     color: #eaeaea;
-    font-family: 'Arial', sans-serif;
-    height: 100vh;
-    display: flex;
+}
+
+.gridContainer {
+    display: grid;
+    grid-template-rows: auto auto 1fr;
+    background-color: #181818;
     align-items: center;
     justify-content: center;
+    justify-items: center;
+}
+
+.title {
+    padding: 20px 5%;
+    font-size: 5vh;
 }
 
 .container {

@@ -41,3 +41,20 @@
 .toggleVisibility:hover {
     color: #b5b5b5;
 }
+
+.removeButton {
+    font-size: 20px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    position: absolute;
+    top: 57%;
+    right: -3px;
+    transform: translateY(-50%);
+    transition: color 0.3s ease;
+    color: #777;
+}
+
+.removeButton:hover {
+    color: #b5b5b5;
+}

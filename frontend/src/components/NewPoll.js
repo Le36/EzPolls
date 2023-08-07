@@ -9,6 +9,7 @@ import {ErrorContext} from '../contexts/ErrorContext'
 import {AuthContext} from '../contexts/AuthContext'
 import Checkbox from './Checkbox'
 import ReCaptchaComponent from './ReCaptchaComponent'
+import styles from './FormStyles.module.css'
 
 const NewPoll = () => {
     const navigate = useNavigate()
@@ -96,7 +97,7 @@ const NewPoll = () => {
     }
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className={styles.form}>
             <h2>Create a Poll</h2>
             Complete the below fields to create your poll.
             <QuestionInput value={question} onChange={(e) => setQuestion(e.target.value)} />

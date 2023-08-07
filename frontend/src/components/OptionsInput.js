@@ -1,20 +1,19 @@
+import CustomInput from './CustomInput'
+
 const OptionInputs = ({options, handleOptionChange, addOption, removeOption}) => {
     return (
         <div>
             <h3>Answer Options</h3>
             {options.map((option, index) => (
                 <div key={index}>
-                    <input
+                    <CustomInput
                         type="text"
                         value={option}
                         onChange={(e) => handleOptionChange(e, index)}
                         placeholder={`Option ${index + 1}`}
+                        onRemove={() => removeOption(index)}
+                        showRemove={options.length > 2}
                     />
-                    {options.length > 2 && (
-                        <button type="button" onClick={() => removeOption(index)}>
-                            X
-                        </button>
-                    )}
                 </div>
             ))}
             <button type="button" onClick={addOption}>

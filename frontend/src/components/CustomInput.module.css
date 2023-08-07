@@ -3,6 +3,7 @@
     flex-direction: column;
     position: relative;
     width: auto;
+    margin-right: -25px;
     padding-right: 25px;
 }
 
@@ -26,14 +27,15 @@
 
 .toggleVisibility {
     position: absolute;
-    right: 0;
+    right: -3px;
     top: 57%;
     transform: translateY(-50%);
     cursor: pointer;
     border: none;
     background: transparent;
-    color: #eaeaea;
+    color: #777;
     transition: color 0.3s ease;
+    font-size: 15px;
 }
 
 .toggleVisibility:hover {

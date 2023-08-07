@@ -30,7 +30,6 @@ const LoginForm = () => {
             login(jwt)
             navigate('/')
         } catch (error) {
-            console.log(error)
             if (error.response && error.response.data.message) {
                 setErrorMessage(error.response.data.message)
             } else {

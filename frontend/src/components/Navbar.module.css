@@ -58,6 +58,16 @@
         font-size: 24px;
         display: block;
     }
+
+    .menu {
+        display: none;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .menu a {
+        margin: 0 10px;
+    }
 }
 
 .burgerButton:focus {

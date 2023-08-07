@@ -1,6 +1,6 @@
 import styles from './OptionsInput.module.css'
-import CustomInputIcon from './CustomInputIcon'
-import ToolTip from './ToolTip'
+import CustomInputIcon from '../formElements/CustomInputIcon'
+import ToolTip from '../common/ToolTip'
 import React from 'react'
 
 const OptionsInputs = ({options, handleOptionChange, addOption, removeOption}) => {

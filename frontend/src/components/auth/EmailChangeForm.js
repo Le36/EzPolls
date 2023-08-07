@@ -1,8 +1,8 @@
 import {useContext, useState} from 'react'
-import userService from '../services/userService'
-import {ErrorContext} from '../contexts/ErrorContext'
-import {NotificationContext} from '../contexts/NotificationContext'
-import {AuthContext} from '../contexts/AuthContext'
+import userService from '../../services/userService'
+import {ErrorContext} from '../../contexts/ErrorContext'
+import {NotificationContext} from '../../contexts/NotificationContext'
+import {AuthContext} from '../../contexts/AuthContext'
 
 const EmailChangeForm = ({username}) => {
     const [newEmail, setNewEmail] = useState('')
@@ -14,7 +14,7 @@ const EmailChangeForm = ({username}) => {
         e.preventDefault()
         try {
             const emailObject = {email: newEmail}
-            const user = await userService.changeEmail(username, emailObject, authHeader())
+            await userService.changeEmail(username, emailObject, authHeader())
             setNotificationMessage('Email changed successfully.')
         } catch (error) {
             if (error.response && error.response.data.message) {

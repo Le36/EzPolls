@@ -1,8 +1,8 @@
 import {useContext, useState} from 'react'
-import {AuthContext} from '../contexts/AuthContext'
-import pollService from '../services/pollService'
-import {ErrorContext} from '../contexts/ErrorContext'
-import {NotificationContext} from '../contexts/NotificationContext'
+import {AuthContext} from '../../contexts/AuthContext'
+import pollService from '../../services/pollService'
+import {ErrorContext} from '../../contexts/ErrorContext'
+import {NotificationContext} from '../../contexts/NotificationContext'
 
 const DeleteButton = ({poll, onSuccess}) => {
     const {username, authHeader} = useContext(AuthContext)

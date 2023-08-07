@@ -13,4 +13,5 @@
 | 03.08 | 13            | Refactor rate limiter into interceptor, QoL changes for poll creating and navigating, support to delete polls by the author      |
 | 04.08 | 10            | Add profile page for users, support to change password, email                                                                    |
 | 06.08 | 11            | Add reCAPTCHA to important services, possibility to require reCAPTCHA when voting, add initial styling, poll creation validation |
+| 07.08 | 10            | Full styling for poll creation, nav bar, add tooltip system, frontend component restructure                                      |
 | total |               |                                                                                                                                  |

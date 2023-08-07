@@ -1,11 +1,11 @@
 import React, {useEffect, useState, useContext} from 'react'
 import {Link, useParams} from 'react-router-dom'
-import userService from '../services/userService'
-import {ErrorContext} from '../contexts/ErrorContext'
-import {AuthContext} from '../contexts/AuthContext'
-import DeleteButton from './DeleteButton'
-import EmailChangeForm from './EmailChangeForm'
-import PasswordChangeForm from './PasswordChangeForm'
+import userService from '../../services/userService'
+import {ErrorContext} from '../../contexts/ErrorContext'
+import {AuthContext} from '../../contexts/AuthContext'
+import DeleteButton from '../common/DeleteButton'
+import EmailChangeForm from '../auth/EmailChangeForm'
+import PasswordChangeForm from '../auth/PasswordChangeForm'
 
 const UserProfile = () => {
     const {username} = useParams()

@@ -1,13 +1,13 @@
 import React, {useContext, useRef, useState} from 'react'
 import {useNavigate} from 'react-router-dom'
-import userService from '../services/userService'
-import {AuthContext} from '../contexts/AuthContext'
-import {ErrorContext} from '../contexts/ErrorContext'
-import ReCaptchaComponent from './ReCaptchaComponent'
-import SubmitButton from './SubmitButton'
-import styles from './FormStyles.module.css'
-import CustomInput from './CustomInput'
-import CustomInputIcon from './CustomInputIcon'
+import userService from '../../services/userService'
+import {AuthContext} from '../../contexts/AuthContext'
+import {ErrorContext} from '../../contexts/ErrorContext'
+import ReCaptchaComponent from '../formElements/ReCaptchaComponent'
+import SubmitButton from '../formElements/SubmitButton'
+import styles from '../formElements/FormStyles.module.css'
+import CustomInput from '../formElements/CustomInput'
+import CustomInputIcon from '../formElements/CustomInputIcon'
 
 const LoginForm = () => {
     const [username, setUsername] = useState('')

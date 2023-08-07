@@ -22,8 +22,13 @@
     border: 1px solid #555;
     background-color: #333;
     color: #eaeaea;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    transition: box-shadow 0.3s ease-in-out;
 }
 
 .select:hover, .select:focus {
     border-color: #777;
+    outline: none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    transition: box-shadow 0.3s ease-in-out;
 }

@@ -1,5 +1,5 @@
 import styles from './RestrictionSelect.module.css'
-import ToolTip from './ToolTip'
+import ToolTip from '../common/ToolTip'
 import React from 'react'
 
 const RestrictionSelect = ({value, onChange}) => {

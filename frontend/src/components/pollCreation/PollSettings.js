@@ -1,7 +1,7 @@
 import React from 'react'
-import CheckboxSlider from './CheckboxSlider'
+import CheckboxSlider from '../formElements/CheckboxSlider'
 import styles from './PollSettings.module.css'
-import ToolTip from './ToolTip'
+import ToolTip from '../common/ToolTip'
 
 const PollSettings = ({
     restriction,

@@ -1,11 +1,11 @@
 import React, {useContext, useState} from 'react'
 import {useNavigate} from 'react-router-dom'
-import userService from '../services/userService'
-import {ErrorContext} from '../contexts/ErrorContext'
+import userService from '../../services/userService'
+import {ErrorContext} from '../../contexts/ErrorContext'
 import PasswordField from './PasswordField'
-import SubmitButton from './SubmitButton'
-import styles from './FormStyles.module.css'
-import CustomInput from './CustomInput'
+import SubmitButton from '../formElements/SubmitButton'
+import styles from '../formElements/FormStyles.module.css'
+import CustomInput from '../formElements/CustomInput'
 
 const RegisterForm = () => {
     const [username, setUsername] = useState('')

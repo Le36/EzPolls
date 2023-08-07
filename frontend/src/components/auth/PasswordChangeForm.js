@@ -1,11 +1,11 @@
 import {useContext, useState} from 'react'
-import userService from '../services/userService'
-import {ErrorContext} from '../contexts/ErrorContext'
-import {NotificationContext} from '../contexts/NotificationContext'
-import {AuthContext} from '../contexts/AuthContext'
-import SubmitButton from './SubmitButton'
+import userService from '../../services/userService'
+import {ErrorContext} from '../../contexts/ErrorContext'
+import {NotificationContext} from '../../contexts/NotificationContext'
+import {AuthContext} from '../../contexts/AuthContext'
+import SubmitButton from '../formElements/SubmitButton'
 import PasswordField from './PasswordField'
-import CustomInputIcon from './CustomInputIcon'
+import CustomInputIcon from '../formElements/CustomInputIcon'
 
 const PasswordChangeForm = ({username}) => {
     const [passwordChange, setPasswordChange] = useState({oldPassword: '', newPassword: ''})

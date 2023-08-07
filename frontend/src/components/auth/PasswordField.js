@@ -1,6 +1,6 @@
 import {useEffect, useState} from 'react'
 import styles from './PasswordField.module.css'
-import CustomInputIcon from './CustomInputIcon'
+import CustomInputIcon from '../formElements/CustomInputIcon'
 import {FaCheck, FaCircle} from 'react-icons/fa'
 
 const PasswordField = ({setPassword, onValidationChange}) => {

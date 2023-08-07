@@ -1,6 +1,6 @@
 import styles from './QuestionInput.module.css'
-import CustomInput from './CustomInput'
-import ToolTip from './ToolTip'
+import CustomInput from '../formElements/CustomInput'
+import ToolTip from '../common/ToolTip'
 import React from 'react'
 
 const QuestionInput = ({value, onChange}) => {

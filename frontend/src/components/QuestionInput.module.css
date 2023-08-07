@@ -1,0 +1,10 @@
+.container {
+    margin-top: 5px;
+}
+
+.questionTitle {
+    margin-bottom: 10px;
+    font-size: 1em;
+    font-weight: 500;
+    color: #eaeaea;
+}

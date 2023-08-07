@@ -1,11 +1,12 @@
+import styles from './OptionsInput.module.css'
 import CustomInput from './CustomInput'
 
-const OptionInputs = ({options, handleOptionChange, addOption, removeOption}) => {
+const OptionsInputs = ({options, handleOptionChange, addOption, removeOption}) => {
     return (
-        <div>
-            <h3>Answer Options</h3>
+        <div className={styles.container}>
+            <h3 className={styles.optionTitle}>Answer Options</h3>
             {options.map((option, index) => (
-                <div key={index}>
+                <div key={index} className={styles.optionInputWrapper}>
                     <CustomInput
                         type="text"
                         value={option}
@@ -16,11 +17,11 @@ const OptionInputs = ({options, handleOptionChange, addOption, removeOption}) =>
                     />
                 </div>
             ))}
-            <button type="button" onClick={addOption}>
+            <button type="button" onClick={addOption} className={styles.addButton}>
                 Add Option
             </button>
         </div>
     )
 }
 
-export default OptionInputs
+export default OptionsInputs

@@ -2,7 +2,7 @@ import React, {useContext, useRef, useState} from 'react'
 import {useNavigate} from 'react-router-dom'
 import pollService from '../services/pollService'
 import QuestionInput from './QuestionInput'
-import OptionInputs from './OptionsInput'
+import OptionsInputs from './OptionsInput'
 import RestrictionSelect from './RestictionSelect'
 import SubmitButton from './SubmitButton'
 import {ErrorContext} from '../contexts/ErrorContext'
@@ -101,7 +101,7 @@ const NewPoll = () => {
             <h2>Create a Poll</h2>
             Complete the below fields to create your poll.
             <QuestionInput value={question} onChange={(e) => setQuestion(e.target.value)} />
-            <OptionInputs
+            <OptionsInputs
                 options={options}
                 handleOptionChange={handleOptionChange}
                 addOption={addOption}

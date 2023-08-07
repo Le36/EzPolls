@@ -7,7 +7,7 @@ import RestrictionSelect from './RestictionSelect'
 import SubmitButton from './SubmitButton'
 import {ErrorContext} from '../contexts/ErrorContext'
 import {AuthContext} from '../contexts/AuthContext'
-import Checkbox from './Checkbox'
+import CheckboxSlider from './CheckboxSlider'
 import ReCaptchaComponent from './ReCaptchaComponent'
 import styles from './FormStyles.module.css'
 
@@ -109,22 +109,14 @@ const NewPoll = () => {
             />
             <RestrictionSelect value={restriction} onChange={(e) => setRestriction(e.target.value)} />
             {restriction !== 'NO_RESTRICTION' && (
-                <Checkbox
-                    label="Allow Revoting:"
-                    checked={revotingAllowed}
-                    onChange={(e) => setRevotingAllowed(e.target.checked)}
-                />
+                <CheckboxSlider label="Allow Revoting:" checked={revotingAllowed} onChange={setRevotingAllowed} />
             )}
-            <Checkbox
+            <CheckboxSlider
                 label="Allow multiple choices:"
                 checked={multipleChoicesAllowed}
-                onChange={(e) => setMultipleChoicesAllowed(e.target.checked)}
+                onChange={setMultipleChoicesAllowed}
             />
-            <Checkbox
-                label="Require reCAPTCHA on votes"
-                checked={requireRecaptcha}
-                onChange={(e) => setRequireRecaptcha(e.target.checked)}
-            />
+            <CheckboxSlider label="Require reCAPTCHA" checked={requireRecaptcha} onChange={setRequireRecaptcha} />
             {!userToken && <ReCaptchaComponent ref={captchaRef} onCaptchaChange={setRecaptchaValue} />}
             <SubmitButton type="submit" disabled={isSubmitting}>
                 {isSubmitting ? 'Submitting...' : 'Submit'}

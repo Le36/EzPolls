@@ -25,7 +25,7 @@
     transition: background-color 0.3s, box-shadow 0.3s;
 }
 
-.toggleVisibility {
+.toggleVisibility, .removeButton {
     position: absolute;
     right: -3px;
     top: 57%;
@@ -38,23 +38,10 @@
     font-size: 15px;
 }
 
-.toggleVisibility:hover {
+.toggleVisibility:hover, .removeButton:hover {
     color: #b5b5b5;
 }
 
 .removeButton {
     font-size: 20px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    position: absolute;
-    top: 57%;
-    right: -3px;
-    transform: translateY(-50%);
-    transition: color 0.3s ease;
-    color: #777;
-}
-
-.removeButton:hover {
-    color: #b5b5b5;
 }

@@ -1,0 +1,62 @@
+.wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.label {
+    font-size: 16px;
+    color: #eaeaea;
+}
+
+.checkboxButton {
+    cursor: pointer;
+    width: 50px;
+    height: 25px;
+    background-color: #333;
+    border: 1px solid #555;
+    border-radius: 15px;
+    position: relative;
+    transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.checkboxButton:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    background-color: #444;
+    transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.slider {
+    position: absolute;
+    width: 23px;
+    height: 23px;
+    border-radius: 50%;
+    background-color: #777;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    left: 1px;
+    top: 1px;
+    transition: left 0.3s ease-in-out, background-color 0.5s ease-in-out;
+}
+
+.slider:hover {
+    background-color: #555;
+    transition: background-color 0.5s ease-in-out;
+}
+
+.sliderActive {
+    position: absolute;
+    width: 23px;
+    height: 23px;
+    border-radius: 50%;
+    background-color: #eaeaea;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    left: 26px;
+    top: 1px;
+    transition: left 0.3s ease-in-out, background-color 0.5s ease-in-out;
+}
+
+.sliderActive:hover {
+    background-color: #b5b5b5;
+    transition: background-color 0.5s ease-in-out;
+}

@@ -1,6 +1,7 @@
 import React from 'react'
 import CheckboxSlider from './CheckboxSlider'
 import styles from './PollSettings.module.css'
+import ToolTip from './ToolTip'
 
 const PollSettings = ({
     restriction,
@@ -13,10 +14,13 @@ const PollSettings = ({
 }) => {
     return (
         <div className={styles.container}>
-            <h2 className={styles.settingsTitle}>Settings</h2>
+            <h2 className={styles.settingsTitle}>
+                Settings
+                <ToolTip tip="Fine-tune the behavior of your poll. Set options like revoting, multiple choices, or add security measures like reCAPTCHA." />
+            </h2>
             <div className={styles.checkboxSetting}>
                 {restriction !== 'NO_RESTRICTION' && (
-                    <CheckboxSlider label="Allow Revoting:" checked={revotingAllowed} onChange={setRevotingAllowed} />
+                    <CheckboxSlider label="Allow revoting:" checked={revotingAllowed} onChange={setRevotingAllowed} />
                 )}
             </div>
             <div className={styles.checkboxSetting}>

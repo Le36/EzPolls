@@ -10,6 +10,8 @@
     font-size: 1em;
     font-weight: 500;
     color: #eaeaea;
+    display: flex;
+    justify-content: space-between;
 }
 
 .checkboxSetting {

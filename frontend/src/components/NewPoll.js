@@ -10,6 +10,7 @@ import {AuthContext} from '../contexts/AuthContext'
 import CheckboxSlider from './CheckboxSlider'
 import ReCaptchaComponent from './ReCaptchaComponent'
 import styles from './FormStyles.module.css'
+import PollSettings from './PollSettings'
 
 const NewPoll = () => {
     const navigate = useNavigate()
@@ -108,15 +109,15 @@ const NewPoll = () => {
                 removeOption={removeOption}
             />
             <RestrictionSelect value={restriction} onChange={(e) => setRestriction(e.target.value)} />
-            {restriction !== 'NO_RESTRICTION' && (
-                <CheckboxSlider label="Allow Revoting:" checked={revotingAllowed} onChange={setRevotingAllowed} />
-            )}
-            <CheckboxSlider
-                label="Allow multiple choices:"
-                checked={multipleChoicesAllowed}
-                onChange={setMultipleChoicesAllowed}
+            <PollSettings
+                restriction={restriction}
+                revotingAllowed={revotingAllowed}
+                setRevotingAllowed={setRevotingAllowed}
+                multipleChoicesAllowed={multipleChoicesAllowed}
+                setMultipleChoicesAllowed={setMultipleChoicesAllowed}
+                requireRecaptcha={requireRecaptcha}
+                setRequireRecaptcha={setRequireRecaptcha}
             />
-            <CheckboxSlider label="Require reCAPTCHA" checked={requireRecaptcha} onChange={setRequireRecaptcha} />
             {!userToken && <ReCaptchaComponent ref={captchaRef} onCaptchaChange={setRecaptchaValue} />}
             <SubmitButton type="submit" disabled={isSubmitting}>
                 {isSubmitting ? 'Submitting...' : 'Submit'}

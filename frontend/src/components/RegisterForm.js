@@ -4,8 +4,8 @@ import userService from '../services/userService'
 import {ErrorContext} from '../contexts/ErrorContext'
 import PasswordField from './PasswordField'
 import SubmitButton from './SubmitButton'
-import CustomInput from './CustomInput'
 import styles from './FormStyles.module.css'
+import CustomInput from './CustomInput'
 
 const RegisterForm = () => {
     const [username, setUsername] = useState('')

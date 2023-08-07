@@ -1,5 +1,5 @@
 import styles from './OptionsInput.module.css'
-import CustomInput from './CustomInput'
+import CustomInputIcon from './CustomInputIcon'
 
 const OptionsInputs = ({options, handleOptionChange, addOption, removeOption}) => {
     return (
@@ -7,7 +7,7 @@ const OptionsInputs = ({options, handleOptionChange, addOption, removeOption}) =
             <h3 className={styles.optionTitle}>Answer Options</h3>
             {options.map((option, index) => (
                 <div key={index} className={styles.optionInputWrapper}>
-                    <CustomInput
+                    <CustomInputIcon
                         type="text"
                         value={option}
                         onChange={(e) => handleOptionChange(e, index)}

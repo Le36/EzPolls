@@ -1,0 +1,55 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    width: auto;
+    border: 1px solid #555;
+    border-radius: 5px;
+    font-size: 1em;
+    background-color: #333;
+    color: #eaeaea;
+    transition: border-color 0.3s;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    margin-right: 0;
+    padding-right: 18px;
+}
+
+.inputField {
+    border: none;
+    padding: 10px;
+    font-size: 1em;
+    background-color: transparent;
+    color: #eaeaea;
+}
+
+.inputField:focus {
+    outline: none;
+}
+
+.container:focus, .container:hover {
+    border-color: #777;
+    outline: none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.toggleVisibility, .removeButton {
+    position: absolute;
+    right: -1px;
+    top: 57%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    border: none;
+    background: transparent;
+    color: #777;
+    transition: color 0.3s ease;
+    font-size: 15px;
+}
+
+.toggleVisibility:hover, .removeButton:hover {
+    color: #b5b5b5;
+}
+
+.removeButton {
+    font-size: 20px;
+}

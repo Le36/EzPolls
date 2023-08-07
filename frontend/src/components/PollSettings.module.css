@@ -5,9 +5,17 @@
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
 }
 
-.questionTitle {
+.settingsTitle {
     margin-bottom: 10px;
     font-size: 1em;
     font-weight: 500;
     color: #eaeaea;
+}
+
+.checkboxSetting {
+    margin-bottom: 10px;
+}
+
+.checkboxSetting:last-child {
+    margin-bottom: 0;
 }

@@ -5,7 +5,7 @@ import {NotificationContext} from '../contexts/NotificationContext'
 import {AuthContext} from '../contexts/AuthContext'
 import SubmitButton from './SubmitButton'
 import PasswordField from './PasswordField'
-import CustomInput from './CustomInput'
+import CustomInputIcon from './CustomInputIcon'
 
 const PasswordChangeForm = ({username}) => {
     const [passwordChange, setPasswordChange] = useState({oldPassword: '', newPassword: ''})
@@ -30,7 +30,7 @@ const PasswordChangeForm = ({username}) => {
 
     return (
         <form onSubmit={handlePasswordChange}>
-            <CustomInput
+            <CustomInputIcon
                 type="password"
                 placeholder="Old password"
                 value={passwordChange.oldPassword}

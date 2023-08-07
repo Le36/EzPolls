@@ -1,5 +1,5 @@
-import CustomInput from './CustomInput'
 import styles from './QuestionInput.module.css'
+import CustomInput from './CustomInput'
 
 const QuestionInput = ({value, onChange}) => {
     return (

@@ -24,24 +24,3 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     transition: background-color 0.3s, box-shadow 0.3s;
 }
-
-.toggleVisibility, .removeButton {
-    position: absolute;
-    right: -3px;
-    top: 57%;
-    transform: translateY(-50%);
-    cursor: pointer;
-    border: none;
-    background: transparent;
-    color: #777;
-    transition: color 0.3s ease;
-    font-size: 15px;
-}
-
-.toggleVisibility:hover, .removeButton:hover {
-    color: #b5b5b5;
-}
-
-.removeButton {
-    font-size: 20px;
-}

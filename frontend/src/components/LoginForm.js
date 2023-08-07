@@ -4,9 +4,10 @@ import userService from '../services/userService'
 import {AuthContext} from '../contexts/AuthContext'
 import {ErrorContext} from '../contexts/ErrorContext'
 import ReCaptchaComponent from './ReCaptchaComponent'
-import CustomInput from './CustomInput'
 import SubmitButton from './SubmitButton'
 import styles from './FormStyles.module.css'
+import CustomInput from './CustomInput'
+import CustomInputIcon from './CustomInputIcon'
 
 const LoginForm = () => {
     const [username, setUsername] = useState('')
@@ -49,7 +50,7 @@ const LoginForm = () => {
                 placeholder="Username"
                 required
             />
-            <CustomInput
+            <CustomInputIcon
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}

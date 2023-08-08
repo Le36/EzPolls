@@ -8,7 +8,7 @@ import SubmitButton from '../formElements/SubmitButton'
 import {ErrorContext} from '../../contexts/ErrorContext'
 import {AuthContext} from '../../contexts/AuthContext'
 import ReCaptchaComponent from '../formElements/ReCaptchaComponent'
-import styles from '../formElements/FormStyles.module.css'
+import styles from './NewPoll.module.css'
 import PollSettings from './PollSettings'
 
 const NewPoll = () => {
@@ -97,17 +97,28 @@ const NewPoll = () => {
     }
 
     return (
-        <form onSubmit={handleSubmit} className={styles.form}>
-            <h2>Create a Poll</h2>
-            Complete the below fields to create your poll.
-            <QuestionInput value={question} onChange={(e) => setQuestion(e.target.value)} />
+        <form onSubmit={handleSubmit} className={!userToken ? styles.form : styles.formLogged}>
+            <h2 className={`${styles.pollTitle} pollTitle`}>Create a Poll</h2>
+            <h2 className={`${styles.pollSecondaryTitle} pollSecondaryTitle`}>
+                Complete the below fields to create your poll.
+            </h2>
+            <QuestionInput
+                value={question}
+                onChange={(e) => setQuestion(e.target.value)}
+                className={`${styles.QuestionInput}`}
+            />
             <OptionsInputs
                 options={options}
                 handleOptionChange={handleOptionChange}
                 addOption={addOption}
                 removeOption={removeOption}
+                className={`${styles.OptionsInputs} OptionsInput`}
             />
-            <RestrictionSelect value={restriction} onChange={(e) => setRestriction(e.target.value)} />
+            <RestrictionSelect
+                value={restriction}
+                onChange={(e) => setRestriction(e.target.value)}
+                className="RestrictionSelect"
+            />
             <PollSettings
                 restriction={restriction}
                 revotingAllowed={revotingAllowed}
@@ -116,9 +127,16 @@ const NewPoll = () => {
                 setMultipleChoicesAllowed={setMultipleChoicesAllowed}
                 requireRecaptcha={requireRecaptcha}
                 setRequireRecaptcha={setRequireRecaptcha}
+                className="PollSettings"
             />
-            {!userToken && <ReCaptchaComponent ref={captchaRef} onCaptchaChange={setRecaptchaValue} />}
-            <SubmitButton type="submit" disabled={isSubmitting}>
+            {!userToken && (
+                <ReCaptchaComponent
+                    ref={captchaRef}
+                    onCaptchaChange={setRecaptchaValue}
+                    className="ReCaptchaComponent"
+                />
+            )}
+            <SubmitButton type="submit" disabled={isSubmitting} className="SubmitButton">
                 {isSubmitting ? 'Submitting...' : 'Submit'}
             </SubmitButton>
         </form>

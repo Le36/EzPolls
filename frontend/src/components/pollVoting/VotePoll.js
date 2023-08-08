@@ -12,7 +12,7 @@ import DeleteButton from '../common/DeleteButton'
 import {NotificationContext} from '../../contexts/NotificationContext'
 import NavigateButton from '../layout/NavigateButton'
 import ReCaptchaComponent from '../formElements/ReCaptchaComponent'
-import styles from '../formElements/FormStyles.module.css'
+import styles from '../pollCreation/NewPoll.module.css'
 import PollInfo from './PollInfo'
 
 const VotePoll = () => {

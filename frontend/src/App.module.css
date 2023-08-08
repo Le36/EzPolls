@@ -13,8 +13,8 @@ time, mark, audio, video {
     margin: 0;
     padding: 0;
     border: 0;
-    font-size: 100%;
     font: inherit;
+    font-family: 'Roboto', Arial, sans-serif;
     vertical-align: baseline;
 }
 
@@ -28,20 +28,10 @@ body {
     grid-template-rows: auto auto 1fr;
     background-color: #181818;
     align-items: center;
-    justify-content: center;
     justify-items: center;
 }
 
 .title {
     padding: 20px 5%;
     font-size: 5vh;
-}
-
-.container {
-    width: 80%;
-    max-width: 1200px;
-    padding: 20px;
-    background-color: #222;
-    border-radius: 10px;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
 }

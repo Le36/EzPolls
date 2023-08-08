@@ -26,7 +26,6 @@ const ReCaptchaComponent = React.forwardRef((props, ref) => {
                 sitekey="6LevqYUnAAAAAFFG9SrmT5hy-OUKEkZFZDVjDKzP"
                 onChange={handleCaptchaChange}
                 theme="dark"
-                size="compact"
             />
         </div>
     )

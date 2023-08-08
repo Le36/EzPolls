@@ -5,7 +5,7 @@ import {AuthContext} from '../../contexts/AuthContext'
 import {ErrorContext} from '../../contexts/ErrorContext'
 import ReCaptchaComponent from '../formElements/ReCaptchaComponent'
 import SubmitButton from '../formElements/SubmitButton'
-import styles from '../formElements/FormStyles.module.css'
+import styles from './AuthStyles.module.css'
 import CustomInput from '../formElements/CustomInput'
 import CustomInputIcon from '../formElements/CustomInputIcon'
 

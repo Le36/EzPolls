@@ -1,0 +1,78 @@
+.form {
+    display: grid;
+    gap: 20px;
+    grid-template-areas:
+        "PollTitle PollTitle"
+        "PollSecondaryTitle PollSecondaryTitle"
+        "QuestionInput QuestionInput"
+        "OptionsInputs OptionsInputs"
+        "RestrictionSelect PollSettings"
+        "Recaptcha PollSettings"
+        "Recaptcha SubmitButton";
+    width: 80%;
+    max-width: 800px;
+    padding: 20px;
+    background-color: #222;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+    box-sizing: border-box;
+    margin-bottom: 20px;
+}
+
+.formLogged {
+    display: grid;
+    gap: 20px;
+    grid-template-areas:
+        "PollTitle PollTitle"
+        "PollSecondaryTitle PollSecondaryTitle"
+        "QuestionInput QuestionInput"
+        "OptionsInputs OptionsInputs"
+        "RestrictionSelect PollSettings"
+        "SubmitButton PollSettings";
+    width: 80%;
+    max-width: 800px;
+    padding: 20px;
+    background-color: #222;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+    box-sizing: border-box;
+    margin-bottom: 20px;
+}
+
+@media (max-width: 800px) {
+    .form {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        width: 80%;
+        min-width: 340px;
+        max-width: 1200px;
+        padding: 20px;
+        background-color: #222;
+        border-radius: 10px;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+        box-sizing: border-box;
+        margin-bottom: 20px;
+    }
+}
+
+.pollTitle {
+    grid-area: PollTitle;
+}
+
+.pollSecondaryTitle {
+    grid-area: PollSecondaryTitle;
+}
+
+.pollTitle {
+    font-size: 1em;
+    font-weight: 500;
+    color: #eaeaea;
+}
+
+.pollSecondaryTitle {
+    font-size: 0.9em;
+    font-weight: 300;
+    color: #eaeaea;
+}
+

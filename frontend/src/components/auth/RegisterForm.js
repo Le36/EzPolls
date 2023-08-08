@@ -4,7 +4,7 @@ import userService from '../../services/userService'
 import {ErrorContext} from '../../contexts/ErrorContext'
 import PasswordField from './PasswordField'
 import SubmitButton from '../formElements/SubmitButton'
-import styles from '../formElements/FormStyles.module.css'
+import styles from './AuthStyles.module.css'
 import CustomInput from '../formElements/CustomInput'
 
 const RegisterForm = () => {

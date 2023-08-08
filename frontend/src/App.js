@@ -29,7 +29,6 @@ const App = () => {
                 <div className={styles.gridContainer}>
                     <Navbar />
                     <h1 className={styles.title}>EzPolls</h1>
-                    <div className={styles.container}>
                         <ErrorNotification />
                         <Notification />
                         <Routes>
@@ -40,7 +39,6 @@ const App = () => {
                             <Route path="/register" element={<RegisterForm />} />
                             <Route path="/users/:username" element={<UserProfile />} />
                         </Routes>
-                    </div>
                 </div>
             </Router>
         </Providers>

@@ -2,18 +2,18 @@ import React, {useContext, useEffect, useRef, useState} from 'react'
 import pollService from '../../services/pollService'
 import {useNavigate} from 'react-router-dom'
 import PollQuestion from './PollQuestion'
-import VotingRestriction from './VotingRestriction'
 import PollOptions from './PollOptions'
 import SubmitButton from '../formElements/SubmitButton'
 import Loading from '../layout/Loading'
 import {ErrorContext} from '../../contexts/ErrorContext'
 import usePoll from '../../hooks/UsePoll'
 import {AuthContext} from '../../contexts/AuthContext'
-import Author from '../profile/Author'
 import DeleteButton from '../common/DeleteButton'
 import {NotificationContext} from '../../contexts/NotificationContext'
 import NavigateButton from '../layout/NavigateButton'
 import ReCaptchaComponent from '../formElements/ReCaptchaComponent'
+import styles from '../formElements/FormStyles.module.css'
+import PollInfo from './PollInfo'
 
 const VotePoll = () => {
     const [selectedOptions, setSelectedOptions] = useState([])
@@ -88,10 +88,9 @@ const VotePoll = () => {
     const shouldShowCaptcha = poll.requireRecaptcha && (!userVotes || poll.revotingAllowed)
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className={styles.form}>
             <PollQuestion question={poll.question} />
-            <VotingRestriction restriction={poll.votingRestriction} />
-            <Author author={poll.author} />
+            <PollInfo poll={poll} />
             <PollOptions
                 options={poll.options}
                 selectedOptions={selectedOptions}

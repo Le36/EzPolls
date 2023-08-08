@@ -15,7 +15,7 @@ const CheckboxSlider = ({label, checked: propChecked, onChange}) => {
     }
 
     return (
-        <div className={styles.wrapper}>
+        <div className={styles.container}>
             <span className={styles.label}>{label}</span>
             <div className={styles.checkboxButton} onClick={handleClick}>
                 <div className={checked ? styles.sliderActive : styles.slider}></div>

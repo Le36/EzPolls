@@ -3,6 +3,7 @@ import {AuthContext} from '../../contexts/AuthContext'
 import pollService from '../../services/pollService'
 import {ErrorContext} from '../../contexts/ErrorContext'
 import {NotificationContext} from '../../contexts/NotificationContext'
+import styles from '../formElements/SubmitButton.module.css'
 
 const DeleteButton = ({poll, onSuccess}) => {
     const {username, authHeader} = useContext(AuthContext)
@@ -34,7 +35,7 @@ const DeleteButton = ({poll, onSuccess}) => {
     }
 
     return (
-        <button onClick={handleDelete} disabled={isDeleting}>
+        <button className={styles.button} onClick={handleDelete} disabled={isDeleting}>
             {isDeleting ? 'Deleting...' : 'Delete Poll'}
         </button>
     )

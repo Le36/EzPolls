@@ -1,5 +1,6 @@
 import React from 'react'
 import {useNavigate} from 'react-router-dom'
+import styles from '../formElements/SubmitButton.module.css'
 
 const NavigateButton = ({to, children}) => {
     const navigate = useNavigate()
@@ -10,7 +11,7 @@ const NavigateButton = ({to, children}) => {
     }
 
     return (
-        <button type="button" onClick={handleClick}>
+        <button className={styles.button} type="button" onClick={handleClick}>
             {children}
         </button>
     )

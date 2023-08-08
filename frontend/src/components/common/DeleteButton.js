@@ -35,7 +35,7 @@ const DeleteButton = ({poll, onSuccess}) => {
     }
 
     return (
-        <button className={styles.button} onClick={handleDelete} disabled={isDeleting}>
+        <button type="button" className={styles.button} onClick={handleDelete} disabled={isDeleting}>
             {isDeleting ? 'Deleting...' : 'Delete Poll'}
         </button>
     )

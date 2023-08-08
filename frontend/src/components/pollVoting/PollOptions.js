@@ -5,11 +5,15 @@ import ToolTip from '../common/ToolTip'
 import React from 'react'
 
 const PollOptions = ({options, selectedOptions, handleOptionChange, multipleChoicesAllowed}) => {
+    const tooltipMessage = multipleChoicesAllowed
+        ? 'You can select multiple options for this poll.'
+        : 'You can select only one option for this poll.'
+
     return (
         <div className={styles.container}>
             <h2 className={styles.votingTitle}>
                 Voting
-                <ToolTip tip="This is the main query of the poll. Please read carefully and provide your response accordingly." />
+                <ToolTip tip={tooltipMessage} />
             </h2>
             {options.map((option, index) => {
                 const isSelected = selectedOptions.includes(option.optionText)

@@ -1,3 +1,4 @@
+import {FaDotCircle, FaCircle} from 'react-icons/fa'
 import styles from './RadioButton.module.css'
 
 const RadioButton = ({id, name, value, checked, onChange, label}) => {
@@ -10,8 +11,12 @@ const RadioButton = ({id, name, value, checked, onChange, label}) => {
                 value={value}
                 checked={checked}
                 onChange={(e) => onChange(e.target.value)}
+                className={styles.hiddenInput}
             />
-            <label htmlFor={id}>{label}</label>
+            <label htmlFor={id}>
+                {checked ? <FaDotCircle className={styles.radioIcon} /> : <FaCircle className={styles.radioIcon} />}
+                {label}
+            </label>
         </div>
     )
 }

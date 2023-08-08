@@ -6,14 +6,14 @@
     font-size: 1em;
     border: none;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
 }
 
 .button:hover {
     background-color: #555;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-    transition: background-color 0.3s, box-shadow 0.3s;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
 
 .button:disabled {

@@ -20,18 +20,26 @@ const PollSettings = ({
             </h2>
             <div className={styles.checkboxSetting}>
                 {restriction !== 'NO_RESTRICTION' && (
-                    <CheckboxSlider label="Allow revoting:" checked={revotingAllowed} onChange={setRevotingAllowed} />
+                    <CheckboxSlider
+                        label="Allow revoting:"
+                        checked={revotingAllowed}
+                        onChange={(value) => setRevotingAllowed(value)}
+                    />
                 )}
             </div>
             <div className={styles.checkboxSetting}>
                 <CheckboxSlider
                     label="Allow multiple choices:"
                     checked={multipleChoicesAllowed}
-                    onChange={setMultipleChoicesAllowed}
+                    onChange={(value) => setMultipleChoicesAllowed(value)}
                 />
             </div>
             <div className={styles.checkboxSetting}>
-                <CheckboxSlider label="Require reCAPTCHA:" checked={requireRecaptcha} onChange={setRequireRecaptcha} />
+                <CheckboxSlider
+                    label="Require reCAPTCHA:"
+                    checked={requireRecaptcha}
+                    onChange={(value) => setRequireRecaptcha(value)}
+                />
             </div>
         </div>
     )

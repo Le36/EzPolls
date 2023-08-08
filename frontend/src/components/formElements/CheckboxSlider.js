@@ -9,8 +9,9 @@ const CheckboxSlider = ({label, checked: propChecked, onChange}) => {
         setSliderActive(!sliderActive)
 
         setTimeout(() => {
-            setChecked(!checked)
-            onChange()
+            const newValue = !checked
+            setChecked(newValue)
+            onChange(newValue)
         }, 300)
     }
 

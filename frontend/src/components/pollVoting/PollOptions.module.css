@@ -1,0 +1,17 @@
+.container {
+    background-color: #292929;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    gap: 15px;
+}
+
+.votingTitle {
+    margin-bottom: 10px;
+    font-size: 1em;
+    font-weight: 500;
+    color: #eaeaea;
+    display: flex;
+    justify-content: space-between;
+}

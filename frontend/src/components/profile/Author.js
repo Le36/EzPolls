@@ -1,7 +1,15 @@
 import React from 'react'
+import styles from '../pollVoting/PollInfo.module.css'
 
 const Author = ({author}) => {
-    return author && <h3>Author: {author}</h3>
+    return (
+        author && (
+            <div className={styles.infoItem}>
+                <span className={styles.infoLabel}>Author:</span>
+                <span>{author}</span>
+            </div>
+        )
+    )
 }
 
 export default Author

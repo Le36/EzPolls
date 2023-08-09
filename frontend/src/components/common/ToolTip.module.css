@@ -13,13 +13,14 @@
     position: absolute;
     bottom: 100%;
     left: 50%;
-    transform: translateX(-50%);
+    transform: translateX(-80%);
     background-color: #222;
     color: #eaeaea;
     padding: 5px 10px;
     border-radius: 5px;
     font-size: 12px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    font-weight: 300;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
     opacity: 0;
     visibility: hidden;
     z-index: 1;

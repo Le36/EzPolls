@@ -13,12 +13,12 @@
 
 .errorModal, .notificationModal {
     width: 80%;
-    max-width: 400px;
+    max-width: 350px;
     position: relative;
     z-index: 1001;
     background-color: #292929;
     border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
 }
 
 .dismissButton {

@@ -97,6 +97,14 @@ const AnimatedChart = ({optionsPoll, chartType}) => {
                 display: false,
             },
             tooltip: {
+                titleFont: {
+                    size: fontSize,
+                    family: 'Roboto',
+                },
+                bodyFont: {
+                    size: fontSize,
+                    family: 'Roboto',
+                },
                 callbacks: {
                     title: function (tooltipItem) {
                         return getTooltipTitle(tooltipItem)
@@ -111,6 +119,10 @@ const AnimatedChart = ({optionsPoll, chartType}) => {
                     display: true,
                     text: 'Votes',
                     color: '#eaeaea',
+                    font: {
+                        size: fontSize,
+                        family: 'Roboto',
+                    },
                 },
                 grid: {
                     color: '#555',
@@ -119,6 +131,10 @@ const AnimatedChart = ({optionsPoll, chartType}) => {
                     color: '#eaeaea',
                     stepSize: 1,
                     precision: 0,
+                    font: {
+                        size: fontSize,
+                        family: 'Roboto',
+                    },
                 },
             },
             y: {
@@ -130,6 +146,7 @@ const AnimatedChart = ({optionsPoll, chartType}) => {
                     color: '#eaeaea',
                     font: {
                         size: fontSize,
+                        family: 'Roboto',
                     },
                     autoSkip: false,
                 },
@@ -144,6 +161,16 @@ const AnimatedChart = ({optionsPoll, chartType}) => {
     const optionsCircle = {
         responsive: true,
         plugins: {
+            tooltip: {
+                titleFont: {
+                    size: fontSize,
+                    family: 'Roboto',
+                },
+                bodyFont: {
+                    size: fontSize,
+                    family: 'Roboto',
+                },
+            },
             legend: {
                 display: !anyOptionWrapped,
                 position: 'top',

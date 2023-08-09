@@ -1,16 +1,21 @@
 import React from 'react'
+import ChartToggle from './ChartToggle'
+import AnimatedChart from './AnimatedChart'
+import styles from './ResultsList.module.css'
+import ToolTip from '../common/ToolTip'
 
 const ResultsList = ({options}) => {
+    const [chartType, setChartType] = React.useState('bar')
+
     return (
-        <ul>
-            {options
-                .sort((a, b) => b.voteCount - a.voteCount)
-                .map((option, index) => (
-                    <li key={index}>
-                        {option.optionText}: {option.voteCount} votes
-                    </li>
-                ))}
-        </ul>
+        <div className={styles.container}>
+            <h2 className={styles.resultsTitle}>
+                Results
+                <ToolTip tip="The primary prompt for your poll. Be clear and concise to ensure participants understand what you're asking." />
+            </h2>
+            <ChartToggle chartType={chartType} setChartType={setChartType} />
+            <AnimatedChart optionsPoll={options} chartType={chartType} />
+        </div>
     )
 }
 

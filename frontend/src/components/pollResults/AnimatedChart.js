@@ -1,14 +1,26 @@
-import {Chart as ChartJS, ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement} from 'chart.js'
+import {Chart, ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement} from 'chart.js'
 import {Pie, Bar, Doughnut} from 'react-chartjs-2'
 
 const AnimatedChart = ({optionsPoll, chartType}) => {
-    ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement)
+    Chart.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement)
+
+    const wrapText = (text, maxChar) => {
+        let newText = ''
+        while (text.length > maxChar) {
+            let prevSpace = text.lastIndexOf(' ', maxChar)
+            if (prevSpace === -1) prevSpace = maxChar
+            newText += text.substring(0, prevSpace) + '\n'
+            text = text.substring(prevSpace + 1)
+        }
+        newText += text
+        return newText.split('\n')
+    }
 
     const sortedOptions = optionsPoll.sort((a, b) => b.voteCount - a.voteCount)
-    const labels = sortedOptions.map((option) => option.optionText)
+    const labels = sortedOptions.map((option) => wrapText(option.optionText, 25))
     const dataPoints = sortedOptions.map((option) => option.voteCount)
 
-    const stringToColor = (str) => {
+    const stringToColor = (str, opacity = 1) => {
         let hash = 0
         for (let i = 0; i < str.length; i++) {
             hash = (str.charCodeAt(i) * 139241) ^ (hash * 17)
@@ -18,38 +30,80 @@ const AnimatedChart = ({optionsPoll, chartType}) => {
         const saturation = (hash % 25) + 70
         const lightness = ((hash * 3) % 10) + 45
 
-        return `hsl(${hue}, ${saturation}%, ${lightness}%)`
+        return `hsl(${hue}, ${saturation}%, ${lightness}%, ${opacity})`
     }
+
+    const colors = sortedOptions.map((option) => {
+        return {
+            background: stringToColor(option.optionText, 0.7),
+            border: stringToColor(option.optionText),
+        }
+    })
 
     const data = {
         labels: labels,
         datasets: [
             {
+                label: 'Votes',
                 data: dataPoints,
-                backgroundColor: sortedOptions.map((option) => stringToColor(option.optionText)),
+                backgroundColor: colors.map((color) => color.background),
+                borderColor: colors.map((color) => color.border),
+                borderWidth: 3,
             },
         ],
     }
 
-    const options = {
+    const getTooltipTitle = (tooltipItem) => {
+        const labelArray = labels[tooltipItem[0].dataIndex]
+        if (Array.isArray(labelArray)) {
+            return labelArray.join(' ')
+        }
+        return labelArray
+    }
+
+    const optionsBar = {
         indexAxis: 'y',
+        plugins: {
+            legend: {
+                labels: {
+                    color: '#eaeaea',
+                },
+            },
+            tooltip: {
+                callbacks: {
+                    title: function (tooltipItem) {
+                        return getTooltipTitle(tooltipItem)
+                    },
+                },
+            },
+        },
         scales: {
             x: {
                 type: 'linear',
                 title: {
                     display: true,
                     text: 'Votes',
+                    color: '#eaeaea',
+                },
+                grid: {
+                    color: '#555',
                 },
                 ticks: {
+                    color: '#eaeaea',
                     stepSize: 1,
                     precision: 0,
                 },
             },
             y: {
                 type: 'category',
-                title: {
-                    display: true,
-                    text: 'Options',
+                grid: {
+                    color: '#555',
+                },
+                ticks: {
+                    color: '#eaeaea',
+                    font: {
+                        size: 10,
+                    },
                 },
             },
         },
@@ -59,16 +113,55 @@ const AnimatedChart = ({optionsPoll, chartType}) => {
         },
     }
 
+    const optionsCircle = {
+        plugins: {
+            legend: {
+                labels: {
+                    color: '#eaeaea',
+                },
+            },
+        },
+        animation: {
+            duration: 1000,
+            animateRotate: true,
+            animateScale: true,
+        },
+    }
+
     if (chartType === 'pie') {
-        return <Pie data={data} />
+        return <Pie data={data} options={optionsCircle} />
     }
 
     if (chartType === 'bar') {
-        return <Bar data={data} options={options} />
+        return <Bar data={data} options={optionsBar} />
     }
 
     if (chartType === 'doughnut') {
-        return <Doughnut data={data} />
+        return <Doughnut data={data} options={optionsCircle} />
+    }
+
+    if (chartType === 'list') {
+        return (
+            <ol
+                style={{
+                    padding: '20px',
+                    border: '1px solid #555',
+                    borderRadius: '5px',
+                }}
+            >
+                {sortedOptions.map((option, index) => (
+                    <li
+                        key={index}
+                        style={{
+                            padding: '8px',
+                            borderBottom: index !== sortedOptions.length - 1 ? '1px solid #555' : 'none',
+                        }}
+                    >
+                        {labels[index].join(' ')}: <strong>{option.voteCount}</strong> votes
+                    </li>
+                ))}
+            </ol>
+        )
     }
 
     return null

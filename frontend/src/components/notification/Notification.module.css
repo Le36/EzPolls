@@ -1,4 +1,4 @@
-.errorBackdrop {
+.errorBackdrop, .notificationBackdrop {
     position: fixed;
     top: 0;
     left: 0;
@@ -11,7 +11,7 @@
     align-items: center;
 }
 
-.errorModal {
+.errorModal, .notificationModal {
     width: 80%;
     max-width: 400px;
     position: relative;
@@ -54,7 +54,7 @@
     padding: 15px;
 }
 
-.errorMessage {
+.errorMessage, .notificationMessage {
     margin-bottom: 15px;
 }
 

@@ -1,6 +1,6 @@
 import React, {useContext} from 'react'
 import {ErrorContext} from '../../contexts/ErrorContext'
-import styles from './ErrorNotification.module.css'
+import styles from './Notification.module.css'
 import {FaTimes} from 'react-icons/fa'
 
 const ErrorNotification = () => {

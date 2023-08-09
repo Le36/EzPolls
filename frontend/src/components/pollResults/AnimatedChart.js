@@ -1,8 +1,34 @@
-import {Chart, ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement} from 'chart.js'
-import {Pie, Bar, Doughnut} from 'react-chartjs-2'
+import {ArcElement, BarElement, CategoryScale, Chart, Legend, LinearScale, Tooltip} from 'chart.js'
+import {Bar, Doughnut, Pie} from 'react-chartjs-2'
+import {useEffect, useState} from 'react'
+import styles from './AnimatedChart.module.css'
 
 const AnimatedChart = ({optionsPoll, chartType}) => {
     Chart.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement)
+
+    const [fontSize, setFontSize] = useState(12)
+
+    const adjustFontSize = () => {
+        if (window.innerWidth <= 320) {
+            setFontSize(6)
+        } else if (window.innerWidth <= 480) {
+            setFontSize(9)
+        } else if (window.innerWidth <= 600) {
+            setFontSize(11)
+        } else if (window.innerWidth <= 768) {
+            setFontSize(13)
+        } else {
+            setFontSize(15)
+        }
+    }
+
+    useEffect(() => {
+        adjustFontSize()
+        window.addEventListener('resize', adjustFontSize)
+        return () => {
+            window.removeEventListener('resize', adjustFontSize)
+        }
+    }, [])
 
     const wrapText = (text, maxChar) => {
         let newText = ''
@@ -19,6 +45,7 @@ const AnimatedChart = ({optionsPoll, chartType}) => {
     const sortedOptions = optionsPoll.sort((a, b) => b.voteCount - a.voteCount)
     const labels = sortedOptions.map((option) => wrapText(option.optionText, 25))
     const dataPoints = sortedOptions.map((option) => option.voteCount)
+    const anyOptionWrapped = labels.some((label) => label.length > 1)
 
     const stringToColor = (str, opacity = 1) => {
         let hash = 0
@@ -62,12 +89,12 @@ const AnimatedChart = ({optionsPoll, chartType}) => {
     }
 
     const optionsBar = {
+        responsive: true,
+        maintainAspectRatio: false,
         indexAxis: 'y',
         plugins: {
             legend: {
-                labels: {
-                    color: '#eaeaea',
-                },
+                display: false,
             },
             tooltip: {
                 callbacks: {
@@ -102,8 +129,9 @@ const AnimatedChart = ({optionsPoll, chartType}) => {
                 ticks: {
                     color: '#eaeaea',
                     font: {
-                        size: 10,
+                        size: fontSize,
                     },
+                    autoSkip: false,
                 },
             },
         },
@@ -114,10 +142,16 @@ const AnimatedChart = ({optionsPoll, chartType}) => {
     }
 
     const optionsCircle = {
+        responsive: true,
         plugins: {
             legend: {
+                display: !anyOptionWrapped,
+                position: 'top',
                 labels: {
                     color: '#eaeaea',
+                    font: {
+                        size: fontSize,
+                    },
                 },
             },
         },
@@ -129,26 +163,43 @@ const AnimatedChart = ({optionsPoll, chartType}) => {
     }
 
     if (chartType === 'pie') {
-        return <Pie data={data} options={optionsCircle} />
+        return (
+            <div className={styles.chartContainer}>
+                <Pie data={data} options={optionsCircle} />
+            </div>
+        )
     }
 
     if (chartType === 'bar') {
-        return <Bar data={data} options={optionsBar} />
+        const baseHeightPerLine = 50
+        const additionalHeightForWrappedLine = 40
+
+        const chartHeight = labels.reduce((acc, label) => {
+            let heightForThisOption = baseHeightPerLine
+            if (label.length > 1) {
+                heightForThisOption += additionalHeightForWrappedLine * (label.length - 1)
+            }
+            return acc + heightForThisOption
+        }, 0)
+
+        return (
+            <div style={{minHeight: `${chartHeight}px`}}>
+                <Bar data={data} options={optionsBar} />
+            </div>
+        )
     }
 
     if (chartType === 'doughnut') {
-        return <Doughnut data={data} options={optionsCircle} />
+        return (
+            <div className={styles.chartContainer}>
+                <Doughnut data={data} options={optionsCircle} />
+            </div>
+        )
     }
 
     if (chartType === 'list') {
         return (
-            <ol
-                style={{
-                    padding: '20px',
-                    border: '1px solid #555',
-                    borderRadius: '5px',
-                }}
-            >
+            <ol className={styles.orderedList}>
                 {sortedOptions.map((option, index) => (
                     <li
                         key={index}

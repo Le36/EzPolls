@@ -1,0 +1,11 @@
+.chartContainer {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.orderedList {
+    padding: 20px;
+    border: 1px solid #555;
+    border-radius: 5px;
+}

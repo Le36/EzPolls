@@ -13,7 +13,7 @@ const ResultsList = ({options}) => {
             <div className={styles.container}>
                 <h2 className={styles.resultsTitle}>
                     Results
-                    <ToolTip tip="The primary prompt for your poll. Be clear and concise to ensure participants understand what you're asking." />
+                    <ToolTip tip="This chart visualizes the voting results. The distribution of votes among the options is represented graphically for easy interpretation." />
                 </h2>
                 <AnimatedChart optionsPoll={options} chartType={chartType} />
             </div>

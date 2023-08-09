@@ -16,7 +16,7 @@ const ViewPoll = () => {
 
     return (
         <div className={styles.container}>
-            <PollQuestion question={poll.question} />
+            <PollQuestion question={poll.question} isResultsView={true} />
             <ResultsList options={poll.options} />
             <DeleteButton poll={poll} onSuccess={() => navigate('/')} />
             <NavigateButton to={`/polls/${poll.id}`}>Back to Voting</NavigateButton>

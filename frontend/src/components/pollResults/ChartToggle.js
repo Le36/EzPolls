@@ -7,7 +7,7 @@ const ChartToggle = ({setChartType}) => {
         <div className={styles.container}>
             <h2 className={styles.toggleTitle}>
                 Chart Type
-                <ToolTip tip="The primary prompt for your poll. Be clear and concise to ensure participants understand what you're asking." />
+                <ToolTip tip="Choose the type of chart that best visualizes the voting results. Different chart types can offer unique perspectives on the data." />
             </h2>
             <div className={styles.buttonContainer}>
                 <button className={styles.button} onClick={() => setChartType('bar')}>

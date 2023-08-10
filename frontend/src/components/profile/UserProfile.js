@@ -1,11 +1,14 @@
 import React, {useEffect, useState, useContext} from 'react'
-import {Link, useParams} from 'react-router-dom'
+import {useParams} from 'react-router-dom'
 import userService from '../../services/userService'
 import {ErrorContext} from '../../contexts/ErrorContext'
 import {AuthContext} from '../../contexts/AuthContext'
-import DeleteButton from '../common/DeleteButton'
-import EmailChangeForm from '../auth/EmailChangeForm'
-import PasswordChangeForm from '../auth/PasswordChangeForm'
+import ProfileInfo from './ProfileInfo'
+import ProfilePolls from './ProfilePolls'
+import styles from './UserProfile.module.css'
+import Loading from '../layout/Loading'
+import PasswordChange from './PasswordChange'
+import EmailChange from './EmailChange'
 
 const UserProfile = () => {
     const {username} = useParams()
@@ -30,30 +33,31 @@ const UserProfile = () => {
         fetchUserProfile().then()
     }, [username, authHeader, setErrorMessage])
 
-    if (!userProfile) return <p>Loading...</p>
+    const handleDeleteSuccess = (pollId) => {
+        setUserProfile((userData) => ({
+            ...userData,
+            polls: userData.polls.filter((p) => p.id !== pollId),
+        }))
+    }
+
+    const handleEmailChange = (newEmail) => {
+        setUserProfile((prevProfile) => ({
+            ...prevProfile,
+            user: {
+                ...prevProfile.user,
+                email: newEmail,
+            },
+        }))
+    }
+
+    if (!userProfile) return <Loading />
 
     return (
-        <div>
-            <h2>Your Profile</h2>
-            <p>Username: {userProfile.user.username}</p>
-            <p>Email: {userProfile.user.email}</p>
-            <h2>Your Polls</h2>
-            {userProfile.polls.map((poll) => (
-                <div key={poll.id}>
-                    <Link to={`/polls/${poll.id}`}>{poll.question}</Link>
-                    <DeleteButton
-                        poll={poll}
-                        onSuccess={() =>
-                            setUserProfile((userData) => ({
-                                ...userData,
-                                polls: userData.polls.filter((p) => p.id !== poll.id),
-                            }))
-                        }
-                    />
-                </div>
-            ))}
-            <PasswordChangeForm username={username} />
-            <EmailChangeForm username={username} />
+        <div className={styles.container}>
+            <ProfileInfo user={userProfile.user} />
+            <PasswordChange username={username} />
+            <EmailChange username={username} handleEmailChange={handleEmailChange}/>
+            <ProfilePolls polls={userProfile.polls} onDeleteSuccess={handleDeleteSuccess} />
         </div>
     )
 }

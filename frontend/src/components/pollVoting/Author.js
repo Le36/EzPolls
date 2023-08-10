@@ -1,5 +1,5 @@
 import React from 'react'
-import styles from '../pollVoting/PollInfo.module.css'
+import styles from './PollInfo.module.css'
 
 const Author = ({author}) => {
     return (

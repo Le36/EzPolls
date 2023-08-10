@@ -6,6 +6,7 @@ import {AuthContext} from '../../contexts/AuthContext'
 import SubmitButton from '../formElements/SubmitButton'
 import PasswordField from './PasswordField'
 import CustomInputIcon from '../formElements/CustomInputIcon'
+import styles from './AuthStyles.module.css'
 
 const PasswordChangeForm = ({username}) => {
     const [passwordChange, setPasswordChange] = useState({oldPassword: '', newPassword: ''})
@@ -29,10 +30,10 @@ const PasswordChangeForm = ({username}) => {
     }
 
     return (
-        <form onSubmit={handlePasswordChange}>
+        <form onSubmit={handlePasswordChange} className={styles.formChange}>
             <CustomInputIcon
                 type="password"
-                placeholder="Old password"
+                placeholder="Old Password"
                 value={passwordChange.oldPassword}
                 onChange={(e) => setPasswordChange((prev) => ({...prev, oldPassword: e.target.value}))}
             />

@@ -3,7 +3,6 @@
     gap: 20px;
     grid-template-areas:
         "PollTitle PollTitle"
-        "PollSecondaryTitle PollSecondaryTitle"
         "QuestionInput QuestionInput"
         "OptionsInputs OptionsInputs"
         "RestrictionSelect PollSettings"
@@ -24,7 +23,6 @@
     gap: 20px;
     grid-template-areas:
         "PollTitle PollTitle"
-        "PollSecondaryTitle PollSecondaryTitle"
         "QuestionInput QuestionInput"
         "OptionsInputs OptionsInputs"
         "RestrictionSelect PollSettings"
@@ -56,12 +54,8 @@
     }
 }
 
-.pollTitle {
+.pollTitleContainer {
     grid-area: PollTitle;
-}
-
-.pollSecondaryTitle {
-    grid-area: PollSecondaryTitle;
 }
 
 .pollTitle {
@@ -74,5 +68,6 @@
     font-size: 0.9em;
     font-weight: 300;
     color: #eaeaea;
+    margin-bottom: 0;
 }
 

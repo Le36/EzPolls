@@ -16,4 +16,5 @@
 | 07.08 | 10            | Full styling for poll creation, nav bar, add tooltip system, frontend component restructure                                                          |
 | 08.08 | 11            | Full styling for poll voting, make new grid for poll creation when in desktop vs mobile, mobile optimizations, new poll info display                 |
 | 09.08 | 10            | Full styling for error and notification modal, chart.js for poll results and styling for mobile and desktop, consistent font usage across components |
+| 10.08 | 12            | Add new home page, add share poll function, full styling for profile page, nav bar refactor for better mobile experience, new footer                 |
 | total |               |                                                                                                                                                      |

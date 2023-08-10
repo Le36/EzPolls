@@ -17,3 +17,10 @@
     gap: 20px;
     box-sizing: border-box;
 }
+
+.title {
+    font-size: 1em;
+    font-weight: 500;
+    color: #eaeaea;
+    margin: 0;
+}

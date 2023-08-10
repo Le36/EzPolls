@@ -98,21 +98,16 @@ const NewPoll = () => {
 
     return (
         <form onSubmit={handleSubmit} className={!userToken ? styles.form : styles.formLogged}>
-            <h2 className={`${styles.pollTitle} pollTitle`}>Create a Poll</h2>
-            <h2 className={`${styles.pollSecondaryTitle} pollSecondaryTitle`}>
-                Complete the below fields to create your poll.
-            </h2>
-            <QuestionInput
-                value={question}
-                onChange={(e) => setQuestion(e.target.value)}
-                className={`${styles.QuestionInput}`}
-            />
+            <div className={styles.pollTitle}>
+                <h2 className={styles.pollTitle}>Create a Poll</h2>
+                <h2 className={styles.pollSecondaryTitle}>Complete the below fields to create your poll.</h2>
+            </div>
+            <QuestionInput value={question} onChange={(e) => setQuestion(e.target.value)} />
             <OptionsInputs
                 options={options}
                 handleOptionChange={handleOptionChange}
                 addOption={addOption}
                 removeOption={removeOption}
-                className={`${styles.OptionsInputs} OptionsInput`}
             />
             <RestrictionSelect
                 value={restriction}

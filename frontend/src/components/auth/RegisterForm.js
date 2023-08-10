@@ -34,6 +34,7 @@ const RegisterForm = () => {
 
     return (
         <form onSubmit={handleSubmit} className={styles.form}>
+            <h2 className={styles.title}>Register</h2>
             <CustomInput
                 type="text"
                 value={username}

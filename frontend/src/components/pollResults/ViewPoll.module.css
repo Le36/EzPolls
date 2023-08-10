@@ -12,3 +12,30 @@
     box-sizing: border-box;
     margin-bottom: 20px;
 }
+
+.title {
+    font-size: 1em;
+    font-weight: 500;
+    color: #eaeaea;
+    margin: 0;
+    display: flex;
+    align-items: center;
+}
+
+.icon {
+    font-size: 2em;
+    margin-right: 10px;
+    animation: colorChange 2s infinite;
+}
+
+@keyframes colorChange {
+    0% {
+        color: #eaeaea;
+    }
+    50% {
+        color: #808080;
+    }
+    100% {
+        color: #eaeaea;
+    }
+}

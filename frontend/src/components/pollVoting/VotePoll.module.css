@@ -12,3 +12,10 @@
     box-sizing: border-box;
     margin-bottom: 20px;
 }
+
+.title {
+    font-size: 1em;
+    font-weight: 500;
+    color: #eaeaea;
+    margin: 0;
+}

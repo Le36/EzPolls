@@ -43,6 +43,7 @@ const LoginForm = () => {
 
     return (
         <form onSubmit={handleSubmit} className={styles.form}>
+            <h2 className={styles.title}>Login</h2>
             <CustomInput
                 type="text"
                 value={username}

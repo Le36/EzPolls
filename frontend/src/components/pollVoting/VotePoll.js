@@ -90,6 +90,7 @@ const VotePoll = () => {
 
     return (
         <form onSubmit={handleSubmit} className={styles.form}>
+            <h2 className={styles.title}>Vote On a Poll</h2>
             <PollQuestion question={poll.question} />
             <PollInfo poll={poll} />
             <SharePoll pollId={poll.id} />

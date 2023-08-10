@@ -1,5 +1,6 @@
 .loadingContainer {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     opacity: 0;
@@ -10,6 +11,51 @@
     font-size: 4rem;
     color: #eaeaea;
     animation: spin 1s linear infinite;
+}
+
+.errorMessage1,
+.errorMessage2,
+.errorMessage3,
+.errorMessage4,
+.errorMessage5,
+.errorMessage6,
+.errorMessage7,
+.errorMessage8 {
+    color: #eaeaea;
+    padding-top: 25px;
+    opacity: 0;
+}
+
+.errorMessage1 {
+    animation: fadeIn 2s forwards 5s;
+}
+
+.errorMessage2 {
+    animation: fadeIn 2s forwards 10s;
+}
+
+.errorMessage3 {
+    animation: fadeIn 2s forwards 15s;
+}
+
+.errorMessage4 {
+    animation: fadeIn 2s forwards 20s;
+}
+
+.errorMessage5 {
+    animation: fadeIn 2s forwards 25s;
+}
+
+.errorMessage6 {
+    animation: fadeIn 2s forwards 30s;
+}
+
+.errorMessage7 {
+    animation: fadeIn 2s forwards 35s;
+}
+
+.errorMessage8 {
+    animation: fadeIn 2s forwards 55s;
 }
 
 @keyframes spin {

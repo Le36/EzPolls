@@ -14,6 +14,7 @@ import NavigateButton from '../layout/NavigateButton'
 import ReCaptchaComponent from '../formElements/ReCaptchaComponent'
 import styles from './VotePoll.module.css'
 import PollInfo from './PollInfo'
+import SharePoll from './SharePoll'
 
 const VotePoll = () => {
     const [selectedOptions, setSelectedOptions] = useState([])
@@ -91,6 +92,7 @@ const VotePoll = () => {
         <form onSubmit={handleSubmit} className={styles.form}>
             <PollQuestion question={poll.question} />
             <PollInfo poll={poll} />
+            <SharePoll pollId={poll.id} />
             <PollOptions
                 options={poll.options}
                 selectedOptions={selectedOptions}

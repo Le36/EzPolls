@@ -1,8 +1,10 @@
 import React, {useContext, useState} from 'react'
 import {Link} from 'react-router-dom'
 import {AuthContext} from '../../contexts/AuthContext'
-import {FaBars, FaTimes} from 'react-icons/fa'
+import {FaBars} from 'react-icons/fa'
 import styles from './Navbar.module.css'
+import MobileMenuModal from './MobileMenuModal'
+import {FaSquarePollHorizontal} from 'react-icons/fa6'
 
 const Navbar = () => {
     const {userToken, logout, username} = useContext(AuthContext)
@@ -17,22 +19,39 @@ const Navbar = () => {
         setIsMobileMenuOpen(!isMobileMenuOpen)
     }
 
+    if (isMobileMenuOpen) {
+        return (
+            <MobileMenuModal
+                onClose={handleToggleMenu}
+                userToken={userToken}
+                username={username}
+                onLogout={handleLogout}
+            />
+        )
+    }
+
     return (
         <nav className={styles.nav}>
-            <button className={styles.burgerButton} onClick={handleToggleMenu}>
-                {isMobileMenuOpen ? <FaTimes /> : <FaBars />}
-            </button>
+            <h1 className={styles.title}>
+                <FaSquarePollHorizontal className={styles.icon} />
+                EzPolls
+            </h1>
 
-            <div className={`${styles.menu} ${isMobileMenuOpen ? styles.open : ''}`}>
-                <Link to="/">Home</Link>
-                {!userToken && <Link to="/login">Login</Link>}
-                {!userToken && <Link to="/register">Register</Link>}
-                {userToken && <Link to={`/users/${username}`}>Profile</Link>}
-                {userToken && (
-                    <Link to="/" onClick={handleLogout}>
-                        Logout
-                    </Link>
-                )}
+            <div className={styles.menuItems}>
+                <button className={styles.burgerButton} onClick={handleToggleMenu}>
+                    <FaBars />
+                </button>
+                <div className={styles.menu}>
+                    <Link to="/">Home</Link>
+                    {!userToken && <Link to="/login">Login</Link>}
+                    {!userToken && <Link to="/register">Register</Link>}
+                    {userToken && <Link to={`/users/${username}`}>Profile</Link>}
+                    {userToken && (
+                        <Link to="/" onClick={handleLogout}>
+                            Logout
+                        </Link>
+                    )}
+                </div>
             </div>
         </nav>
     )

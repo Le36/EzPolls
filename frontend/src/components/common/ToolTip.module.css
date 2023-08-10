@@ -7,6 +7,12 @@
 .icon {
     color: #888;
     font-size: 18px;
+    transition: color 0.3s ease-in-out;
+}
+
+.icon:hover {
+    transition: color 0.3s ease-in-out;
+    color: #b5b5b5;
 }
 
 .tipText {

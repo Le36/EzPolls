@@ -28,7 +28,6 @@ const App = () => {
             <Router>
                 <div className={styles.gridContainer}>
                     <Navbar />
-                    <h1 className={styles.title}>EzPolls</h1>
                         <ErrorNotification />
                         <Notification />
                         <Routes>

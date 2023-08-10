@@ -1,16 +1,17 @@
 import React from 'react'
-import {Link} from 'react-router-dom'
-import DeleteButton from '../common/DeleteButton'
+import ProfilePollItem from './ProfilePollItem'
+import styles from './ProfilePolls.module.css'
+import ToolTip from '../common/ToolTip'
 
 const ProfilePolls = ({polls, onDeleteSuccess}) => {
     return (
-        <div>
-            <h2>Your Polls</h2>
+        <div className={styles.container}>
+            <h2 className={styles.pollsTitle}>
+                Your Polls
+                <ToolTip tip="This section displays the list of polls you've created. Click on a poll to view its details, or delete button to remove the poll from the server." />
+            </h2>
             {polls.map((poll) => (
-                <div key={poll.id}>
-                    <Link to={`/polls/${poll.id}`}>{poll.question}</Link>
-                    <DeleteButton poll={poll} onSuccess={() => onDeleteSuccess(poll.id)} />
-                </div>
+                <ProfilePollItem key={poll.id} poll={poll} onDeleteSuccess={onDeleteSuccess} />
             ))}
         </div>
     )

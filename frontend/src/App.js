@@ -13,6 +13,8 @@ import {NotificationProvider} from './contexts/NotificationContext'
 import Notification from './components/notification/Notification'
 import UserProfile from './components/profile/UserProfile'
 import styles from './App.module.css'
+import Home from './components/home/Home'
+import Footer from './components/layout/Footer'
 
 const Providers = ({children}) => (
     <AuthProvider>
@@ -31,13 +33,15 @@ const App = () => {
                         <ErrorNotification />
                         <Notification />
                         <Routes>
-                            <Route path="/" element={<NewPoll />} />
+                            <Route path="/" element={<Home/>} />
+                            <Route path="/create" element={<NewPoll />} />
                             <Route path="/polls/:id" element={<VotePoll />} />
                             <Route path="/polls/:id/results" element={<ViewPoll />} />
                             <Route path="/login" element={<LoginForm />} />
                             <Route path="/register" element={<RegisterForm />} />
                             <Route path="/users/:username" element={<UserProfile />} />
                         </Routes>
+                    <Footer />
                 </div>
             </Router>
         </Providers>

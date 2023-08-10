@@ -16,7 +16,6 @@ time, mark, audio, video {
     margin: 0;
     padding: 0;
     border: 0;
-    font: inherit;
     font-family: Roboto, sans-serif;
     vertical-align: baseline;
 }
@@ -30,6 +29,7 @@ body {
     display: grid;
     grid-template-rows: auto auto 1fr;
     background-color: #181818;
-    align-items: center;
+    align-items: end;
     justify-items: center;
+    min-height: 100vh;
 }

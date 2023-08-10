@@ -1,0 +1,29 @@
+.footer {
+    margin-top: 50px;
+    padding: 20px 0;
+    text-align: center;
+    color: #eaeaea;
+    border-top: 1px solid #3a3a3d;
+    width: 100%;
+}
+
+.linkWrapper {
+    margin: 15px 0;
+}
+
+.githubLink, .backToTop {
+    color: #eaeaea;
+    text-decoration: none;
+    margin: 0 10px;
+    display: inline-block;
+    transition: color 0.3s;
+}
+
+.githubLink:hover, .backToTop:hover {
+    color: #b3b3b5;
+}
+
+.icon {
+    margin-right: 8px;
+    vertical-align: middle;
+}

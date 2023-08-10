@@ -33,8 +33,10 @@ const Navbar = () => {
     return (
         <nav className={styles.nav}>
             <h1 className={styles.title}>
-                <FaSquarePollHorizontal className={styles.icon} />
-                EzPolls
+                <Link to="/">
+                    <FaSquarePollHorizontal className={styles.icon} />
+                    EzPolls
+                </Link>
             </h1>
 
             <div className={styles.menuItems}>
@@ -43,6 +45,7 @@ const Navbar = () => {
                 </button>
                 <div className={styles.menu}>
                     <Link to="/">Home</Link>
+                    <Link to="/create">Create</Link>
                     {!userToken && <Link to="/login">Login</Link>}
                     {!userToken && <Link to="/register">Register</Link>}
                     {userToken && <Link to={`/users/${username}`}>Profile</Link>}

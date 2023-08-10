@@ -91,3 +91,11 @@
 .icon {
     padding-right: 10px;
 }
+
+.title a {
+    text-decoration: none;
+    font-size: 5vh;
+    display: flex;
+    align-items: center;
+    color: #eaeaea;
+}

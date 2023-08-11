@@ -78,7 +78,7 @@ const VotePoll = () => {
             } else {
                 setErrorMessage('An unexpected error occurred. Please try again.')
             }
-            captchaRef.current.reset()
+            if (poll.requireRecaptcha) captchaRef.current.reset()
         } finally {
             setIsSubmitting(false)
         }

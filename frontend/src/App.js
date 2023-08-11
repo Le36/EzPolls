@@ -16,6 +16,7 @@ import styles from './App.module.css'
 import Home from './components/home/Home'
 import Footer from './components/layout/Footer'
 import Loading from './components/layout/Loading'
+import NavbarSlot from './components/layout/NavbarSlot'
 
 const Providers = ({children}) => (
     <AuthProvider>
@@ -31,6 +32,7 @@ const App = () => {
             <Router>
                 <div className={styles.gridContainer}>
                     <Navbar />
+                    <NavbarSlot />
                     <ErrorNotification />
                     <Notification />
                     <Routes>

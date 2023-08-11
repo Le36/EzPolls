@@ -1,5 +1,4 @@
 .hero {
-    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://cdn.strawpoll.com/images/stock/index-splash.jpg');
     background-size: cover;
     background-position: center center;
     border-radius: 10px;
@@ -9,20 +8,22 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    text-align: center;
     color: #eaeaea;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+    text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.7);
     margin-bottom: 40px;
     opacity: 0;
-    animation: fadeIn 1.5s cubic-bezier(0.25, 0.4, 0.5, 0.25) forwards 0.5s;
+    animation: fadeInAndMoveUp 1.5s cubic-bezier(0.25, 0.1, 0.3, 1) forwards 0.5s;
 }
 
-
-@keyframes fadeIn {
+@keyframes fadeInAndMoveUp {
     from {
         opacity: 0;
+        transform: translateY(10%);
     }
     to {
         opacity: 1;
+        transform: translateY(0);
     }
 }
 
@@ -30,14 +31,17 @@
     font-size: 3rem;
     font-weight: bold;
     margin-bottom: 20px;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    padding: 10px 20px;
 }
 
 .hero p {
     max-width: 650px;
     text-align: center;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.2);
     padding: 10px 20px;
-    border-radius: 5px;
+    border-radius: 10px;
     font-size: 1.2rem;
 }
 

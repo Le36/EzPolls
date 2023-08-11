@@ -20,7 +20,7 @@
 }
 
 .featureCard:hover {
-    transform: translateY(-10px);
+    transform: translateY(-10px) scale(1.05);
     box-shadow: 0 4px 25px rgba(0, 0, 0, 0.5);
 }
 
@@ -34,7 +34,6 @@
 
 .featureCard h3 {
     font-size: 1.4rem;
-    margin: 10px 0;
     text-align: center;
     font-weight: 600;
 }
@@ -43,5 +42,34 @@
     font-size: 1rem;
     margin: 15px;
     line-height: 1.5;
-    opacity: 0.9;
+}
+
+@media (min-width: 800px) {
+    .featureCard h3 {
+        margin-top: 55px;
+    }
+
+    .featureCard img {
+        transform: translateY(15%) scale(1.3);
+    }
+}
+
+@media (min-width: 1000px) {
+    .featureCard h3 {
+        margin-top: 65px;
+    }
+
+    .featureCard img {
+        transform: translateY(15%) scale(1.3);
+    }
+}
+
+@media (min-width: 1200px) {
+    .featureCard h3 {
+        margin-top: 75px;
+    }
+
+    .featureCard img {
+        transform: translateY(15%) scale(1.3);
+    }
 }

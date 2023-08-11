@@ -15,6 +15,7 @@ import UserProfile from './components/profile/UserProfile'
 import styles from './App.module.css'
 import Home from './components/home/Home'
 import Footer from './components/layout/Footer'
+import Loading from './components/layout/Loading'
 
 const Providers = ({children}) => (
     <AuthProvider>
@@ -30,17 +31,18 @@ const App = () => {
             <Router>
                 <div className={styles.gridContainer}>
                     <Navbar />
-                        <ErrorNotification />
-                        <Notification />
-                        <Routes>
-                            <Route path="/" element={<Home/>} />
-                            <Route path="/create" element={<NewPoll />} />
-                            <Route path="/polls/:id" element={<VotePoll />} />
-                            <Route path="/polls/:id/results" element={<ViewPoll />} />
-                            <Route path="/login" element={<LoginForm />} />
-                            <Route path="/register" element={<RegisterForm />} />
-                            <Route path="/users/:username" element={<UserProfile />} />
-                        </Routes>
+                    <ErrorNotification />
+                    <Notification />
+                    <Routes>
+                        <Route path="/" element={<Home />} />
+                        <Route path="/create" element={<NewPoll />} />
+                        <Route path="/polls/:id" element={<VotePoll />} />
+                        <Route path="/polls/:id/results" element={<ViewPoll />} />
+                        <Route path="/login" element={<LoginForm />} />
+                        <Route path="/register" element={<RegisterForm />} />
+                        <Route path="/users/:username" element={<UserProfile />} />
+                        <Route path="*" element={<Loading />} />
+                    </Routes>
                     <Footer />
                 </div>
             </Router>

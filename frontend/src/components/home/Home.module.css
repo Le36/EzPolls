@@ -9,7 +9,7 @@
     gap: 20px;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 800px) {
     .features {
         flex-direction: row;
         justify-content: space-between;
@@ -19,7 +19,7 @@
 @media (min-width: 1024px) {
     .container {
         margin: 0 auto;
-        max-width: 1200px;
-        padding: 40px;
+        max-width: 1300px;
+        padding-bottom: 40px;
     }
 }

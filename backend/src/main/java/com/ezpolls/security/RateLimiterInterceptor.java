@@ -22,15 +22,12 @@ public class RateLimiterInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull Object handler) {
         String uri = request.getRequestURI();
-
-        if (uri.startsWith("/static/")) {
-            return true;
-        }
-
         String ip = getClientIp(request);
-        if (rateLimiter.tryConsume(ip)) {
+
+        if (uri.startsWith("/api") && rateLimiter.tryConsume(ip)) {
             throw new RateLimitException();
         }
+
         request.setAttribute("ip", ip);
         return true;
     }

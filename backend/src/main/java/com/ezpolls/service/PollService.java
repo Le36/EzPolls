@@ -164,7 +164,7 @@ public class PollService {
     }
 
     public Flux<Poll> getVoteUpdates(String pollId) {
-        return Flux.create(emitter -> {
+        Flux<Poll> actualUpdates = Flux.create(emitter -> {
                     ApplicationListener<VoteCastEvent> listener = event -> {
                         if (event.getPollId().equals(pollId)) {
                             Mono.fromCallable(() -> pollRepository.findById(pollId))
@@ -178,6 +178,13 @@ public class PollService {
                 })
                 .bufferTimeout(100, Duration.ofMillis(300))
                 .map(list -> (Poll) list.get(list.size() - 1));
+
+        Flux<Poll> periodicUpdate = Flux.interval(Duration.ofSeconds(45))
+                .flatMap(tick -> Mono.fromCallable(() -> pollRepository.findById(pollId))
+                        .subscribeOn(Schedulers.boundedElastic())
+                        .flatMap(Mono::justOrEmpty));
+
+        return Flux.merge(periodicUpdate, actualUpdates);
     }
 
     public void deletePoll(String pollId, String username) {

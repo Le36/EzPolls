@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const BASE_URL = 'http://localhost:8080/api/polls'
+const BASE_URL = '/api/polls'
 
 const createPoll = async (newPoll, headers) => {
     const response = await axios.post(BASE_URL, newPoll, {headers})

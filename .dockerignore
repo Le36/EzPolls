@@ -1,0 +1,23 @@
+# Version control
+.git
+.gitignore
+
+# Build artifacts & dependencies
+frontend/node_modules/
+backend/build/
+backend/out/
+backend/.gradle/
+
+# OS specific
+.DS_Store
+Thumbs.db
+
+# IDE specific
+*.idea/
+*.iml
+*.log
+
+# Temporary files
+*.tmp
+*.bak
+*~

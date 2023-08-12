@@ -8,6 +8,7 @@
 }
 
 .fadeInWrapper {
+    display: flex;
     opacity: 0;
     animation: fadeInAndMoveUp 1.5s cubic-bezier(0.25, 0.1, 0.3, 1) forwards 1s;
     flex: 0 0 calc(33.333% - 20px);

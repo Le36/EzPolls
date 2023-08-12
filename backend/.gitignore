@@ -35,6 +35,3 @@ out/
 
 ### VS Code ###
 .vscode/
-
-### Enviroment ###
-/src/main/resources/application.properties

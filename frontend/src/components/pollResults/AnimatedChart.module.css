@@ -9,3 +9,14 @@
     border: 1px solid #555;
     border-radius: 5px;
 }
+
+.voteItem {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px;
+    border-bottom: 1px solid #555;
+}
+
+.voteItem:last-child {
+    border-bottom: none;
+}

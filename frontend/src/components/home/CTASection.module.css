@@ -52,5 +52,5 @@ h2 {
 .buttonContainer {
     display: flex;
     align-items: center;
-    gap: 20px;
+    gap: 8px;
 }

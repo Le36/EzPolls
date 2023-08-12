@@ -225,17 +225,17 @@ const AnimatedChart = ({optionsPoll, chartType}) => {
     }
 
     if (chartType === 'list') {
+        const totalVotes = optionsPoll.reduce((acc, option) => acc + option.voteCount, 0)
+        const percentage = (count) => ((count / totalVotes) * 100).toFixed(2)
+
         return (
             <ol className={styles.orderedList}>
                 {sortedOptions.map((option, index) => (
-                    <li
-                        key={index}
-                        style={{
-                            padding: '8px',
-                            borderBottom: index !== sortedOptions.length - 1 ? '1px solid #555' : 'none',
-                        }}
-                    >
-                        {labels[index].join(' ')}: <strong>{option.voteCount}</strong> votes
+                    <li key={index} className={styles.voteItem}>
+                        <span>{labels[index].join(' ')}</span>
+                        <span>
+                            <strong>{option.voteCount}</strong> votes ({percentage(option.voteCount)}%)
+                        </span>
                     </li>
                 ))}
             </ol>

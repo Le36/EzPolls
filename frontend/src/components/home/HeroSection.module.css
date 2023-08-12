@@ -9,7 +9,11 @@
     align-items: center;
     flex-direction: column;
     color: #eaeaea;
-    text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.7);
+    text-shadow: -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000,
+    2px 2px 5px rgba(0, 0, 0, 0.7);
     margin-bottom: 40px;
     opacity: 0;
     animation: fadeInAndMoveUp 1.5s cubic-bezier(0.25, 0.1, 0.3, 1) forwards 0.5s;
@@ -27,10 +31,9 @@
 }
 
 .hero h2 {
-    font-size: 3rem;
+    font-size: 5rem;
     font-weight: bold;
     margin-bottom: 20px;
-    background-color: rgba(0, 0, 0, 0.2);
     border-radius: 10px;
     padding: 10px;
     text-align: center;
@@ -39,10 +42,9 @@
 .hero p {
     max-width: 650px;
     text-align: center;
-    background-color: rgba(0, 0, 0, 0.2);
     padding: 10px;
     border-radius: 10px;
-    font-size: 1.2rem;
+    font-size: 1.5rem;
 }
 
 @media (max-width: 768px) {

@@ -9,7 +9,9 @@ const HeroSection = () => {
                 backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.4)), url(${heroImage})`,
             }}
         >
-            <h2>Welcome to EzPolls</h2>
+            <h2>
+                <span>Welcome to EzPolls</span>
+            </h2>
             <p>Create your poll in seconds</p>
         </section>
     )

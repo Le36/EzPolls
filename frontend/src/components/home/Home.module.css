@@ -6,13 +6,14 @@
 .features {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 40px;
 }
 
 @media (min-width: 800px) {
     .features {
         flex-direction: row;
         justify-content: space-between;
+        gap: 20px;
     }
 }
 

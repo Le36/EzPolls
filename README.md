@@ -7,18 +7,24 @@ enhanced security, and a user-friendly interface, EzPolls is where simplicity me
 
 # Live Demo
 
-Check out the live demo of EzPolls at
+Experience real-time polling with EzPolls. Try creating a poll, voting, and watching live vote updates:
 
 ### [https://ezpolls.fly.dev/](https://ezpolls.fly.dev/)
 
-[![EzPolls](frontend/public/favicon.ico)](https://ezpolls.fly.dev/)
+<a href="https://ezpolls.fly.dev/">
+  <img src="frontend/src/assets/liveResults.jpg" alt="EzPolls Live Results" width="500">
+</a>
+<br><br>
+<a href="https://ezpolls.fly.dev/">
+  <img src="frontend/src/assets/easyPolling.jpg" alt="EzPolls Create Poll" width="500">
+</a>
 
 ## Tech Stack
 
-- Frontend: React.js
-- Backend: Java with Spring Boot
-- Database: MongoDB
-- Deployment: Docker, Fly.io
+- **Frontend:** React.js
+- **Backend:** Java with Spring Boot
+- **Database:** MongoDB
+- **Deployment:** Docker, Fly.io
 
 ## Features
 
@@ -74,53 +80,54 @@ Check out the live demo of EzPolls at
 
 ### With Docker
 
-First you have to build the Docker image. To do so, run the following command in the root directory of the project:
+**Building the Docker Image:** First, you need to build the Docker image. Execute the following command in the root
+directory of the project:
 
 ```docker build -t ezpolls .```
 
-Then, you can run the Docker image with the following command:
+**Running the Docker Image:** Once the image is built, start the container with:
 
 ```docker run -p 8080:8080 ezpolls```
 
-The project will be available at http://localhost:8080.
+The project will then be accessible at http://localhost:8080.
 
 #### Environment variables
 
-You should add the environment variables to the Docker run command.
+When running the Docker container, it's essential to provide the required environment variables:
 
-For this you need Atlas MongoDB URI, Google reCAPTCHA secret and JWT secret.
+**Atlas MongoDB URI:** This is the connection string for your MongoDB database. Obtain it from your Atlas dashboard.
 
-Atlas MongoDB URI is the connection string to your MongoDB database. You can get it from the Atlas dashboard.
+**Google reCAPTCHA v2 Secret:** This secret key is specific to your reCAPTCHA. Remember to also integrate the
+corresponding
+site key in the frontend's reCAPTCHA component.
 
-Google reCAPTCHA secret is the secret key for your reCAPTCHA. You will also need to add the site key to the frontend
-reCAPTCHA component.
+**JWT Secret:** You can utilize any Base64-encoded string for this.
 
-For JWT secret, you can use any Base64 encoded string.
+The Docker command with environment variables looks like:
 
-```docker run -p 8080:8080 -e MONGODB_URI='text' -e RECAPTCHA_SECRET='text' -e JWT_SECRET='text' ezpolls```
+```docker run -p 8080:8080 -e MONGODB_URI='your_mongodb_uri' -e RECAPTCHA_SECRET='your_recaptcha_secret' -e JWT_SECRET='your_jwt_secret' ezpolls```
 
 ### Without Docker
 
-You can also run the project without Docker. To do so, you need to have Java 17, Gradle and npm installed.
+If you prefer not to use Docker, ensure you have Java 17, Gradle, and npm installed beforehand.
 
-Backend can be run with the following command in the backend directory:
+**Running the Backend:** Navigate to the backend directory and run:
 
 ```./gradlew bootRun```
 
-and frontend can be run with the following commands in the frontend directory:
+**Setting up & Running the Frontend:** In the frontend directory, execute:
 
-```npm install```
+```
+npm install
+npm start
+```
 
-```npm start```
+The frontend will then be live at http://localhost:3000.
 
-Project will be available at http://localhost:3000.
+**Note:** Don't forget to provide the environment variables for your backend. Set them like this:
 
-Remember to add the environment variables to your backend.
+```export MONGODB_URI='your_mongodb_uri'```
 
-They can be added like this:
-
-```export MONGODB_URI='text'```
-
-### Timesheet
+## Timesheet
 
 [timesheet.md](timesheet.md)

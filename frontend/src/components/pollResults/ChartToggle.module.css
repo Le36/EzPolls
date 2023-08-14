@@ -37,3 +37,21 @@
     display: flex;
     justify-content: space-around
 }
+
+@media (min-width: 600px) {
+    .button {
+        padding: 8px 20px;
+    }
+}
+
+@media (min-width: 700px) {
+    .button {
+        padding: 8px 30px;
+    }
+}
+
+@media (min-width: 800px) {
+    .button {
+        padding: 8px 40px;
+    }
+}

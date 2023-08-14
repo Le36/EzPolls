@@ -18,4 +18,6 @@
 | 09.08 | 10            | Full styling for error and notification modal, chart.js for poll results and styling for mobile and desktop, consistent font usage across components |
 | 10.08 | 12            | Add new home page, add share poll function, full styling for profile page, nav bar refactor for better mobile experience, new footer                 |
 | 11.08 | 9             | Graphics for home page, finalising touches on ui styling desktop and mobile, make nav bar floating, responsive user experience                       |
-| total |               |                                                                                                                                                      |
+| 12.08 | 10            | Dockerized the app, made changes for production mode, deployed to fly.io, slight ui adjustments for mobile                                           |
+| 14.08 | 3             | Finished the project, writing documentation etc.                                                                                                     |
+| total | 175           |                                                                                                                                                      |

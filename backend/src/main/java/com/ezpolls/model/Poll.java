@@ -22,17 +22,17 @@ public class Poll {
     private boolean requireRecaptcha;
     private String author;
 
+    public enum VotingRestriction {
+        ONE_VOTE_PER_IP,
+        ONE_VOTE_PER_USER,
+        NO_RESTRICTION
+    }
+
     @Getter
     @Setter
     public static class Option {
         private String optionText;
         private int voteCount;
-    }
-
-    public enum VotingRestriction {
-        ONE_VOTE_PER_IP,
-        ONE_VOTE_PER_USER,
-        NO_RESTRICTION
     }
 
 }

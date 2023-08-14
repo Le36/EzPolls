@@ -12,10 +12,9 @@ import org.springframework.web.client.RestTemplate;
 @Service
 public class CaptchaService {
 
+    private final RestTemplate restTemplate;
     @Value("${recaptcha.secret}")
     private String recaptchaSecret;
-
-    private final RestTemplate restTemplate;
 
     @Autowired
     public CaptchaService(RestTemplateBuilder restTemplateBuilder) {

@@ -1,13 +1,12 @@
 package com.ezpolls.service;
 
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.atomic.AtomicInteger;
-
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Service
 public class RateLimiter {
@@ -43,8 +42,8 @@ public class RateLimiter {
     }
 
     private static class Pair {
-        private long timestamp;
         private final AtomicInteger counter;
+        private long timestamp;
 
         Pair(long timestamp, AtomicInteger counter) {
             this.timestamp = timestamp;

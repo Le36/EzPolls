@@ -18,14 +18,18 @@
     border: 1px solid #555;
     border-radius: 15px;
     position: relative;
-    transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    transition:
+        background-color 0.3s ease-in-out,
+        box-shadow 0.3s ease-in-out;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 .checkboxButton:hover {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     background-color: #444;
-    transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    transition:
+        background-color 0.3s ease-in-out,
+        box-shadow 0.3s ease-in-out;
 }
 
 .slider {
@@ -37,7 +41,9 @@
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
     left: 1px;
     top: 1px;
-    transition: left 0.3s ease-in-out, background-color 0.5s ease-in-out;
+    transition:
+        left 0.3s ease-in-out,
+        background-color 0.5s ease-in-out;
 }
 
 .slider:hover {
@@ -54,7 +60,9 @@
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
     left: 26px;
     top: 1px;
-    transition: left 0.3s ease-in-out, background-color 0.5s ease-in-out;
+    transition:
+        left 0.3s ease-in-out,
+        background-color 0.5s ease-in-out;
 }
 
 .sliderActive:hover {

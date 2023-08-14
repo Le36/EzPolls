@@ -14,14 +14,18 @@
     font-size: 1em;
     border: none;
     cursor: pointer;
-    transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    transition:
+        background-color 0.3s ease-in-out,
+        box-shadow 0.3s ease-in-out;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
 }
 
 .button:hover {
     background-color: #555;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-    transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    transition:
+        background-color 0.3s ease-in-out,
+        box-shadow 0.3s ease-in-out;
 }
 
 .toggleTitle {
@@ -35,7 +39,7 @@
 
 .buttonContainer {
     display: flex;
-    justify-content: space-around
+    justify-content: space-around;
 }
 
 @media (min-width: 600px) {

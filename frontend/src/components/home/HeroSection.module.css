@@ -9,11 +9,12 @@
     align-items: center;
     flex-direction: column;
     color: #eaeaea;
-    text-shadow: -1px -1px 0 #000,
-    1px -1px 0 #000,
-    -1px 1px 0 #000,
-    1px 1px 0 #000,
-    2px 2px 5px rgba(0, 0, 0, 0.7);
+    text-shadow:
+        -1px -1px 0 #000,
+        1px -1px 0 #000,
+        -1px 1px 0 #000,
+        1px 1px 0 #000,
+        2px 2px 5px rgba(0, 0, 0, 0.7);
     margin-bottom: 40px;
     opacity: 0;
     animation: fadeInAndMoveUp 1.5s cubic-bezier(0.25, 0.1, 0.3, 1) forwards 0.5s;

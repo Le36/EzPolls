@@ -56,7 +56,7 @@ const UserProfile = () => {
         <div className={styles.container}>
             <ProfileInfo user={userProfile.user} />
             <PasswordChange username={username} />
-            <EmailChange username={username} handleEmailChange={handleEmailChange}/>
+            <EmailChange username={username} handleEmailChange={handleEmailChange} />
             <ProfilePolls polls={userProfile.polls} onDeleteSuccess={handleDeleteSuccess} />
         </div>
     )

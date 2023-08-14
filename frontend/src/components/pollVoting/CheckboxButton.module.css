@@ -4,7 +4,9 @@
     padding: 8px;
     background-color: #333;
     color: #eaeaea;
-    transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    transition:
+        border-color 0.3s ease-in-out,
+        box-shadow 0.3s ease-in-out;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     margin-bottom: 12px;
     cursor: pointer;
@@ -14,7 +16,9 @@
     border-color: #777;
     outline: none;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    transition:
+        border-color 0.3s ease-in-out,
+        box-shadow 0.3s ease-in-out;
 }
 
 label {

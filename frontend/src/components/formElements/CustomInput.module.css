@@ -15,13 +15,18 @@
     background-color: #333;
     color: #eaeaea;
     font-family: Roboto, sans-serif;
-    transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    transition:
+        border-color 0.3s ease-in-out,
+        box-shadow 0.3s ease-in-out;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
-.inputField:focus, .inputField:hover {
+.inputField:focus,
+.inputField:hover {
     border-color: #777;
     outline: none;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    transition:
+        border-color 0.3s ease-in-out,
+        box-shadow 0.3s ease-in-out;
 }

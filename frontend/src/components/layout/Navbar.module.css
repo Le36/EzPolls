@@ -23,7 +23,9 @@
     text-decoration: none;
     color: #eaeaea;
     border-radius: 5px;
-    transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    transition:
+        background-color 0.3s ease-in-out,
+        box-shadow 0.3s ease-in-out;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
     background-color: #333;
     margin-left: 10px;
@@ -33,7 +35,9 @@
 .menu a:hover {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
     background-color: #555;
-    transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    transition:
+        background-color 0.3s ease-in-out,
+        box-shadow 0.3s ease-in-out;
 }
 
 .menu.open {
@@ -52,7 +56,6 @@
     display: flex;
     align-items: center;
     padding-right: 20px;
-
 }
 
 @media (min-width: 799px) {
@@ -86,7 +89,8 @@
     }
 }
 
-.burgerButton:focus, .burgerButton:hover {
+.burgerButton:focus,
+.burgerButton:hover {
     outline: none;
     color: #b5b5b5;
     transition: color 0.3s ease-in-out;

@@ -28,7 +28,8 @@
     transition: box-shadow 0.3s ease-in-out;
 }
 
-.select:hover, .select:focus {
+.select:hover,
+.select:focus {
     border-color: #777;
     outline: none;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);

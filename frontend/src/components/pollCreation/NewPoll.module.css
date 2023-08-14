@@ -2,12 +2,12 @@
     display: grid;
     gap: 20px;
     grid-template-areas:
-        "PollTitle PollTitle"
-        "QuestionInput QuestionInput"
-        "OptionsInputs OptionsInputs"
-        "RestrictionSelect PollSettings"
-        "Recaptcha PollSettings"
-        "Recaptcha SubmitButton";
+        'PollTitle PollTitle'
+        'QuestionInput QuestionInput'
+        'OptionsInputs OptionsInputs'
+        'RestrictionSelect PollSettings'
+        'Recaptcha PollSettings'
+        'Recaptcha SubmitButton';
     width: 80%;
     max-width: 800px;
     padding: 20px;
@@ -22,11 +22,11 @@
     display: grid;
     gap: 20px;
     grid-template-areas:
-        "PollTitle PollTitle"
-        "QuestionInput QuestionInput"
-        "OptionsInputs OptionsInputs"
-        "RestrictionSelect PollSettings"
-        "SubmitButton PollSettings";
+        'PollTitle PollTitle'
+        'QuestionInput QuestionInput'
+        'OptionsInputs OptionsInputs'
+        'RestrictionSelect PollSettings'
+        'SubmitButton PollSettings';
     width: 80%;
     max-width: 800px;
     padding: 20px;
@@ -38,7 +38,8 @@
 }
 
 @media (max-width: 800px) {
-    .form, .formLogged {
+    .form,
+    .formLogged {
         display: flex;
         flex-direction: column;
         gap: 20px;
@@ -70,4 +71,3 @@
     color: #eaeaea;
     margin-bottom: 0;
 }
-

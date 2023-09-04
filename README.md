@@ -127,7 +127,3 @@ The frontend will then be live at http://localhost:3000.
 **Note:** Don't forget to provide the environment variables for your backend. Set them like this:
 
 ```export MONGODB_URI='your_mongodb_uri'```
-
-## Timesheet
-
-[timesheet.md](timesheet.md)

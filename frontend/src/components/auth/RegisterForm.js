@@ -2,6 +2,7 @@ import React, {useContext, useState} from 'react'
 import {useNavigate} from 'react-router-dom'
 import userService from '../../services/userService'
 import {ErrorContext} from '../../contexts/ErrorContext'
+import {NotificationContext} from '../../contexts/NotificationContext'
 import PasswordField from './PasswordField'
 import SubmitButton from '../formElements/SubmitButton'
 import styles from './AuthStyles.module.css'
@@ -14,12 +15,14 @@ const RegisterForm = () => {
     const navigate = useNavigate()
     const {setErrorMessage} = useContext(ErrorContext)
     const [isPasswordValid, setIsPasswordValid] = useState(false)
+    const {setNotificationMessage} = useContext(NotificationContext)
 
     const handleSubmit = async (e) => {
         e.preventDefault()
         const newUser = {username, password, email}
         try {
             await userService.register(newUser)
+            setNotificationMessage('Registration successful.')
             navigate('/login')
         } catch (error) {
             if (error.response && error.response.data.message) {

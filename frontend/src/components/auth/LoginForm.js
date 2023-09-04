@@ -3,6 +3,7 @@ import {useNavigate} from 'react-router-dom'
 import userService from '../../services/userService'
 import {AuthContext} from '../../contexts/AuthContext'
 import {ErrorContext} from '../../contexts/ErrorContext'
+import {NotificationContext} from '../../contexts/NotificationContext'
 import ReCaptchaComponent from '../formElements/ReCaptchaComponent'
 import SubmitButton from '../formElements/SubmitButton'
 import styles from './AuthStyles.module.css'
@@ -15,6 +16,7 @@ const LoginForm = () => {
     const navigate = useNavigate()
     const {login} = useContext(AuthContext)
     const {setErrorMessage} = useContext(ErrorContext)
+    const {setNotificationMessage} = useContext(NotificationContext)
     const [recaptchaValue, setRecaptchaValue] = useState(null)
     const recaptchaRef = useRef(null)
 
@@ -29,7 +31,8 @@ const LoginForm = () => {
         try {
             const jwt = await userService.login(credentials)
             login(jwt)
-            navigate('/')
+            setNotificationMessage('Login successful.')
+            navigate('/create')
         } catch (error) {
             if (error.response && error.response.data.message) {
                 setErrorMessage(error.response.data.message)
